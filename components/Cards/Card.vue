@@ -11,7 +11,6 @@
       <h3 class="text-xl font-bold" :class="[variant === 'primary' ? 'text-[#DC6F19]' : 'text-[#165049]']">
         <slot name="price"></slot>
       </h3>
-
       <!-- stats -->
       <div class=" space-x-1 text-[#22C55E] ">
         <!-- negative or positivw -->
