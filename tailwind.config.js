@@ -18,6 +18,9 @@ export default {
         "secondary-50": "#E8EEED",
         "text-1": "#808080",
       },
+      fontFamily: {
+        aileron: ["Aileron", "sans-serif"],
+      },
     },
   },
   plugins: [],
