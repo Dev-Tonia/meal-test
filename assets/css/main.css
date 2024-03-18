@@ -1,3 +1,69 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* custom font  */
+@layer base {
+  @font-face {
+    font-family: "Aileron";
+    src: url("/public/font/Aileron-Black.woff2") format("woff2"),
+      url("/public/font/Aileron-Black.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Aileron";
+    font-weight: 700;
+    src: url("/public/font/Aileron-Bold.woff2") format("woff2"),
+      url("/public/font/Aileron-Bold.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Aileron";
+    font-weight: 800;
+    src: url("/public/font/Aileron-Heavy.woff2") format("woff2"),
+      url("/public/font/Aileron-Heavy.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Aileron";
+    font-weight: 300;
+    src: url("/public/font/Aileron-Light.woff2") format("woff2"),
+      url("/public/font/Aileron-Light.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Aileron";
+    font-weight: 400;
+    src: url("/public/font/Aileron-Regular.woff2") format("woff2"),
+      url("/public/font/Aileron-Regular.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Aileron";
+    font-weight: 600;
+    src: url("/public/font/Aileron-SemiBold.woff2") format("woff2"),
+      url("/public/font/Aileron-SemiBold.woff") format("woff");
+  }
+}
+
+body {
+  @apply font-aileron;
+}
+/* Scroll bar customization  */
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

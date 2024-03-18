@@ -21,7 +21,7 @@
       title: 'Prev',
     }"
   />
-  <BaseButton :btnData="{ title: 'No Icon' }" class="bg-primary text-white" />
+  <BaseButton :btnData="{ title: 'No Icon' }" class="!bg-primary text-white" />
   <BaseButton :btnData="{ title: 'Next' }">
     <Icon name="mingcute:arrow-right-line" size="30"
   /></BaseButton>
