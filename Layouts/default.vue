@@ -4,7 +4,7 @@
     <div class="sticky top-0 left-0 h-full">
       <Sidebar class="h-screen overflow-y-auto" />
     </div>
-    <main class="w-full">
+    <main class="w-full overflow-hidden">
       <Navbar />
       <div class="px-8 border">
         <slot />

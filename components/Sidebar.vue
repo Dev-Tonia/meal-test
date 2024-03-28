@@ -10,7 +10,7 @@ const navItems = [
     iconName: "iconoir:truck",
     path: "/merchants",
   },
-  { title: "Vendors", iconName: "maki:gift", path: "/vendor" },
+  { title: "Vendors", iconName: "maki:gift", path: "/vendors" },
   { title: "Customers", iconName: "ph:user", path: "/customers" },
   { title: "Payouts", iconName: "ph:money-duotone", path: "/payouts" },
   { title: "Riders", iconName: "heroicons:user-group", path: "/riders" },
@@ -24,7 +24,7 @@ const navItems = [
 ];
 </script>
 <template>
-  <aside class="w-[300px]">
+  <aside class="w-[300px] bg-white">
     <!-- Brand Logo -->
     <div class="flex items-center justify-center pt-16">
       <NuxtLink to="/" class="w-20">

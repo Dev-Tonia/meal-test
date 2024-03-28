@@ -1,13 +1,5 @@
 <script lang="ts" setup>
-const headers = [
-  "Date",
-  "Order ID",
-  "Rider ID",
-  "Pickup time",
-  "Delivery time",
-  "Distance (KM)",
-  "Status",
-];
+const { tableTitles } = defineProps(["tableTitles"]);
 </script>
 
 <template>
@@ -22,11 +14,11 @@ const headers = [
 
       <th
         scope="col"
-        v-for="(header, index) in headers"
-        :key="header"
+        v-for="(title, index) in tableTitles"
+        :key="title"
         class="p-4 text-xs font-medium text-left text-[#667085] uppercase lg:p-5"
       >
-        {{ header }}
+        {{ title }}
       </th>
     </tr>
   </thead>
