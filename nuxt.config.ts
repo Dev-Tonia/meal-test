@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["nuxt-icon", "nuxt-svgo"],
+  modules: ["nuxt-icon", "nuxt-svgo", "@nuxt/image"],
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   postcss: {

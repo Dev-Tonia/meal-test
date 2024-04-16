@@ -7,14 +7,14 @@ const { label, placeholder, inputType } = defineProps([
 ]);
 </script>
 <template>
-  <div class="form-group">
-    <label for="" class="text-xs" v-show="label"> {{ label }} </label>
+  <div class="">
+    <label for="" class="text-xs mb-2 inline-block" v-show="label">{{ label }} </label>
     <div class="rounded-lg border flex items-center px-2.5 py-3 gap-3">
       <!-- <Envlope /> -->
       <div>
         <slot></slot>
       </div>
-      <input :type="inputType" :placeholder="placeholder" class="" />
+      <input :type="inputType" :placeholder="placeholder" class="in" />
     </div>
   </div>
 </template>

@@ -49,7 +49,7 @@ const headers = [
 </script>
 
 <template>
-  <ReusableTable :tableData="items" :tableTitles="headers" />
+  <ReusableTable :tableData="vendorData" :tableTitles="vendorHeader" />
 </template>
 
 <style scoped></style>
