@@ -15,9 +15,9 @@ function openOverlay() {
     <slot />
   </div>
   <div v-else class="flex space-x-3">
-    <div class="sticky top-0 left-0 h-full hidden md:block">
-      <Sidebar class="h-screen overflow-y-auto w-[300px]" />
-    </div>
+    <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
+    <Sidebar class="hidden md:block w-[300px]" />
+    <!-- </div> -->
     <MobileSidebar
       class="md:hidden"
       :closeOverlay="closeOverlay"
