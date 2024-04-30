@@ -24,7 +24,7 @@ const navItems = [
 ];
 </script>
 <template>
-  <aside class="w-[300px] bg-white">
+  <aside class="bg-white">
     <!-- Brand Logo -->
     <div class="flex items-center justify-center pt-16">
       <NuxtLink to="/" class="w-20">
