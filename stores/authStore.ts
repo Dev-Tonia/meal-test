@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import auth from '~/services/auth'
 // const router = useRouter()
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
+  const user= ref<IUser | null>(null)
   const isAuthenticated = ref(false)
 
 
@@ -22,6 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     const response = await auth.getUser()
     console.log("🚀 ~ getUserProfile ~ response:", response)
     user.value = response.data.data
+    console.log("🚀 ~ getUserProfile ~ user:", user?.value?.firstname)
   }
   const logout = async () => {
     const token = useCookie('userToken')

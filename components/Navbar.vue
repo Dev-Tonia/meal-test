@@ -8,7 +8,11 @@ import {
   DropdownMenuTrigger
   //@ts-ignore
 } from '@/components/ui/dropdown-menu';
+import { storeToRefs } from 'pinia';
+const { isAuthenticated, user } = storeToRefs(useAuthStore());
+
 const store = useAuthStore()
+const currentUser = user
 const router = useRouter()
 
 const handleLogout = () => {
@@ -33,7 +37,7 @@ const handleLogout = () => {
           <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
         </div>
         <div class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
-          <img src="../assets/imgs/UserAvater.png" class="w-full" />
+          <img :src="currentUser?.photo ? currentUser?.photo : '../assets/imgs/UserAvater.png'" class="w-full" />
         </div>
         <div class="text-text-1">
 
@@ -44,7 +48,7 @@ const handleLogout = () => {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent class="w-24 bg-white z-[2]">
-              <DropdownMenuLabel>Profile</DropdownMenuLabel>
+              <DropdownMenuLabel>{{ currentUser?.firstname }}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <button @click="handleLogout" class="">Logout</button>
