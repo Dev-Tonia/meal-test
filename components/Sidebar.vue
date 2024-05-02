@@ -54,6 +54,6 @@ ul .router-link-exact-active {
 }
 
 li a {
-  @apply hover:bg-secondary hover:border-primary hover:text-white;
+  @apply hover:bg-mt-secondary hover:mt-border-primary hover:text-white;
 }
 </style>
