@@ -3,7 +3,7 @@ const { tableTitles } = defineProps(["tableTitles"]);
 </script>
 
 <template>
-  <thead class="bg-secondary-50">
+  <thead class="bg-mt-secondary-50">
     <tr>
       <th scope="col" class="text-xs px-5 py-3">
         <div class="flex items-center">

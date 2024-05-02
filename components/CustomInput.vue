@@ -1,10 +1,16 @@
 <script setup lang="ts">
-const { label, placeholder, inputType } = defineProps([
+import { ErrorMessage } from "vee-validate";
+const { label, placeholder, inputType, modelValue, name } = defineProps([
   "label",
   "icon",
   "placeholder",
   "inputType",
+  "modelValue",
+  "name"
 ]);
+
+
+const emit = defineEmits(['update:modelValue', 'blur']);
 </script>
 <template>
   <div class="">
@@ -14,8 +20,10 @@ const { label, placeholder, inputType } = defineProps([
       <div>
         <slot></slot>
       </div>
-      <input :type="inputType" :placeholder="placeholder" class="in" />
+      <input :type="inputType" :placeholder="placeholder" class="input" :value="modelValue"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" @blur="$emit('blur')" />
     </div>
+    <ErrorMessage :name="name" class=" text-red-400 text-sm transition-all " />
   </div>
 </template>
 <style scoped>

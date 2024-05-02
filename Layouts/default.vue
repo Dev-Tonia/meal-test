@@ -1,14 +1,18 @@
 
 <script setup lang="ts">
+const store = useAuthStore()
 const route = useRoute()
-const isLoginRoute = ref(route.fullPath.includes("/login"))
+
+onMounted(() => {
+  store.getUserProfile()
+})
+// const isAuth = useCookie('userToken')
+// console.log("🚀 ~ isAuth:", isAuth)
 
 </script>
+
 <template>
-  <div v-if="isLoginRoute" class="min-h-screen ">
-    <slot />
-  </div>
-  <div v-else class="flex space-x-3">
+  <div class="flex space-x-3">
     <div class="sticky top-0 left-0 h-full">
       <Sidebar class="h-screen overflow-y-auto" />
     </div>
