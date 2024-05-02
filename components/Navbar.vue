@@ -1,24 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { openOverlay } = defineProps(["openOverlay"]);
+</script>
 
 <template>
   <nav class="px-8 py-3 mb-4 border">
     <div class="flex items-center justify-between">
-      <div class="flex space-x-4 basis-[60%]">
-        <CustomInput
-          class="w-full"
-          inputType="text"
-          label=""
-          placeholder="Search for products"
-        >
-          <Icon name="mi:search" size="24" class="text-gray-400" />
-        </CustomInput>
-        <BaseButton
-          class="text-text-1"
-          :btnData="{
-            iconName: 'bi:filter',
-            title: 'Filters',
-          }"
-        />
+      <div>
+        <div class="flex space-x-5 items-center md:hidden">
+          <Icon
+            name="ic:baseline-menu"
+            class="cursor-pointer"
+            size="40"
+            @click="openOverlay"
+          />
+          <NuxtLink to="/" class="block w-10">
+            <img src="../assets/imgs/Brand-Logo.png" class="w-full" alt="" />
+          </NuxtLink>
+        </div>
       </div>
       <div class="flex items-center space-x-2">
         <div
