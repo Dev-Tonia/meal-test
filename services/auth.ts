@@ -1,14 +1,14 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-const API_URL = 'https://api.mealtrips.com/api';
-
 class AuthService {
+
   async login(user: IUserLogin) {
+    const config = useRuntimeConfig()
     try {
 
       const response = await axios
-        .post(API_URL + '/login', {
+        .post(config.public.baseURL + '/login', {
           email: user.email,
           password: user.password
         });
@@ -21,8 +21,10 @@ class AuthService {
     }
   }
   async getUser() {
+    const config = useRuntimeConfig()
+
     try {
-      const response = await axios.get(API_URL + '/account/profile', {
+      const response = await axios.get(config.public.baseURL + '/account/profile', {
         headers: authHeader()
       });
       return response

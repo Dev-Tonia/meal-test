@@ -16,7 +16,7 @@ function openOverlay() {
 </script>
 
 <template>
-  <div class="flex space-x-3">
+  <div class="flex ">
     <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
     <Sidebar class="hidden md:block w-[300px]" />
     <!-- </div> -->
