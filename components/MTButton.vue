@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-secondary flex items-center space-x-3 pl-8 py-3 px-28 text-white border-l-[18px] rounded border-l-primary ">
+    class="bg-mt-secondary flex items-center space-x-3 pl-8 py-3 px-28 text-white border-l-[18px] rounded border-l-mt-primary ">
     <Icon :name="iconName" color="white" size="18px" />
     <span class="">{{ text }}</span>
   </button>
