@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import auth from '~/services/auth'
 // const router = useRouter()
 export const useAuthStore = defineStore('auth', () => {
-  const user= ref<IUser | null>(null)
+  const user: Ref<IUser | null> = ref(null)
   const isAuthenticated = ref(false)
 
 

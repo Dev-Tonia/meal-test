@@ -9,11 +9,10 @@ import {
   //@ts-ignore
 } from '@/components/ui/dropdown-menu';
 import { storeToRefs } from 'pinia';
-const { isAuthenticated, user } = storeToRefs(useAuthStore());
+const { user } = storeToRefs(useAuthStore());
 
 const store = useAuthStore()
 const currentUser = user
-const router = useRouter()
 
 const handleLogout = () => {
   store.logout()
@@ -48,7 +47,7 @@ const handleLogout = () => {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent class="w-24 bg-white z-[2]">
-              <DropdownMenuLabel>{{ currentUser?.firstname }}</DropdownMenuLabel>
+              <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <button @click="handleLogout" class="">Logout</button>

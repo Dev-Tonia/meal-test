@@ -20,7 +20,7 @@ const emit = defineEmits(['update:modelValue', 'blur']);
       <div>
         <slot></slot>
       </div>
-      <input :type="inputType" :placeholder="placeholder" class="input" :value="modelValue"
+      <input :type="inputType"  :placeholder="placeholder" class="input" :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" @blur="$emit('blur')" />
     </div>
     <ErrorMessage :name="name" class=" text-red-400 text-sm transition-all " />
