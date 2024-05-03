@@ -17,6 +17,10 @@ const currentUser = user
 const handleLogout = () => {
   store.logout()
 }
+const { openOverlay } = defineProps(["openOverlay"]);
+
+
+
 </script>
 
 <template>
@@ -30,30 +34,38 @@ const handleLogout = () => {
           iconName: 'bi:filter',
           title: 'Filters',
         }" />
-      </div>
-      <div class="flex items-center space-x-2">
-        <div class="bg-white border w-9 h-9 rounded-full flex items-center justify-center">
-          <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
+        <div>
+          <div class="flex space-x-5 items-center md:hidden">
+            <Icon name="ic:baseline-menu" class="cursor-pointer" size="40" @click="openOverlay" />
+            <NuxtLink to="/" class="block w-10">
+              <img src="../assets/imgs/Brand-Logo.png" class="w-full" alt="" />
+            </NuxtLink>
+          </div>
         </div>
-        <div class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
-          <img :src="currentUser?.photo ? currentUser?.photo : '../assets/imgs/UserAvater.png'" class="w-full" />
-        </div>
-        <div class="text-text-1">
+        <div class="flex items-center space-x-2">
+          <div class="bg-white border w-9 h-9 rounded-full flex items-center justify-center">
+            <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
+          </div>
+          <div class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
+            <img :src="currentUser?.photo ? currentUser?.photo : '../assets/imgs/UserAvater.png'" class="w-full" />
+          </div>
+          <div class="text-text-1">
 
-          <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-              <button> <span class="font-medium">Admin</span>
-                <Icon name="ri:arrow-down-s-line" class="text-2xl" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent class="w-24 bg-white z-[2]">
-              <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <button @click="handleLogout" class="">Logout</button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <button> <span class="font-medium">Admin</span>
+                  <Icon name="ri:arrow-down-s-line" class="text-2xl" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent class="w-24 bg-white z-[2]">
+                <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <button @click="handleLogout" class="">Logout</button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </div>

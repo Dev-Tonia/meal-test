@@ -1,5 +1,4 @@
 <template>
-  <!-- <NuxtLayout :name="layout"> -->
 
     <div class="grid grid-cols-2 ">
       <div
@@ -44,7 +43,6 @@
         </div>
       </div>
     </div>
-  <!-- </NuxtLayout> -->
 </template>
 <script setup>
 import { toTypedSchema } from '@vee-validate/zod';
