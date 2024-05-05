@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const store = useAuthStore()
+const store = useAuthStore();
 
 onMounted(() => {
-  store.getUserProfile()
-})
+  store.getUserProfile();
+});
 
 // toggle side bar on mobile screen
 const showOverlay = ref(false);
@@ -20,13 +20,16 @@ function openOverlay() {
     <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
     <Sidebar class="hidden md:block w-[300px]" />
     <!-- </div> -->
-    <MobileSidebar class="md:hidden" :closeOverlay="closeOverlay" :showOverlay="showOverlay" />
+    <MobileSidebar
+      class="md:hidden"
+      :closeOverlay="closeOverlay"
+      :showOverlay="showOverlay"
+    />
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
-      <div class="px-8 border">
+      <div class="px-7 border min-h-[80vh]">
         <slot />
       </div>
     </main>
-
   </div>
 </template>

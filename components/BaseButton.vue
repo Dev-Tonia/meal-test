@@ -14,9 +14,8 @@ const props = defineProps({
 const { btnData } = props;
 </script>
 <template>
-  <button
-    class="px-4 py-2.5 bg-white border border-[#D0D5DD] rounded-lg shadow shadow-[#1018280D]"
-  >
+  <!-- add background color and border where needed-->
+  <button class="px-4 py-2.5 shadow overflow-hidden shadow-[#1018280D] btn">
     <div
       class="flex gap-2 items-center"
       :class="{ 'justify-center': btnData.iconName === null }"
@@ -34,3 +33,8 @@ const { btnData } = props;
     </div>
   </button>
 </template>
+<style scoped>
+.btn {
+  border-radius: 8px;
+}
+</style>
