@@ -35,7 +35,7 @@ const navItems = [
           </NuxtLink>
         </div>
         <div class="py-10">
-          <ul class="px-5">
+          <ul class="">
             <li class="my-2.5" v-for="(navItem) in navItems" :key="navItem.title">
               <NuxtLink :to="navItem.path"
                 class="py-4 rounded-md text-mt-secondary-900 flex items-center px-10 border-l-[24px] border-white">
