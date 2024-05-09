@@ -4,21 +4,25 @@ const { data } = defineProps(["data"]);
 
 // Different table status
 enum Status {
-  Ongoing = "ongoing",
+  PendingPayment = "pending_payment",
   Success = "success",
   Active = "active",
   Unavailable = "unavailable",
-  Cancelled = "cancelled",
+  Rejected = "rejected",
+  Completed = "completed",
+  Accepted = "accepted",
 }
 // Different classes depending on the status
 const statusClasses = computed(() => ({
-  "text-[#14532D], bg-[#DCFCE7] px-2.5 py-[3px] rounded-full":
+  "text-[#14532D], bg-[#DCFCE7] px-2.5 py-[3px] rounded-full font-bold":
     data === Status.Active,
-  "text-[##5C2F0B], bg-[#FCF1E8] px-2.5 py-[3px] rounded-full":
+  "text-[##5C2F0B], bg-[#FCF1E8] px-2.5 py-[3px] rounded-full font-bold":
     data === Status.Unavailable,
-  "text-[#DC6F19]": data === Status.Ongoing,
-  "text-[#4CAF50]": data === Status.Success,
-  "text-[#CE3131]": data === Status.Cancelled,
+  "text-[#DC6F19] font-bold ": data === Status.PendingPayment,
+  "text-[#4CAF50] font-bold": data === Status.Success,
+  "text-[#49AE4C] font-bold": data === Status.Completed,
+  "text-[#CE3131] font-bold": data === Status.Rejected,
+  "text-[#14532D] font-bold": data === Status.Accepted,
 }));
 
 // const classObject = computed(() => ({

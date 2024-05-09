@@ -9,20 +9,20 @@ const {
   headers: authHeader(),
 });
 const {
-  data: txn,
-  pending: txnErr,
-  error: isTxn,
-} = useApiCall("/admin/payments", {
+  data: orders,
+  pending: ordersErr,
+  error: isOrders,
+} = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
 
 const satOverview = computed(() => {
   return overview.value.data;
 });
-const txnData = computed(() => {
-  return txn.value.data.data;
+const ordersData = computed(() => {
+  return orders.value.data.data;
 });
-console.log(satOverview);
+
 const headers = [
   "Date",
   "Order ID",
@@ -32,11 +32,23 @@ const headers = [
   "Distance (KM)",
   "Status",
 ];
+
+// formatting the date
+const dateAndTime = computed(() => {
+  const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z$/;
+  return ordersData.value.map((price) => {
+    if (pattern.test(price.order_date)) {
+      let date = price.order_date.slice(0, 10);
+      let time = price.order_date.slice(12, 19);
+      return `${date}:${time}`;
+    }
+  });
+});
 </script>
 
 <template>
   <pre>
-    {{ txnData }}
+     {{ dateAndTime }}
   </pre>
   <div class="flex flex-wrap justify-between items-center py-4">
     <div>
@@ -70,12 +82,12 @@ const headers = [
     </Cards-Card>
   </div>
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
-    <div class="font-bold text-[#393939] p-5">Transactions</div>
+    <div class="font-bold text-[#393939] p-5">Recent Orders</div>
     <ReusableTable :tableTitles="headers">
-      <TableRow v-for="(data, index) in txnData" :key="index">
+      <TableRow v-for="(data, index) in ordersData" :key="index">
         <TableCheckbox />
-        <TableData :data="data.created_at" />
-        <TableData :data="data.user_id" />
+        <TableData :data="dateAndTime[index]" />
+        <TableData :data="data.id" />
         <TableData :data="data.amount" />
         <TableData :data="data.reference" />
         <TableData data="60000" />
