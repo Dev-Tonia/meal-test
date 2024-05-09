@@ -49,7 +49,17 @@ const headers = [
 </script>
 
 <template>
-  <ReusableTable :tableData="vendorData" :tableTitles="vendorHeader" />
+  <ReusableTable :tableTitles="headers">
+    <TableRow v-for="(data, index) in items" :key="index">
+      <TableCheckbox />
+      <TableData :data="data.Name" />
+      <TableData :data="data.Email" />
+      <TableData :data="data.Phone" />
+      <TableData :data="data.NoOfRiders" />
+      <TableData :data="data.NoOfDeliveries" />
+      <TableData :data="data.Status" />
+    </TableRow>
+  </ReusableTable>
 </template>
 
 <style scoped></style>

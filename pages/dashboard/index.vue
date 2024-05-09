@@ -47,9 +47,6 @@ const dateAndTime = computed(() => {
 </script>
 
 <template>
-  <pre>
-     {{ dateAndTime }}
-  </pre>
   <div class="flex flex-wrap justify-between items-center py-4">
     <div>
       <p class="text-[#165049] font-light">Welcome, Favour</p>
