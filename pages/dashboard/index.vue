@@ -17,10 +17,10 @@ const {
 });
 
 const satOverview = computed(() => {
-  return overview.value.data;
+  return overview.value?.data;
 });
 const ordersData = computed(() => {
-  return orders.value.data.data;
+  return orders.value?.data.data;
 });
 
 const headers = [
@@ -80,6 +80,7 @@ const dateAndTime = computed(() => {
   </div>
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
     <div class="font-bold text-[#393939] p-5">Recent Orders</div>
+
     <ReusableTable :tableTitles="headers">
       <TableRow v-for="(data, index) in ordersData" :key="index">
         <TableCheckbox />
@@ -89,7 +90,7 @@ const dateAndTime = computed(() => {
         <TableData :data="data.reference" />
         <TableData data="60000" />
         <TableData data="800000000" />
-        <TableData :data="data.status" />
+        <TableData :data="data.status" class="text-center" />
       </TableRow>
     </ReusableTable>
   </div>

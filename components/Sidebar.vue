@@ -5,11 +5,6 @@ const navItems = [
     iconName: "streamline:dashboard-circle-solid",
     path: "/dashboard",
   },
-  {
-    title: "Merchants",
-    iconName: "iconoir:truck",
-    path: "/dashboard/merchants",
-  },
   { title: "Vendors", iconName: "maki:gift", path: "/dashboard/vendors" },
   { title: "Customers", iconName: "ph:user", path: "/dashboard/customers" },
   {

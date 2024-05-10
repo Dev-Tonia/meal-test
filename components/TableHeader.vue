@@ -16,7 +16,7 @@ const { tableTitles } = defineProps(["tableTitles"]);
         scope="col"
         v-for="(title, index) in tableTitles"
         :key="title"
-        class="p-4 text-xs font-medium text-[#667085] text-center uppercase lg:p-5"
+        class="p-4 text-xs font-medium text-[#667085] uppercase lg:p-5"
       >
         {{ title }}
       </th>
