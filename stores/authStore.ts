@@ -20,7 +20,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getUserProfile = async () => {
     const response = await auth.getUser()
-    console.log("🚀 ~ getUserProfile ~ response:", response)
     user.value = response.data.data
     console.log("🚀 ~ getUserProfile ~ user:", user?.value?.firstname)
   }

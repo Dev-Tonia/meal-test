@@ -27,7 +27,7 @@ function openOverlay() {
     />
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
-      <div class="px-7 border min-h-[80vh]">
+      <div class=" border min-h-[80vh]">
         <slot />
       </div>
     </main>

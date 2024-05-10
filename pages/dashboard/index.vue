@@ -64,7 +64,7 @@ const dateAndTime = computed(() => {
   <div class="flex gap-5">
     <Cards-Card :positive="false">
       <template #title>customers</template>
-      <template #price>{{ satOverview.customers_count }}</template>
+      <template #price>{{ satOverview?.customers_count }}</template>
       <template #statNumber>36</template>
     </Cards-Card>
     <Cards-Card variant="secondary">

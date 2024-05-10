@@ -110,118 +110,21 @@ export const headers = [
 ];
 
 export const vendorHeader = [
-  "Name",
-  "Email",
-  "Phone",
-  "Location",
-  "Orders Completred",
-  "reviews"
+  "Date",
+  "Order ID",
+  "Rider ID",
+  "Pick up time",
+  "Delivery time",
+  "Distance (KM)",
+  "Status",
+  "Actions"
+]
+export const paymentHeader = [
+  "Vendor Name",
+  "Vendor ID",
+  "Amount(N)",
+  "Date",
+  "Time",
+  "Status"
 ]
 
-
-export const vendorData = [{
-  "name": "San Diego Sedge",
-  "email": "gpeoples0@sogou.com",
-  "phone": "441-978-5759",
-  "location": "7 Crowley Street",
-  "orders_completed": 88,
-  "reviews": 11
-}, {
-  "name": "Manynerve Catchfly",
-  "email": "tskedge1@networksolutions.com",
-  "phone": "536-955-5479",
-  "location": "0215 Grasskamp Way",
-  "orders_completed": 19,
-  "reviews": 97
-}, {
-  "name": "Alpine Sheep Sorrel",
-  "email": "lchess2@live.com",
-  "phone": "318-196-6021",
-  "location": "520 Warner Trail",
-  "orders_completed": 44,
-  "reviews": 61
-}, {
-  "name": "Lescur's Pohlia Moss",
-  "email": "dcolin3@booking.com",
-  "phone": "323-397-5285",
-  "location": "6019 Hollow Ridge Place",
-  "orders_completed": 16,
-  "reviews": 64
-}, {
-  "name": "Wart Lichen",
-  "email": "cbranford4@addtoany.com",
-  "phone": "796-822-2009",
-  "location": "1 Elka Junction",
-  "orders_completed": 50,
-  "reviews": 10
-}, {
-  "name": "Iwatsukiella Moss",
-  "email": "rduthy5@slashdot.org",
-  "phone": "341-192-5973",
-  "location": "866 Mcguire Point",
-  "orders_completed": 28,
-  "reviews": 84
-}, {
-  "name": "Sweetgrass",
-  "email": "shutton6@twitpic.com",
-  "phone": "914-464-2914",
-  "location": "4626 Warbler Road",
-  "orders_completed": 89,
-  "reviews": 57
-}, {
-  "name": "Trumpet Tree",
-  "email": "mmoatt7@sbwire.com",
-  "phone": "283-570-9311",
-  "location": "30593 Arapahoe Park",
-  "orders_completed": 68,
-  "reviews": 49
-}, {
-  "name": "Erect Brachymenium Moss",
-  "email": "mmcelwee8@google.ru",
-  "phone": "268-188-1903",
-  "location": "3104 Hagan Street",
-  "orders_completed": 62,
-  "reviews": 54
-}, {
-  "name": "Common Tarweed",
-  "email": "anickerson9@home.pl",
-  "phone": "869-499-4996",
-  "location": "30 Pine View Terrace",
-  "orders_completed": 15,
-  "reviews": 85
-}, {
-  "name": "Hoary Mock Orange",
-  "email": "theppnera@wix.com",
-  "phone": "437-903-8839",
-  "location": "24346 Menomonie Street",
-  "orders_completed": 49,
-  "reviews": 17
-}, {
-  "name": "Bonpland's Croton",
-  "email": "yoxleyb@clickbank.net",
-  "phone": "315-578-0815",
-  "location": "0739 Waubesa Drive",
-  "orders_completed": 55,
-  "reviews": 17
-}, {
-  "name": "Forked Threeawn",
-  "email": "estaintonskinnc@nyu.edu",
-  "phone": "888-175-7830",
-  "location": "81935 Merry Circle",
-  "orders_completed": 11,
-  "reviews": 86
-}, {
-  "name": "Nodding Sage",
-  "email": "bskydalld@psu.edu",
-  "phone": "343-296-6895",
-  "location": "3 Scofield Avenue",
-  "orders_completed": 80,
-  "reviews": 34
-}, {
-  "name": "Ohio Buckeye",
-  "email": "rbrosolie@gravatar.com",
-  "phone": "236-274-0178",
-  "location": "17 Judy Center",
-  "orders_completed": 74,
-  "reviews": 27
-}]
