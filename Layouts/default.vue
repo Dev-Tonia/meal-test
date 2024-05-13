@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const store = useAuthStore();
-
+useHead({
+  title: 'Mealtrips',
+  meta: [
+    { name: 'description', content: 'Mealtrips Dashboard.' }
+  ]
+})
 onMounted(() => {
   store.getUserProfile();
 });
@@ -20,11 +25,7 @@ function openOverlay() {
     <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
     <Sidebar class="hidden md:block w-[300px]" />
     <!-- </div> -->
-    <MobileSidebar
-      class="md:hidden"
-      :closeOverlay="closeOverlay"
-      :showOverlay="showOverlay"
-    />
+    <MobileSidebar class="md:hidden" :closeOverlay="closeOverlay" :showOverlay="showOverlay" />
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
       <div class=" border min-h-[80vh]">

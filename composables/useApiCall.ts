@@ -4,7 +4,7 @@ export function useApiCall<T>(
   url: string | (() => string),
   options: UseFetchOptions<T> = {}
 ) {
-  return useFetch(`https://api.mealtrips.com/api${url}`, {
+  return useFetch(() => `https://api.mealtrips.com/api${url}`, {
     ...options,
   })
 }
