@@ -1,8 +1,10 @@
 <template>
   <div class=" relative">
+    <Transition name="fade">
     <Spinner v-if="pending" />
+  </Transition>
     <ReusableTable :table-titles="vendorHeader">
-      <TableRow v-for="(order, index) in ordersData.data" :key="index">
+      <TableRow v-for="(order, index) in ordersData?.data" :key="index">
         <TableCheckbox />
         <TableData :data="formatDate(order.order_date)" />
         <TableData :data="order.order_number" />
@@ -14,7 +16,7 @@
         <TableData :data="order.action ? order.action : 'N/A'" />
       </TableRow>
     </ReusableTable>
-    <MTPagination :total-pages="ordersData.meta.total" :itemsper-page="ordersData.meta.per_page" @goto="gotoPage"
+    <MTPagination :total-pages="ordersData?.meta?.total" :itemsper-page="ordersData?.meta?.per_page" @goto="gotoPage"
       @prev-page="prevPage" @next-page="nextPage" />
   </div>
 </template>
