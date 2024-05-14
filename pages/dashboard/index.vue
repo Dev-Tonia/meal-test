@@ -23,16 +23,6 @@ const ordersData = computed(() => {
   return orders.value?.data.data;
 });
 
-const headers = [
-  "Date",
-  "Order ID",
-  "Rider ID",
-  "Pickup time",
-  "Delivery time",
-  "Distance (KM)",
-  "Status",
-];
-
 // formatting the date
 const dateAndTime = computed(() => {
   const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z$/;
@@ -61,7 +51,22 @@ const dateAndTime = computed(() => {
     />
   </div>
 
-  <div class="flex gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <Cards-Card :positive="false">
+      <template #title>Today Sales</template>
+      <template #price>{{ satOverview?.today_sales }}</template>
+      <template #statNumber>36</template>
+    </Cards-Card>
+    <Cards-Card variant="secondary">
+      <template #title>Total Sales</template>
+      <template #price>{{ satOverview?.total_sales }}</template>
+      <template #statNumber>36</template>
+    </Cards-Card>
+    <Cards-Card :positive="false">
+      <template #title>Total Orders</template>
+      <template #price>{{ satOverview?.orders_count }}</template>
+      <template #statNumber>8</template>
+    </Cards-Card>
     <Cards-Card :positive="false">
       <template #title>customers</template>
       <template #price>{{ satOverview?.customers_count }}</template>
@@ -81,17 +86,36 @@ const dateAndTime = computed(() => {
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
     <div class="font-bold text-[#393939] p-5">Recent Orders</div>
 
-    <ReusableTable :tableTitles="headers">
+    <ReusableTable :tableTitles="overviewHeaders">
       <TableRow v-for="(data, index) in ordersData" :key="index">
         <TableCheckbox />
         <TableData :data="dateAndTime[index]" />
-        <TableData :data="data.id" />
-        <TableData :data="data.amount" />
-        <TableData :data="data.reference" />
-        <TableData data="60000" />
-        <TableData data="800000000" />
-        <TableData :data="data.status" class="text-center" />
+        <TableData :data="data.order_number" />
+        <TableData :data="data.rider_name ? data.rider_name : 'N/A'" />
+        <TableData
+          :data="data.dispatched_at ? formatTime(data.dispatched_at) : '--:--'"
+        />
+        <TableData
+          :data="data.completed_at ? formatTime(data.completed_at) : '--:--'"
+        />
+        <TableData :data="data.distance ? data.distance : '00(KM)'" />
+        <TableData :data="data.status ? data.status : 'N/A'" />
       </TableRow>
     </ReusableTable>
   </div>
 </template>
+<!-- 
+      <TableData :data="formatDate(order.order_date)" />
+        <TableData :data="order.order_number" />
+        <TableData :data="order.rider_name ? order.rider_name : 'N/A'" />
+        <TableData
+          :data="
+            order.dispatched_at ? formatTime(order.dispatched_at) : '--:--'
+          "
+        />
+        <TableData
+          :data="order.completed_at ? formatTime(order.completed_at) : '--:--'"
+        />
+        <TableData :data="order.distance ? order.distance : '00(KM)'" />
+        <TableData :data="order.status ? order.status : 'N/A'" />
+ -->
