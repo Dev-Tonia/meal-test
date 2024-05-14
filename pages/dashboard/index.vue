@@ -17,10 +17,10 @@ const {
 });
 
 const satOverview = computed(() => {
-  return overview.value.data;
+  return overview.value?.data;
 });
 const ordersData = computed(() => {
-  return orders.value.data.data;
+  return orders.value?.data.data;
 });
 
 const headers = [
@@ -47,9 +47,6 @@ const dateAndTime = computed(() => {
 </script>
 
 <template>
-  <pre>
-     {{ dateAndTime }}
-  </pre>
   <div class="flex flex-wrap justify-between items-center py-4">
     <div>
       <p class="text-[#165049] font-light">Welcome, Favour</p>
@@ -67,7 +64,7 @@ const dateAndTime = computed(() => {
   <div class="flex gap-5">
     <Cards-Card :positive="false">
       <template #title>customers</template>
-      <template #price>{{ satOverview.customers_count }}</template>
+      <template #price>{{ satOverview?.customers_count }}</template>
       <template #statNumber>36</template>
     </Cards-Card>
     <Cards-Card variant="secondary">
@@ -83,6 +80,7 @@ const dateAndTime = computed(() => {
   </div>
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
     <div class="font-bold text-[#393939] p-5">Recent Orders</div>
+
     <ReusableTable :tableTitles="headers">
       <TableRow v-for="(data, index) in ordersData" :key="index">
         <TableCheckbox />
@@ -92,7 +90,7 @@ const dateAndTime = computed(() => {
         <TableData :data="data.reference" />
         <TableData data="60000" />
         <TableData data="800000000" />
-        <TableData :data="data.status" />
+        <TableData :data="data.status" class="text-center" />
       </TableRow>
     </ReusableTable>
   </div>

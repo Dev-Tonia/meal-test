@@ -31,8 +31,8 @@ const statusClasses = computed(() => ({
 // }))
 </script>
 <template>
-  <td class="py-3 text-sm font-medium text-gray-900 whitespace-nowrap px-5">
-    <div :class="statusClasses" class="text-center">
+  <td class="py-3 text-sm text-left font-medium text-gray-900 whitespace-nowrap px-5">
+    <div :class="statusClasses">
       <slot>{{ data }}</slot>
     </div>
   </td>

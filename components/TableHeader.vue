@@ -5,7 +5,7 @@ const { tableTitles } = defineProps(["tableTitles"]);
 <template>
   <thead class="bg-mt-secondary-50">
     <tr>
-      <th scope="col" class="text-xs px-5 py-3">
+      <th scope="col" class="text-xs px-5  py-3">
         <div class="flex items-center">
           <CustomCheckbox />
           <label for="checkbox-all" class="sr-only">checkbox</label>
@@ -16,7 +16,7 @@ const { tableTitles } = defineProps(["tableTitles"]);
         scope="col"
         v-for="(title, index) in tableTitles"
         :key="title"
-        class="p-4 text-xs font-medium text-[#667085] text-center uppercase lg:p-5"
+        class="p-4 text-xs text-left font-medium text-[#667085] uppercase lg:p-5"
       >
         {{ title }}
       </th>
