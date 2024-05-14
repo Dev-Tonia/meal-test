@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[324px] p-7 shadow-md px-8 h-[120px] flex flex-col justify-between custom-radius"
+    class="p-7 shadow-md px-8 h-[120px] flex flex-col justify-between custom-radius"
     :class="[variant === 'primary' ? 'bg-[#FCF1E8]' : 'bg-[#E8EEED]']"
   >
     <!-- card  title -->
