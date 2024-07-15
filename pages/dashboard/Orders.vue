@@ -1,5 +1,19 @@
 <template>
-  <div class="relative">
+  <section class="py-4">
+    <PageTitle page-title="Orders" />
+
+    <div class="flex justify-between py-3">
+      <div class="flex space-x-4 basis-[60%]">
+        <CustomInput
+          class="w-full"
+          inputType="text"
+          label=""
+          placeholder="Search for orders"
+        >
+          <Icon name="mi:search" size="24" class="text-gray-400" />
+        </CustomInput>
+      </div>
+    </div>
     <Transition name="fade">
       <Spinner v-if="pending" />
     </Transition>
@@ -29,7 +43,7 @@
       @prev-page="prevPage"
       @next-page="nextPage"
     />
-  </div>
+  </section>
 </template>
 
 <script setup>

@@ -1,17 +1,18 @@
 <script setup>
+import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
 const {
   data: overview,
-  pending: overviewErr,
-  error: isOverview,
+  pending: isOverview,
+  error: overviewErr,
 } = useApiCall("/admin/dashboard/overview", {
   headers: authHeader(),
 });
 const {
   data: orders,
-  pending: ordersErr,
-  error: isOrders,
+  pending: isOrders,
+  error: ordersErr,
 } = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
@@ -38,10 +39,8 @@ const dateAndTime = computed(() => {
 
 <template>
   <div class="flex flex-wrap justify-between items-center py-4">
-    <div>
-      <p class="text-[#165049] font-light">Welcome, Favour</p>
-      <h6 class="font-bold text-xl text-[#393939]">Admin Dashboard</h6>
-    </div>
+    <PageTitle page-title="Admin Dashboard" />
+
     <BaseButton
       class="bg-text-1 text-white"
       :btnData="{
@@ -83,6 +82,7 @@ const dateAndTime = computed(() => {
       <template #statNumber>8</template>
     </Cards-Card>
   </div>
+
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
     <div class="font-bold text-[#393939] p-5">Recent Orders</div>
 
@@ -103,6 +103,10 @@ const dateAndTime = computed(() => {
       </TableRow>
     </ReusableTable>
   </div>
+
+  <Transition name="fade">
+    <Spinner v-if="isOverview || isOrders" />
+  </Transition>
 </template>
 <!-- 
       <TableData :data="formatDate(order.order_date)" />
