@@ -19,7 +19,7 @@
         class="absolute -left-20 rotate-[180deg] top-0"
       />
     </div>
-    <div class="flex px-12 md:px-24 xl:px-32 items-center">
+    <div class="flex py-10 md:py-0 px-12 md:px-24 xl:px-32 items-center">
       <div class="w-full">
         <div class="space-y-4 mb-12">
           <h2 class="text-4xl">Login</h2>
