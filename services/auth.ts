@@ -16,8 +16,14 @@ class AuthService {
       return response
 
     } catch (error) {
-      console.log(error);
-      throw error
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage = error.response.data.message || 'Invalid credentials';
+        return {
+          success: false,
+          message: errorMessage
+        }
+      }
+      throw error;
     }
   }
   async getUser() {
