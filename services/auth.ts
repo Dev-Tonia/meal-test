@@ -2,35 +2,34 @@ import axios from "axios";
 import authHeader from "./authHeader";
 
 class AuthService {
-
   async login(user: IUserLogin) {
-    const config = useRuntimeConfig()
+    const config = useRuntimeConfig();
     try {
-
-      const response = await axios
-        .post(config.public.baseURL + '/login', {
-          email: user.email,
-          password: user.password
-        });
-
-      return response
-
+      const response = await axios.post(config.public.baseURL + "/login", {
+        email: user.email,
+        password: user.password,
+      });
+      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      throw error
+      // console.log(error);
+      // throw error;
     }
   }
   async getUser() {
-    const config = useRuntimeConfig()
+    const config = useRuntimeConfig();
 
     try {
-      const response = await axios.get(config.public.baseURL + '/account/profile', {
-        headers: authHeader()
-      });
-      return response
+      const response = await axios.get(
+        config.public.baseURL + "/account/profile",
+        {
+          headers: authHeader(),
+        }
+      );
+      return response;
     } catch (error) {
       console.log(error);
-      throw error
+      throw error;
     }
   }
   //   register(user: IUserRegister) {
