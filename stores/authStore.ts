@@ -1,47 +1,47 @@
-import { defineStore } from 'pinia'
-import auth from '~/services/auth'
+import { defineStore } from "pinia";
+import auth from "~/services/auth";
 // const router = useRouter()
-export const useAuthStore = defineStore('auth', () => {
-  const user: Ref<IUser | null> = ref(null)
-  const isAuthenticated = ref(false)
-
-
+export const useAuthStore = defineStore("auth", () => {
+  const user: Ref<IUser | null> = ref(null);
+  const isAuthenticated = ref(false);
+  const authError: Ref<string> = ref("");
   const login = async (credentials: IUserLogin) => {
-    const response = await auth.login(credentials)
+    const response = await auth.login(credentials);
 
     if (response.data.success) {
-      const token = useCookie('userToken')
-      token.value = response.data.data.token
-      isAuthenticated.value = true
-      navigateTo('/dashboard')
+      const token = useCookie("userToken");
+      token.value = response.data.data.token;
+      isAuthenticated.value = true;
+      navigateTo("/dashboard");
+    } else {
+      console.log("error");
+      authError.value = response.data.message;
     }
-
-  }
+  };
 
   const getUserProfile = async () => {
-    const response = await auth.getUser()
-    user.value = response.data.data
-    console.log("🚀 ~ getUserProfile ~ user:", user?.value?.firstname)
-  }
+    const response = await auth.getUser();
+    user.value = response.data.data;
+    console.log("🚀 ~ getUserProfile ~ user:", user?.value?.firstname);
+  };
   const logout = async () => {
-    const token = useCookie('userToken')
-    token.value = null
-    isAuthenticated.value = false
-    user.value = null
-    navigateTo('/')
-  }
+    const token = useCookie("userToken");
+    token.value = null;
+    isAuthenticated.value = false;
+    user.value = null;
+    navigateTo("/");
+  };
 
   return {
     user,
     login,
     isAuthenticated,
     logout,
-    getUserProfile
-
-  }
-})
-
+    getUserProfile,
+    authError,
+  };
+});
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
 }
