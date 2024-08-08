@@ -66,60 +66,60 @@ const pagination = (page) => {
 </script>
 
 <template>
-  <div>
-    <p class="text-[#165049] font-light">Welcome, Favour</p>
-    <h6 class="font-bold text-xl text-[#393939]">Vendors</h6>
-  </div>
-  <div class="flex justify-between py-3">
-    <div class="flex space-x-4 basis-[60%]">
-      <CustomInput
-        class="w-full"
-        inputType="text"
-        label=""
-        placeholder="Search for products"
-      >
-        <Icon name="mi:search" size="24" class="text-gray-400" />
-      </CustomInput>
+  <section class="py-4">
+    <PageTitle page-title="Vendors" />
+
+    <div class="flex justify-between py-3">
+      <div class="flex space-x-4 basis-[60%]">
+        <CustomInput
+          class="w-full"
+          inputType="text"
+          label=""
+          placeholder="Search for vendor"
+        >
+          <Icon name="mi:search" size="24" class="text-gray-400" />
+        </CustomInput>
+        <BaseButton
+          class="text-text-1"
+          :btnData="{
+            iconName: 'mdi:file-export-outline',
+            title: 'Export',
+          }"
+          @click="downloadCSV"
+        />
+      </div>
       <BaseButton
-        class="text-text-1"
+        class="text-mt-secondary bg-mt-secondary/25"
         :btnData="{
-          iconName: 'mdi:file-export-outline',
-          title: 'Export',
+          iconName: 'mynaui:envelope',
+          title: 'Send Broadcast',
         }"
-        @click="downloadCSV"
       />
     </div>
-    <BaseButton
-      class="text-mt-secondary bg-mt-secondary/25"
-      :btnData="{
-        iconName: 'mynaui:envelope',
-        title: 'Send Broadcast',
-      }"
-    />
-  </div>
-  <Transition name="fade">
-    <Spinner v-if="isVendor" />
-  </Transition>
+    <Transition name="fade">
+      <Spinner v-if="isVendor" />
+    </Transition>
 
-  <ReusableTable :tableTitles="vendorHeader">
-    <TableRow v-for="(data, index) in allVendor" :key="index">
-      <TableCheckbox />
-      <TableData :data="data.profile?.business_name" />
-      <TableData :data="data.email" />
-      <TableData :data="data.phone" />
-      <TableData :data="data.address" />
-      <TableData :data="data.meals_count" />
-      <TableData :data="data.is_online === 1 ? 'online' : 'offline'" />
-    </TableRow>
-  </ReusableTable>
-  <div class="py-4">
-    <MTPagination
-      :total-pages="vendor?.meta?.total"
-      :itemsPerPage="vendor?.meta?.per_page"
-      @goto="pagination"
-      @prev-page="pagination"
-      @next-page="pagination"
-    />
-  </div>
+    <ReusableTable :tableTitles="vendorHeader">
+      <TableRow v-for="(data, index) in allVendor" :key="index">
+        <TableCheckbox />
+        <TableData :data="data.profile?.business_name" />
+        <TableData :data="data.email" />
+        <TableData :data="data.phone" />
+        <TableData :data="data.address" />
+        <TableData :data="data.meals_count" />
+        <TableData :data="data.is_online === 1 ? 'online' : 'offline'" />
+      </TableRow>
+    </ReusableTable>
+    <div class="py-4">
+      <MTPagination
+        :total-pages="vendor?.meta?.total"
+        :itemsPerPage="vendor?.meta?.per_page"
+        @goto="pagination"
+        @prev-page="pagination"
+        @next-page="pagination"
+      />
+    </div>
+  </section>
 </template>
 <style scoped></style>

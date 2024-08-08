@@ -122,7 +122,7 @@ export const headers = [
   "No of Deliveries",
   "Status",
 ];
-const overviewHeaders = [
+export const overviewHeaders = [
   "Date",
   "Order ID",
   "Rider ID",
