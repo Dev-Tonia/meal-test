@@ -1,37 +1,28 @@
 <script setup>
+import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
 const {
   data: overview,
-  pending: overviewErr,
-  error: isOverview,
+  pending: isOverview,
+  error: overviewErr,
 } = useApiCall("/admin/dashboard/overview", {
   headers: authHeader(),
 });
 const {
   data: orders,
-  pending: ordersErr,
-  error: isOrders,
+  pending: isOrders,
+  error: ordersErr,
 } = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
-
+console.log(overview.value);
 const satOverview = computed(() => {
   return overview.value?.data;
 });
 const ordersData = computed(() => {
   return orders.value?.data.data;
 });
-
-const headers = [
-  "Date",
-  "Order ID",
-  "Rider ID",
-  "Pickup time",
-  "Delivery time",
-  "Distance (KM)",
-  "Status",
-];
 
 // formatting the date
 const dateAndTime = computed(() => {
@@ -48,10 +39,8 @@ const dateAndTime = computed(() => {
 
 <template>
   <div class="flex flex-wrap justify-between items-center py-4">
-    <div>
-      <p class="text-[#165049] font-light">Welcome, Favour</p>
-      <h6 class="font-bold text-xl text-[#393939]">Admin Dashboard</h6>
-    </div>
+    <PageTitle page-title="Admin Dashboard" />
+
     <BaseButton
       class="bg-text-1 text-white"
       :btnData="{
@@ -61,7 +50,22 @@ const dateAndTime = computed(() => {
     />
   </div>
 
-  <div class="flex gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <Cards-Card :positive="false">
+      <template #title>Today Sales</template>
+      <template #price>{{ satOverview?.today_sales }}</template>
+      <template #statNumber>36</template>
+    </Cards-Card>
+    <Cards-Card variant="secondary">
+      <template #title>Total Sales</template>
+      <template #price>{{ satOverview?.total_sales }}</template>
+      <template #statNumber>36</template>
+    </Cards-Card>
+    <Cards-Card :positive="false">
+      <template #title>Total Orders</template>
+      <template #price>{{ satOverview?.orders_count }}</template>
+      <template #statNumber>8</template>
+    </Cards-Card>
     <Cards-Card :positive="false">
       <template #title>customers</template>
       <template #price>{{ satOverview?.customers_count }}</template>
@@ -69,29 +73,38 @@ const dateAndTime = computed(() => {
     </Cards-Card>
     <Cards-Card variant="secondary">
       <template #title>Vendors</template>
-      <template #price>{{ satOverview.vendors_count }}</template>
+      <template #price>{{ satOverview?.vendors_count }}</template>
       <template #statNumber>36</template>
     </Cards-Card>
     <Cards-Card :positive="false">
       <template #title>riders</template>
-      <template #price>{{ satOverview.riders_count }}</template>
+      <template #price>{{ satOverview?.riders_count }}</template>
       <template #statNumber>8</template>
     </Cards-Card>
   </div>
+
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">
     <div class="font-bold text-[#393939] p-5">Recent Orders</div>
 
-    <ReusableTable :tableTitles="headers">
+    <ReusableTable :tableTitles="overviewHeaders">
       <TableRow v-for="(data, index) in ordersData" :key="index">
         <TableCheckbox />
         <TableData :data="dateAndTime[index]" />
-        <TableData :data="data.id" />
-        <TableData :data="data.amount" />
-        <TableData :data="data.reference" />
-        <TableData data="60000" />
-        <TableData data="800000000" />
-        <TableData :data="data.status" class="text-center" />
+        <TableData :data="data.order_number" />
+        <TableData :data="data.rider_name ? data.rider_name : 'N/A'" />
+        <TableData
+          :data="data.dispatched_at ? formatTime(data.dispatched_at) : '--:--'"
+        />
+        <TableData
+          :data="data.completed_at ? formatTime(data.completed_at) : '--:--'"
+        />
+        <TableData :data="data.distance ? data.distance : '00(KM)'" />
+        <TableData :data="data.status ? data.status : 'N/A'" />
       </TableRow>
     </ReusableTable>
   </div>
+
+  <Transition name="fade">
+    <Spinner v-if="isOverview || isOrders" />
+  </Transition>
 </template>

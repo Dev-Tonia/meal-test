@@ -5,68 +5,75 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
   //@ts-ignore
-} from '@/components/ui/dropdown-menu';
-import { storeToRefs } from 'pinia';
+} from "@/components/ui/dropdown-menu";
+import { storeToRefs } from "pinia";
 const { user } = storeToRefs(useAuthStore());
 
-const store = useAuthStore()
-const currentUser = user
+const store = useAuthStore();
+const currentUser = user;
 
 const handleLogout = () => {
-  store.logout()
-}
+  store.logout();
+};
 const { openOverlay } = defineProps(["openOverlay"]);
 </script>
 
 <template>
   <nav class="px-8 py-3 mb-4 border">
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="flex space-x-5 items-center md:hidden">
-            <Icon
-              name="ic:baseline-menu"
-              class="cursor-pointer"
-              size="40"
-              @click="openOverlay"
-            />
-            <NuxtLink to="/" class="block w-10">
-              <img src="../assets/imgs/Brand-Logo.png" class="w-full" alt="" />
-            </NuxtLink>
-          </div>
-        </div>
-        <div class="flex items-center space-x-2">
-          <div
-            class="bg-white border w-9 h-9 rounded-full flex items-center justify-center"
-          >
-            <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
-          </div>
-          <div
-            class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
-          >
-            <img :src="currentUser?.photo ? currentUser?.photo : '../assets/imgs/UserAvater.png'" class="w-full" />
-          </div>
-          <div class="text-text-1">
-
-            <DropdownMenu>
-              <DropdownMenuTrigger as-child>
-                <button> <span class="font-medium">Admin</span>
-                  <Icon name="ri:arrow-down-s-line" class="text-2xl" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent class="w-24 bg-white z-[2]">
-                <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <button @click="handleLogout" class="">Logout</button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="flex space-x-5 items-center md:hidden">
+          <Icon
+            name="ic:baseline-menu"
+            class="cursor-pointer"
+            size="40"
+            @click="openOverlay"
+          />
+          <NuxtLink to="/" class="block w-10">
+            <img src="../assets/imgs/Brand-Logo.png" class="w-full" alt="" />
+          </NuxtLink>
         </div>
       </div>
-    </nav>
+      <div class="flex items-center space-x-2">
+        <div
+          class="bg-white border w-9 h-9 rounded-full flex items-center justify-center"
+        >
+          <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
+        </div>
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
+        >
+          <img
+            :src="
+              currentUser?.photo
+                ? currentUser?.photo
+                : '../assets/imgs/UserAvater.png'
+            "
+            class="w-full h-full"
+          />
+        </div>
+        <div class="text-text-1">
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <button>
+                <span class="font-medium">Admin</span>
+                <Icon name="ri:arrow-down-s-line" class="text-2xl" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent class="w-24 bg-white z-[2]">
+              <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <button @click="handleLogout" class="">Logout</button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <style scoped></style>
