@@ -1,3 +1,50 @@
+<script setup>
+import { toTypedSchema } from "@vee-validate/zod";
+import { Form, useForm } from "vee-validate";
+import { z } from "zod";
+definePageMeta({
+  layout: "login",
+});
+// const layout = 'login'
+const loading = ref(false);
+const store = useAuthStore();
+const router = useRouter();
+const schema = toTypedSchema(
+  z.object({
+    email: z
+      .string({
+        required_error: "Email is required",
+      })
+      .email({
+        message: "Email is invalid",
+      }),
+    password: z
+      .string({
+        required_error: "Password is required",
+      })
+      .min(6, {
+        message: "Password must be at least 6 characters",
+      }),
+  })
+);
+
+const { defineField, handleSubmit } = useForm({
+  validationSchema: schema,
+});
+
+const [email, emailProps] = defineField("email");
+const [password, passwordProps] = defineField("password");
+
+const handleLogin = async (data) => {
+  try {
+    store.login(data);
+    router.push("/dashboard");
+  } catch (error) {
+    console.log("🚀 ~ handleLogin ~ error:", error);
+  }
+};
+</script>
+
 <template>
   <div class="text-red-500">{{ store.authError }}</div>
   <div class="grid md:grid-cols-2">
@@ -67,51 +114,5 @@
     </div>
   </div>
 </template>
-<script setup>
-import { toTypedSchema } from "@vee-validate/zod";
-import { Form, useForm } from "vee-validate";
-import { z } from "zod";
-definePageMeta({
-  layout: "login",
-});
-// const layout = 'login'
-const loading = ref(false);
-const store = useAuthStore();
-const router = useRouter();
-const schema = toTypedSchema(
-  z.object({
-    email: z
-      .string({
-        required_error: "Email is required",
-      })
-      .email({
-        message: "Email is invalid",
-      }),
-    password: z
-      .string({
-        required_error: "Password is required",
-      })
-      .min(6, {
-        message: "Password must be at least 6 characters",
-      }),
-  })
-);
-
-const { defineField, handleSubmit } = useForm({
-  validationSchema: schema,
-});
-
-const [email, emailProps] = defineField("email");
-const [password, passwordProps] = defineField("password");
-
-const handleLogin = async (data) => {
-  try {
-    store.login(data);
-    router.push("/");
-  } catch (error) {
-    console.log("🚀 ~ handleLogin ~ error:", error);
-  }
-};
-</script>
 
 <style lang="scss" scoped></style>

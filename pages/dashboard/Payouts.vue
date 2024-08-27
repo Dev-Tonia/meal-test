@@ -44,10 +44,6 @@ const { data, pending, error } = await useApiCall("/admin/payments", {
 const allPayments = computed(() => {
   return data.value.data.data;
 });
-
-// onMounted(() => {
-//   console.log(allPayments.value);
-// });
 </script>
 
 <style scoped></style>
