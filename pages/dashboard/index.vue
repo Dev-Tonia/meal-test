@@ -16,7 +16,7 @@ const {
 } = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
-
+console.log(overview.value);
 const satOverview = computed(() => {
   return overview.value?.data;
 });
@@ -73,12 +73,12 @@ const dateAndTime = computed(() => {
     </Cards-Card>
     <Cards-Card variant="secondary">
       <template #title>Vendors</template>
-      <template #price>{{ satOverview.vendors_count }}</template>
+      <template #price>{{ satOverview?.vendors_count }}</template>
       <template #statNumber>36</template>
     </Cards-Card>
     <Cards-Card :positive="false">
       <template #title>riders</template>
-      <template #price>{{ satOverview.riders_count }}</template>
+      <template #price>{{ satOverview?.riders_count }}</template>
       <template #statNumber>8</template>
     </Cards-Card>
   </div>
@@ -108,18 +108,3 @@ const dateAndTime = computed(() => {
     <Spinner v-if="isOverview || isOrders" />
   </Transition>
 </template>
-<!-- 
-      <TableData :data="formatDate(order.order_date)" />
-        <TableData :data="order.order_number" />
-        <TableData :data="order.rider_name ? order.rider_name : 'N/A'" />
-        <TableData
-          :data="
-            order.dispatched_at ? formatTime(order.dispatched_at) : '--:--'
-          "
-        />
-        <TableData
-          :data="order.completed_at ? formatTime(order.completed_at) : '--:--'"
-        />
-        <TableData :data="order.distance ? order.distance : '00(KM)'" />
-        <TableData :data="order.status ? order.status : 'N/A'" />
- -->

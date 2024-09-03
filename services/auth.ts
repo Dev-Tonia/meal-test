@@ -11,10 +11,7 @@ class AuthService {
       });
       console.log(response);
       return response;
-    } catch (error) {
-      // console.log(error);
-      // throw error;
-    }
+    } catch (error) {}
   }
   async getUser() {
     const config = useRuntimeConfig();
@@ -32,19 +29,6 @@ class AuthService {
       throw error;
     }
   }
-  //   register(user: IUserRegister) {
-  //     try {
-  //       return axios.post(API_URL + 'signup', {
-  //         firstname: user.firstname,
-  //         lastname: user.lastname,
-  //         email: user.email,
-  //         role: user.role,
-  //         password: user.password
-  //       })
-  //     } catch (error) {
-  //       throw error;
-  //     };
-  //   }
 }
 
 export default new AuthService();
