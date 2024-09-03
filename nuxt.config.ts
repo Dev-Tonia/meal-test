@@ -1,7 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["nuxt-icon", "nuxt-svgo", "@nuxt/image", "@pinia/nuxt", "shadcn-nuxt"],
+  modules: [
+    "nuxt-icon",
+    "nuxt-svgo",
+    "@nuxt/image",
+    "@pinia/nuxt",
+    "shadcn-nuxt",
+  ],
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   postcss: {
@@ -14,16 +20,18 @@ export default defineNuxtConfig({
     /**
      * Prefix for all the imported component
      */
-    prefix: '',
+    prefix: "",
     /**
      * Directory that the component lives in.
      * @default "./components/ui"
      */
-    componentDir: './components/ui'
+    componentDir: "./components/ui",
   },
   runtimeConfig: {
     public: {
-      baseURL: process.env.NUXT_BASE_URL ?? 'https://api.mealtrips.com/api',
-    }
-  }
+      baseURL:
+        import.meta.env.NUXT_PUBLIC_BASE_URL ??
+        "https://api-staging.mealtrips.com/api",
+    },
+  },
 });

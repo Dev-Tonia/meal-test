@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen ">
+  <div class="h-screen overflow-hidden ">
     <slot />
   </div>
 </template>
+
+
