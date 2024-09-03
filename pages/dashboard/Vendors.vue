@@ -75,8 +75,6 @@ const pagination = (page) => {
           class="w-full"
           inputType="text"
           label=""
-          `1`
-          vfZ`
           placeholder="Search for vendor"
         >
           <Icon name="mi:search" size="24" class="text-gray-400" />
