@@ -5,8 +5,6 @@ import { z } from "zod";
 definePageMeta({
   layout: "login",
 });
-// const layout = 'login'
-const loading = ref(false);
 const store = useAuthStore();
 const router = useRouter();
 const schema = toTypedSchema(
@@ -46,7 +44,6 @@ const handleLogin = async (data) => {
 </script>
 
 <template>
-  <div class="text-red-500">{{ store.authError }}</div>
   <div class="grid md:grid-cols-2">
     <div
       class="bg-gradient-to-br relative p-24 font-bold hidden xl:p-32 md:flex flex-col justify-between from-[#FF792E] min-h-screen to-[#FB9600]"

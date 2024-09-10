@@ -1,6 +1,6 @@
-<template>
+ <template>
   <button
-    class="bg-mt-secondary flex items-center space-x-3 pl-8 py-3 max-w-full text-white border-l-[18px] rounded border-l-mt-primary"
+    class="bg-mt-secondary w-full justify-center flex items-center space-x-3  py-3 max-w-full text-white border-l-[18px] rounded border-l-mt-primary"
   >
     <div>
       <Icon :name="iconName" color="white" size="18px" />
@@ -20,6 +20,4 @@ const props = defineProps({
     required: false,
   },
 });
-
-const { text } = props;
 </script>
