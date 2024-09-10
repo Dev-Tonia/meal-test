@@ -1,14 +1,22 @@
 <script setup>
 import { toTypedSchema } from "@vee-validate/zod";
 import { Form, useForm } from "vee-validate";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { Toaster } from "@/components/ui/toast";
+
 import { z } from "zod";
+
 definePageMeta({
   layout: "login",
 });
+
+const { toast } = useToast();
+
 // const layout = 'login'
 const loading = ref(false);
 const store = useAuthStore();
 const router = useRouter();
+const description = ref("");
 const schema = toTypedSchema(
   z.object({
     email: z
@@ -35,18 +43,24 @@ const { defineField, handleSubmit } = useForm({
 const [email, emailProps] = defineField("email");
 const [password, passwordProps] = defineField("password");
 
+function showToast() {
+  toast({
+    description: `${store.authMessage}`,
+    className:
+      "bg-red-500 text-white px-4 py-2 relative rounded-md !flex !items-center",
+  });
+}
+
 const handleLogin = async (data) => {
-  try {
-    store.login(data);
-    router.push("/dashboard");
-  } catch (error) {
-    console.log("🚀 ~ handleLogin ~ error:", error);
-  }
+  await store.login(data);
+  router.push("/dashboard");
+  showToast();
 };
 </script>
 
 <template>
   <div class="text-red-500">{{ store.authError }}</div>
+  <Toaster class="bg-mt-primary" />
   <div class="grid md:grid-cols-2">
     <div
       class="bg-gradient-to-br relative p-24 font-bold hidden xl:p-32 md:flex flex-col justify-between from-[#FF792E] min-h-screen to-[#FB9600]"
@@ -67,11 +81,15 @@ const handleLogin = async (data) => {
         class="absolute -left-20 rotate-[180deg] top-0"
       />
     </div>
-    <div class="flex py-10 md:py-0 px-12 md:px-24 xl:px-32 items-center">
+    <div
+      class="flex py-10 md:py-0 px-8 md:px-12 lg:px-24 xl:px-32 items-center"
+    >
       <div class="w-full">
         <div class="space-y-4 mb-12">
           <h2 class="text-4xl">Login</h2>
-          <p class="text-sm text-gray-600">Login to your account</p>
+          <p class="text-sm text-gray-600" @click="showToast">
+            Login to your account
+          </p>
         </div>
         <form :onSubmit="handleSubmit(handleLogin)" class="space-y-10">
           <div class="space-y-4">
@@ -106,7 +124,7 @@ const handleLogin = async (data) => {
             </div>
           </div>
           <MTButton
-            :text="store.isLoading ? 'loading...' : 'Log in'"
+            :text="loading ? 'loading...' : 'Log in'"
             iconName="bxl:codepen"
           />
         </form>

@@ -1,23 +1,25 @@
 import { defineStore } from "pinia";
 import auth from "~/services/auth";
 // const router = useRouter()
-export const useAuthStore = defineStore('auth', () => {
-  const user: Ref<IUser | null> = ref(null)
-  const isAuthenticated = ref(false)
-  const authMessage = ref('')
+export const useAuthStore = defineStore("auth", () => {
+  const user: Ref<IUser | null> = ref(null);
+  const isAuthenticated = ref(false);
+  const authMessage = ref("");
+  const isLoading = ref(false);
 
   const login = async (credentials: IUserLogin) => {
     const response = await auth.login(credentials);
-
-    if (response?.data.success) {
-      const token = useCookie("userToken");
-      token.value = response.data.data.token;
-      isAuthenticated.value = true;
-      navigateTo("/dashboard");
-    } else {
-      console.log("error");
-      // authError.value = response.data.message;
+    if (!response?.data?.success) {
+      authMessage.value = response.response.data.message;
+      return;
     }
+
+    const token = useCookie("userToken");
+    token.value = response?.data.data.token;
+    isAuthenticated.value = true;
+    authMessage.value = response.data.message;
+
+    navigateTo("/dashboard");
   };
 
   const getUserProfile = async () => {
