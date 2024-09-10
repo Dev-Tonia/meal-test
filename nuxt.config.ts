@@ -34,4 +34,11 @@ export default defineNuxtConfig({
         "https://api-staging.mealtrips.com/api",
     },
   },
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        baseUrl: ".",
+      },
+    },
+  },
 });
