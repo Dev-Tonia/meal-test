@@ -9,9 +9,10 @@ class AuthService {
         email: user.email,
         password: user.password,
       });
-      console.log(response);
       return response;
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
   }
   async getUser() {
     const config = useRuntimeConfig();
@@ -25,8 +26,7 @@ class AuthService {
       );
       return response;
     } catch (error) {
-      console.log(error);
-      throw error;
+      return error;
     }
   }
 }
