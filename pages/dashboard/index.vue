@@ -2,6 +2,11 @@
 import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
+
+const { toggleModal } = useGlobalStore()
+const { openModal, addAdminStatus } = storeToRefs(useGlobalStore())
+
+
 const {
   data: overview,
   pending: isOverview,
@@ -9,7 +14,6 @@ const {
 } = useApiCall("/admin/dashboard/overview", {
   headers: authHeader(),
 });
-
 const {
   data: orders,
   pending: isOrders,
@@ -17,8 +21,6 @@ const {
 } = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
-
-console.log(overview.value);
 const satOverview = computed(() => {
   return overview.value?.data;
 });
@@ -37,19 +39,24 @@ const dateAndTime = computed(() => {
     }
   });
 });
+
 </script>
 
 <template>
   <div class="flex flex-wrap justify-between items-center py-4">
-    <PageTitle page-title="Admin Dashboard" />
 
-    <BaseButton
-      class="bg-text-1 text-white"
-      :btnData="{
-        iconName: 'ic:round-add',
-        title: 'Add Admin',
-      }"
-    />
+    <PageTitle page-title="Admin Dashboard" />
+    <Modal v-motion :initial="{ opacity: 0, scale: 0.9 }" :visible="{ opacity: 1, scale: 1 }" v-if="openModal">
+      <add-admin v-if="addAdminStatus"></add-admin>
+      <modal-message v-else v-motion :initial="{ opacity: 0, scale: 0.9 }"
+        :visible="{ opacity: 1, scale: 1 }"></modal-message>
+    </Modal>
+
+    <BaseButton @click="toggleModal()" class="bg-text-1 text-white" :btnData="{
+      iconName: 'ic:round-add',
+      title: 'Add Admin',
+    }" />
+
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -94,19 +101,15 @@ const dateAndTime = computed(() => {
         <TableData :data="dateAndTime[index]" />
         <TableData :data="data.order_number" />
         <TableData :data="data.rider_name ? data.rider_name : 'N/A'" />
-        <TableData
-          :data="data.dispatched_at ? formatTime(data.dispatched_at) : '--:--'"
-        />
-        <TableData
-          :data="data.completed_at ? formatTime(data.completed_at) : '--:--'"
-        />
+        <TableData :data="data.dispatched_at ? formatTime(data.dispatched_at) : '--:--'" />
+        <TableData :data="data.completed_at ? formatTime(data.completed_at) : '--:--'" />
         <TableData :data="data.distance ? data.distance : '00(KM)'" />
         <TableData :data="data.status ? data.status : 'N/A'" />
       </TableRow>
     </ReusableTable>
   </div>
 
-  <Transition name="fade">
+  <!-- <Transition name="fade">
     <Spinner v-if="isOverview || isOrders" />
-  </Transition>
+  </Transition> -->
 </template>

@@ -1,49 +1,96 @@
+import axios from "axios";
 import { defineStore } from "pinia";
-import auth from "~/services/auth";
-// const router = useRouter()
-export const useAuthStore = defineStore("auth", () => {
-  const user: Ref<IUser | null> = ref(null);
-  const isAuthenticated = ref(false);
-  const authMessage = ref("");
-  const isLoading = ref(false);
+import authHeader from "~/services/authHeader";
+import type { AdminProfileInterface, UserPayloadInterface } from "~/types/user";
 
-  const login = async (credentials: IUserLogin) => {
-    const response = await auth.login(credentials);
-    if (!response?.data?.success) {
-      authMessage.value = response.response.data.message;
-      return;
+
+
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    authenticated: false,
+    loading: false,
+    currentUser: null as AdminProfileInterface | null,
+  }),
+  actions: {
+    async authenticateUser({ email, password }: UserPayloadInterface) {
+
+      this.loading = true;
+      try {
+        const response = await axios.post('https://api-staging.mealtrips.com/api/login', {
+          email,
+          password
+        }, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = response.data.data;
+
+        if (data) {
+          const token = useCookie('token'); // useCookie new hook in nuxt 3
+          token.value = data.token; // set token to cookie
+          this.authenticated = true; // set authenticated  state value to true
+          setTimeout(() => {
+            navigateTo("/dashboard");
+          }, 2000);
+        }
+        return {
+          message: 'User authenticated successfully',
+          success: true,
+        }
+      }
+      catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          return {
+            message: error.response.data.message,
+            success: false,
+          }
+        } else {
+          return {
+            message: 'An unexpected error occurred',
+            success: false,
+          }
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+    logUserOut() {
+      const token = useCookie('token'); // useCookie new hook in nuxt 3
+      this.authenticated = false; // set authenticated  state value to false
+      token.value = null; // clear the token cookie
+      navigateTo("/");
+
+    },
+    async getCurrentUser() {
+      this.loading = true;
+      try {
+        const res = await axios.get(`https://api-staging.mealtrips.com/api/admin/profile`, {
+          headers: authHeader(),
+        });
+        this.currentUser = res.data.data;
+        return {
+          message: 'User authenticated successfully',
+          success: true,
+        }
+      }
+      catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          return {
+            message: error.response.data.message,
+            success: false,
+          }
+        } else {
+          return {
+            message: 'An unexpected error occurred',
+            success: false,
+          }
+        }
+      }
+      finally {
+        this.loading = false;
+      }
     }
+  }
 
-    const token = useCookie("userToken");
-    token.value = response?.data.data.token;
-    isAuthenticated.value = true;
-    authMessage.value = response.data.message;
-
-    navigateTo("/dashboard");
-  };
-
-  const getUserProfile = async () => {
-    const response = await auth.getUser();
-    user.value = response.data.data;
-    console.log("🚀 ~ getUserProfile ~ user:", user?.value?.firstname);
-  };
-  const logout = async () => {
-    const token = useCookie("userToken");
-    token.value = null;
-    isAuthenticated.value = false;
-    user.value = null;
-    navigateTo("/");
-  };
-
-  return {
-    user,
-    authMessage,
-    login,
-    isAuthenticated,
-    logout,
-    getUserProfile,
-    // authError,
-  };
 });
 
 if (import.meta.hot) {

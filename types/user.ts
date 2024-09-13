@@ -1,4 +1,4 @@
-interface IUserLogin {
+export interface UserPayloadInterface {
   email: string;
   password: string;
 }
@@ -34,4 +34,28 @@ interface IUser {
   profile: {
     user_id: string;
   };
+}
+
+export interface AdminProfileInterface {
+  id: number;
+  email: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  email_verification_status: boolean;
+  role: string;
+  dob: string | null;
+  gender: string | null;
+  phone: string | null;
+  photo: string;
+  longitude: number | null;
+  latitude: number | null;
+  address: string | null;
+  is_online: string;
+  state: string | null;
+  lga: string | null;
+  bank: string | null;
+  profile: {
+    user_id: string;
+  }
 }

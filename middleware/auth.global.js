@@ -1,14 +1,12 @@
-// import Cookies from 'js-cookie';
 import { storeToRefs } from 'pinia';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const {isAuthenticated} = storeToRefs(useAuthStore());
-  const token = useCookie('userToken');
+  const token = useCookie('token')
+  const { authenticated } = storeToRefs(useAuthStore());
   const path = to.fullPath;
   if (token.value) {
     // check if value exists
-    // todo verify if token is valid, before updating the state
-    isAuthenticated.value = true; // update the state to authenticated
+    authenticated.value = true; // update the state to authenticated
   }
   // if token exists and url is /login redirect to homepage
   if (token.value && path === '/') {
@@ -18,4 +16,110 @@ export default defineNuxtRouteMiddleware((to, from) => {
     abortNavigation();
     return navigateTo('/');
   }
+
+  return
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
+  // const token = useCookie('token');
+
+
+
+  // if (token.value) {
+  //   // check if value exists
+  //   authenticated.value = true; // update the state to authenticated
+  // }
+
+  // // if token exists and url is /login redirect to homepage
+  // if (token.value && to?.name === '/') {
+  //   return navigateTo('/dashboard');
+  // }
+
+  // // if token doesn't exist redirect to log in
+  // if (!token.value && to?.name !== '/') {
+  //   // abortNavigation();
+  //   return navigateTo('/');
+  // }
+

@@ -1,0 +1,27 @@
+{
+    "success": true,
+    "message": "Profile retrieved",
+    "data": {
+        "id": 3,
+        "email": "ogunwatonia01@gmail.com",
+        "firstname": "Anthonia",
+        "lastname": "Ogunwa",
+        "fullname": "Anthonia Ogunwa",
+        "email_verification_status": true,
+        "role": "admin",
+        "dob": null,
+        "gender": null,
+        "phone": null,
+        "photo": "https:\/\/res.cloudinary.com\/mealtrips\/image\/upload\/v1710939419\/brick-wall-1834784_1280_crmze3.jpg",
+        "longitude": null,
+        "latitude": null,
+        "address": null,
+        "is_online": "0",
+        "state": null,
+        "lga": null,
+        "bank": null,
+        "profile": {
+            "user_id": "3"
+        }
+    }
+}

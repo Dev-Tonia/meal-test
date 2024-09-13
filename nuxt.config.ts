@@ -7,7 +7,50 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia/nuxt",
     "shadcn-nuxt",
+    "@vueuse/motion/nuxt"
+    // "@sidebase/nuxt-auth",
   ],
+  runtimeConfig: {
+    public: {
+      baseURL:
+        import.meta.env.NUXT_PUBLIC_BASE_URL ??
+        "https://api-staging.mealtrips.com/api",
+    },
+  },
+  // auth: {
+  //   // globalAppMiddleware: true,
+  //   isEnabled: true,
+  //   disableServerSideAuth: false,
+  //   originEnvKey: 'AUTH_ORIGIN',
+  //   baseURL: 'https://api-staging.mealtrips.com/api/',
+  //   provider: {
+  //     type: 'local',
+  //     // pages: {
+  //     //   login: '/'
+  //     // },
+  //     token: {
+  //       signInResponseTokenPointer: '/data/token',
+  //       type: 'Bearer',
+  //       cookieName: 'auth.token',
+  //       headerName: 'Authorization',
+  //       maxAgeInSeconds: 1800,
+  //       // sameSiteAttribute: 'lax',
+  //       // cookieDomain: 'localhost',
+  //       // secureCookieAttribute: false,
+  //       // httpOnlyCookieAttribute: false
+  //     },
+  //     endpoints: {
+  //       signIn: { path: 'login', method: 'post', },
+  //       // signOut: { path: '/logout', method: 'post' },
+  //       // signUp: { path: '/register', method: 'post' },
+  //       // getSession: { path: '/session', method: 'get' }
+  //     }
+  //   },
+  //   // sessionRefresh: {
+  //   //   enablePeriodically: false,
+  //   //   enableOnWindowFocus: false,
+  //   // }
+  // },
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   postcss: {
@@ -21,18 +64,7 @@ export default defineNuxtConfig({
      * Prefix for all the imported component
      */
     prefix: "",
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: "./components/ui",
-  },
-  runtimeConfig: {
-    public: {
-      baseURL:
-        import.meta.env.NUXT_PUBLIC_BASE_URL ??
-        "https://api-staging.mealtrips.com/api",
-    },
   },
   typescript: {
     tsConfig: {
@@ -42,3 +74,5 @@ export default defineNuxtConfig({
     },
   },
 });
+// { token: { bearer: 'THE_AUTH_TOKEN' }, timestamp: '2023' }
+
