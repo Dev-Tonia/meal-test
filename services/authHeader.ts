@@ -1,5 +1,5 @@
 export default function authHeader() {
-  const token = useCookie('userToken')?.value;
+  const token = useCookie('token')?.value;
 
   if (token) {
     return { Authorization: `Bearer ${token} ` };
