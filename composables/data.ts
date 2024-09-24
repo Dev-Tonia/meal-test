@@ -157,3 +157,10 @@ export const paymentHeader = [
   "Time",
   "Status",
 ];
+export const adminsHeader = [
+  "First Name",
+  "Surname",
+  "Email",
+  "Role",
+  "Action"
+];

@@ -20,7 +20,7 @@ const navItems = [
   {
     title: "Admins",
     iconName: "ph:user-gear-duotone",
-    // path: "/dashboard/admins",
+    path: "/dashboard/admins",
   },
   {
     title: "Orders", iconName: "ph:package",
