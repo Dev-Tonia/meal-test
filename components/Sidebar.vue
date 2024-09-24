@@ -10,12 +10,12 @@ const navItems = [
   {
     title: "Payouts",
     iconName: "ph:money-duotone",
-    // path: "/dashboard/payouts",
+    path: "/dashboard/payouts",
   },
   {
     title: "Riders",
     iconName: "heroicons:user-group",
-    // path: "/dashboard/riders",
+    path: "/dashboard/riders",
   },
   {
     title: "Admins",
@@ -24,12 +24,12 @@ const navItems = [
   },
   {
     title: "Orders", iconName: "ph:package",
-    //path: "/dashboard/orders"
+    path: "/dashboard/orders"
   },
   {
     title: "Messages",
     iconName: "mage:message-conversation",
-    // path: "/messages",
+    path: "/messages",
   },
 ];
 </script>

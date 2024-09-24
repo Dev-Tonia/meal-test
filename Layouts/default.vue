@@ -24,7 +24,7 @@ onMounted(async () => {
 <template>
   <div class="flex select-none">
     <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
-    <Sidebar class="hidden md:block w-[300px]" />
+    <Sidebar class="hid md:block w-[300px]" />
     <!-- </div> -->
     <MobileSidebar v-motion :initial="{ x: -100 }" :visible="{ x: 0 }" class="md:hidden" :closeOverlay="closeOverlay"
       :showOverlay="showOverlay" />
