@@ -91,13 +91,8 @@ const handleLogin = async (data: UserPayloadInterface) => {
         </form>
       </div>
     </div>
-    <!-- <button @click="handleTest">test button</button> -->
   </div>
 </template>
 
 <style scoped></style>
 
-<!-- router.js?v=c659cceb:76 Uncaught (in promise) Error: Navigating to an external URL is not allowed by default. Use `navigateTo(url, { external: true })`.
-    at navigateTo (router.js?v=c659cceb:76:13)
-    at signIn (useAuth.js?v=c659cceb:50:12)
-    at async handleLogin (index.vue:57:3) -->

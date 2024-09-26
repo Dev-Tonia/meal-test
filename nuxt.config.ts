@@ -17,40 +17,6 @@ export default defineNuxtConfig({
         "https://api-staging.mealtrips.com/api",
     },
   },
-  // auth: {
-  //   // globalAppMiddleware: true,
-  //   isEnabled: true,
-  //   disableServerSideAuth: false,
-  //   originEnvKey: 'AUTH_ORIGIN',
-  //   baseURL: 'https://api-staging.mealtrips.com/api/',
-  //   provider: {
-  //     type: 'local',
-  //     // pages: {
-  //     //   login: '/'
-  //     // },
-  //     token: {
-  //       signInResponseTokenPointer: '/data/token',
-  //       type: 'Bearer',
-  //       cookieName: 'auth.token',
-  //       headerName: 'Authorization',
-  //       maxAgeInSeconds: 1800,
-  //       // sameSiteAttribute: 'lax',
-  //       // cookieDomain: 'localhost',
-  //       // secureCookieAttribute: false,
-  //       // httpOnlyCookieAttribute: false
-  //     },
-  //     endpoints: {
-  //       signIn: { path: 'login', method: 'post', },
-  //       // signOut: { path: '/logout', method: 'post' },
-  //       // signUp: { path: '/register', method: 'post' },
-  //       // getSession: { path: '/session', method: 'get' }
-  //     }
-  //   },
-  //   // sessionRefresh: {
-  //   //   enablePeriodically: false,
-  //   //   enableOnWindowFocus: false,
-  //   // }
-  // },
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   postcss: {
@@ -73,6 +39,8 @@ export default defineNuxtConfig({
       },
     },
   },
+  nitro: {
+    preset: 'vercel-edge',
+  },
 });
-// { token: { bearer: 'THE_AUTH_TOKEN' }, timestamp: '2023' }
 
