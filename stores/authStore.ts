@@ -90,7 +90,6 @@ export const useAuthStore = defineStore('auth', {
       }
     }
   }
-
 });
 
 if (import.meta.hot) {

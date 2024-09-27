@@ -3,8 +3,9 @@ import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
 
-const { toggleModal } = useGlobalStore()
+const { toggleModal, getAssignableRoles } = useGlobalStore()
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore())
+
 
 
 const {

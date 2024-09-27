@@ -22,7 +22,6 @@ export function useAxiosFetch<T>(
 ) {
   const config = useRuntimeConfig();
   const baseUrl = config.public.baseURL;
-
   const data: Ref<T | null> = ref(null);
   const error: Ref<any> = ref(null);
   const loading: Ref<boolean> = ref(false);

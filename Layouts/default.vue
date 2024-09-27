@@ -6,8 +6,11 @@ useHead({
 });
 
 
-const { getCurrentUser } = useAuthStore();
-
+const { getCurrentUser, } = useAuthStore();
+const { getAssignableRoles } = useGlobalStore();
+onMounted(() => {
+  getAssignableRoles()
+})
 // toggle side bar on mobile screen
 const showOverlay = ref(false);
 function closeOverlay() {
