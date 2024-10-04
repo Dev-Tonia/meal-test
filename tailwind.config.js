@@ -23,7 +23,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        aileron: ["Aileron", "sans-serif"],
+        'aileron': ['Aileron', 'sans-serif'],
       },
       colors: {
         "mt-primary": "#DC6F19",

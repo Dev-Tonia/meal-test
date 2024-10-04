@@ -7,8 +7,9 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia/nuxt",
     "shadcn-nuxt",
-    "@vueuse/motion/nuxt"
     // "@sidebase/nuxt-auth",
+    "@vueuse/motion/nuxt",
+    "@nuxtjs/tailwindcss"
   ],
   runtimeConfig: {
     public: {
@@ -43,4 +44,3 @@ export default defineNuxtConfig({
     preset: "node-server",
   }
 });
-

@@ -20,7 +20,15 @@
         <TableData>
           <div class="flex text-xs gap-x-10 ">
             <button @click="editAdmin(user)" class="bg-gray-400 rounded-full px-7 py-1.5">Edit</button>
-            <button class="bg-red-100 rounded-full px-7 py-1.5">Delete</button>
+            <ConfirmationModal>
+              <template #trigger>
+                <button class="bg-red-100 rounded-full px-7 py-1.5">Delete</button>
+              </template>
+              <template #continue>
+                <button @click="deleteAdmin(user);">Continue</button>
+              </template>
+
+            </ConfirmationModal>
           </div>
         </TableData>
       </TableRow>
@@ -32,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
 import authHeader from '~/services/authHeader';
 const { toggleModal, getSelectedAdminUser } = useGlobalStore()
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore())
@@ -58,6 +67,26 @@ const editAdmin = (user: any) => {
   toggleModal()
 }
 
+const deleteAdmin = async (user: any) => {
+  console.log("🚀 ~ deleteAdmin ~ user:", user)
+  const id = user.profile.user_id
+  try {
+    const res = await axios.delete(`https://api-staging.mealtrips.com/api/admin/admin-users/delete/${id}`, {
+      headers: authHeader(),
+    })
+    customToast(`${res.data.message}`, true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      customToast(error.response.data.message, false);
+    } else {
+      customToast('An unexpected error occurred', false);
+    }
+  }
+}
 // const getAdmins = computed(() => {
 //   return usersData.value.map((user) => {
 //     return {
