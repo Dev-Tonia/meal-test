@@ -11,6 +11,13 @@ interface IUserRegister {
   password: string;
 }
 
+export interface ISelectedAdminUser {
+  user_id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: string;
+}
 interface IUser {
   id: number;
   email: string;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ErrorMessage } from "vee-validate";
 import { ref } from 'vue';
+const { assignableRoles } = storeToRefs(useGlobalStore())
 
 
 const { label, modelValue, name } = defineProps([
@@ -11,7 +12,7 @@ const { label, modelValue, name } = defineProps([
   "modelValue",
   "name"
 ]);
-const roles = ref(["Super Admin", "Admin", "Sales-and-Marketing"]);
+
 const openDropdown = ref(false);
 const handleClick = () => {
   openDropdown.value = !openDropdown.value;
@@ -31,9 +32,9 @@ const handleSelect = (role: string) => {
       <div>
         <slot></slot>
       </div>
-      <input disabled type="text" placeholder="Select role" class="input cursor-pointer disabled:bg-transparent w-full"
-        :value="modelValue" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        @blur="$emit('blur')" />
+      <input disabled type="text" placeholder="Select role"
+        class="input capitalize cursor-pointer disabled:bg-transparent w-full" :value="modelValue"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" @blur="$emit('blur')" />
       <span class="absolute top-1/2 -translate-y-1/2 right-3">
         <Icon v-motion :initial="{ y: 4 }" :enter="{ y: 0 }" v-if="!openDropdown" name="lucide:chevron-down" color="gray"
           size="18px" />
@@ -50,9 +51,9 @@ const handleSelect = (role: string) => {
           opacity: 1
         }
       }" v-if="openDropdown" class="w-full absolute border z-10 top-[50px] left-0 bg-white rounded-[5px] shadow-md">
-        <ul class="flex flex-col gap-y-2" v-for="role in roles" :key="role">
+        <ul class="flex flex-col gap-y-2" v-for="role in assignableRoles" :key="role">
           <li @click="handleSelect(role)"
-            class="border-b hover:bg-gray-100 hover:transition-all p-3.5 cursor-pointer text-sm text-[#041211] border-mt-secondary-50">
+            class="border-b hover:bg-gray-100 hover:transition-all p-3.5 cursor-pointer capitalize text-sm text-[#041211] border-mt-secondary-50">
             {{
               role }}</li>
         </ul>

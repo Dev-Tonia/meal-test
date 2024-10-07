@@ -6,8 +6,11 @@ useHead({
 });
 
 
-const { getCurrentUser } = useAuthStore();
-
+const { getCurrentUser, } = useAuthStore();
+const { getAssignableRoles } = useGlobalStore();
+onMounted(() => {
+  getAssignableRoles()
+})
 // toggle side bar on mobile screen
 const showOverlay = ref(false);
 function closeOverlay() {
@@ -20,7 +23,6 @@ onMounted(async () => {
   await getCurrentUser();
 })
 </script>
-
 <template>
   <div class="flex select-none">
     <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->

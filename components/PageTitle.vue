@@ -6,14 +6,13 @@ const { pageTitle } = defineProps({
 });
 
 import { storeToRefs } from "pinia";
-const { user } = storeToRefs(useAuthStore());
+const { currentUser } = storeToRefs(useAuthStore());
 
-const currentUser = user;
 </script>
 <template>
   <div>
     <p class="text-[#165049] font-light">
-      Welcome, {{ currentUser?.fullname }}
+      Welcome, {{ currentUser?.firstname }}
     </p>
     <h6 class="font-bold text-xl text-[#393939]">{{ pageTitle }}</h6>
   </div>
