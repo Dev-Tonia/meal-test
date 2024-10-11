@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   modules: [
     "nuxt-icon",
     "nuxt-svgo",
@@ -35,8 +36,5 @@ export default defineNuxtConfig({
         baseUrl: ".",
       },
     },
-  },
-  nitro: {
-    preset: "node-server",
   }
 });
