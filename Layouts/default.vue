@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import 'vue3-toastify/dist/index.css';
+import MobileSidebar from '~/components/MobileSidebar.vue';
+import Sidebar from '~/components/Sidebar.vue';
 useHead({
   title: "Mealtrips",
   meta: [{ name: "description", content: "Mealtrips Dashboard." }],

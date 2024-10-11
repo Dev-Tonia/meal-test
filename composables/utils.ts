@@ -24,7 +24,7 @@ export const customToast = (message: string, success: boolean) => {
   if (success) {
     return toast.success(message, {
       autoClose: 1500,
-    });
+    }); 
   } else {
     return toast.error(message, {
       autoClose: 1500,
