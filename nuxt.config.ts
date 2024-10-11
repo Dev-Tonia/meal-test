@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia/nuxt",
     "shadcn-nuxt",
-    // "@sidebase/nuxt-auth",
     "@vueuse/motion/nuxt",
     "@nuxtjs/tailwindcss"
   ],
@@ -27,9 +26,6 @@ export default defineNuxtConfig({
     },
   },
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: "",
     componentDir: "./components/ui",
   },
