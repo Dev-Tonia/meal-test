@@ -67,6 +67,8 @@ const editAdmin = (user: any) => {
   toggleModal()
 }
 
+// dev || 
+
 const deleteAdmin = async (user: any) => {
   console.log("🚀 ~ deleteAdmin ~ user:", user)
   const id = user.profile.user_id
@@ -100,3 +102,4 @@ const deleteAdmin = async (user: any) => {
 </script>
 
 <style lang="scss" scoped></style>
+
