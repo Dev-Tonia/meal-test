@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import 'vue3-toastify/dist/index.css';
 import MobileSidebar from '~/components/MobileSidebar.vue';
 import Sidebar from '~/components/Sidebar.vue';
+import { useAuthStore } from '~/stores/authStore';
+import { useGlobalStore } from '~/stores/globalStore';
 useHead({
   title: "Mealtrips",
   meta: [{ name: "description", content: "Mealtrips Dashboard." }],

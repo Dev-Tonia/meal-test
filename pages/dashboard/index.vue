@@ -3,6 +3,9 @@ import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
 
+definePageMeta({
+  layout: "default",
+});
 const { toggleModal, getAssignableRoles } = useGlobalStore()
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore())
 
