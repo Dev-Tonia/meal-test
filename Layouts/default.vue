@@ -26,7 +26,8 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="flex select-none">
+  <div class="flex">
+    <div>testing sidebar</div>
     <ClientOnly>
       <Sidebar class="hidden md:block w-[300px]" />
     </ClientOnly>
