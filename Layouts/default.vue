@@ -25,11 +25,8 @@ onMounted(async () => {
 </script>
 <template>
   <div class="flex select-none">
-    <!-- <div class="sticky top-0 left-0 h-full hidden md:block"> -->
     <Sidebar class="hidden md:block w-[300px]" />
-    <!-- </div> -->
-    <MobileSidebar v-motion :initial="{ x: -100 }" :visible="{ x: 0 }" class="md:hidden" :closeOverlay="closeOverlay"
-      :showOverlay="showOverlay" />
+    <MobileSidebar  />
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
       <div class="px-5 md:px-8 border min-h-[80vh]">
@@ -38,3 +35,6 @@ onMounted(async () => {
     </main>
   </div>
 </template>
+
+<!-- v-motion :initial="{ x: -100 }" :visible="{ x: 0 }" class="md:hidden" :closeOverlay="closeOverlay"
+      :showOverlay="showOverlay" -->
