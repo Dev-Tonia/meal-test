@@ -1,4 +1,4 @@
-
+import { toast } from 'vue3-toastify';
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -18,10 +18,7 @@ export const formatTime = (dateString: string) => {
   return `${formattedHours}:${formattedMinutes} ${amOrPm}`;
 }
 
-const toast = {
-  success: (message: any, options: any) => ({ message, options }),
-  error: (message: any, options: any) => ({ message, options })
-}
+
 
 export const customToast = (message: string, success: boolean) => {
   if (success) {

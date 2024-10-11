@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-// import 'vue3-toastify/dist/index.css';
+import 'vue3-toastify/dist/index.css';
 </script>
 
 
