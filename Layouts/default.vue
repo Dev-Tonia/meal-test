@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import 'vue3-toastify/dist/index.css';
+// import 'vue3-toastify/dist/index.css';
 useHead({
   title: "Mealtrips",
   meta: [{ name: "description", content: "Mealtrips Dashboard." }],
