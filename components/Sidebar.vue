@@ -36,7 +36,6 @@ const navItems = [
 <template>
   <aside class="bg-white">
     <div class="sticky top-0 left-0 h-screen">
-      <!-- <Sidebar class="h-screen overflow-y-auto " /> -->
       <div class="h-full overflow-y-auto">
         <!-- Brand Logo -->
         <div class="flex items-center justify-center pt-5 sm:pt-5 md:pt-8 lg:pt-10 xl:pt-12 2xl:pt-16å ">
