@@ -3,14 +3,17 @@ import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 
 
-definePageMeta({
-  layout: "default",
-});
 const { toggleModal, getAssignableRoles } = useGlobalStore()
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore())
+const { getCurrentUser, } = useAuthStore();
 
 
 
+onMounted(async () => {
+  getAssignableRoles()
+  await getCurrentUser();
+
+})
 const {
   data: overview,
   pending: isOverview,

@@ -3,19 +3,17 @@ import { onMounted } from 'vue';
 import 'vue3-toastify/dist/index.css';
 import MobileSidebar from '~/components/MobileSidebar.vue';
 import Sidebar from '~/components/Sidebar.vue';
-import { useAuthStore } from '~/stores/authStore';
-import { useGlobalStore } from '~/stores/globalStore';
+
 useHead({
   title: "Mealtrips",
-  meta: [{ name: "description", content: "Mealtrips Dashboard." }],
+  meta: [{
+    name: "description",
+    content: "Mealtrips Dashboard."
+  }],
 });
 
 
-const { getCurrentUser, } = useAuthStore();
-const { getAssignableRoles } = useGlobalStore();
-onMounted(() => {
-  getAssignableRoles()
-})
+
 // toggle side bar on mobile screen
 const showOverlay = ref(false);
 function closeOverlay() {
@@ -25,19 +23,13 @@ function openOverlay() {
   showOverlay.value = true;
 }
 onMounted(async () => {
-  await getCurrentUser();
 })
 </script>
 <template>
-  <div class="flex">
-    <div>testing sidebar</div>
-    <ClientOnly>
-      <Sidebar class="hidden md:block w-[300px]" />
-    </ClientOnly>
-    <ClientOnly>
-      <MobileSidebar v-motion :initial="{ x: -100 }" :visible="{ x: 0 }" class="md:hidden" :closeOverlay="closeOverlay"
-        :showOverlay="showOverlay" />
-    </ClientOnly>
+  <div class="flex default-layout">
+    <Sidebar class="hidden md:block w-[300px]" />
+    <MobileSidebar v-motion :initial="{ x: -100 }" :visible="{ x: 0 }" class="md:hidden" :closeOverlay="closeOverlay"
+      :showOverlay="showOverlay" />
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
       <div class="px-5 md:px-8 border min-h-[80vh]">
