@@ -31,7 +31,8 @@ export function useAxiosFetch<T>(
     error.value = null;
 
     try {
-      const fullUrl = typeof url === 'function' ? `${baseUrl}${url()}` : `${baseUrl}${url}`;
+      const fullUrl =
+        typeof url === "function" ? `${baseUrl}${url()}` : `${baseUrl}${url}`;
       const response = await axios.request<ApiResponse<T>>({
         url: fullUrl,
         ...options,

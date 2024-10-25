@@ -1,70 +1,76 @@
 <script setup>
+import { ref, computed, watch } from "vue";
+import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
 import authHeader from "~/services/authHeader";
 
-const config = useRuntimeConfig(); //getting the end point from env
+const config = useRuntimeConfig();
 
-//getting the csv data
-const { data } = useAsyncData("csvData", async () => {
+// CSV download functionality (unchanged)
+const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
     `${config.public.baseURL}/admin/exports-records/export-vendors`,
-    {
-      headers: authHeader(),
-    }
+    { headers: authHeader() }
   );
-  const csvData = await response.text();
-  return csvData;
+  return response.text();
 });
 
-// // Function to trigger CSV download
 const downloadCSV = () => {
-  // Create a Blob from the API response data
-  const blob = new Blob([data.value], { type: "text/csv" });
-
-  // Create an object URL for the Blob
+  const blob = new Blob([csvData.value], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
-
-  // Create a link element
   const link = document.createElement("a");
-
-  // Set the href and download attributes for the link
   link.href = url;
   link.download = "vendor.csv";
-
-  // Append the link to the body
   document.body.appendChild(link);
-
-  // Simulate click
   link.click();
-
-  // Remove the link from the body
   document.body.removeChild(link);
 };
 
-// fetching the all vendors
+// Vendor fetching and searching
 const pageNo = ref(1);
+const search = ref("");
+const debouncedSearch = ref("");
+
+const url = computed(() => {
+  if (debouncedSearch.value) {
+    return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
+      debouncedSearch.value
+    )}?page=${pageNo.value}`;
+  } else {
+    return `${config.public.baseURL}/admin/vendors?page=${pageNo.value}`;
+  }
+});
+
+const fetchKey = computed(
+  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`
+);
+
 const {
   data: vendor,
   pending: isVendor,
   error,
   refresh,
-} = useFetch(
-  () => `${config.public.baseURL}/admin/users/all/vendor?page=${pageNo.value}`,
-  {
-    headers: authHeader(),
-    key: `vendor-${pageNo.value}`,
-  }
-);
-// getting the vendors data
-const allVendor = computed(() => {
-  return vendor.value?.data;
+} = useFetch(url, {
+  headers: authHeader(),
+  key: fetchKey.value,
 });
-// for pagination
+
+// Debounce search input
+let debounceTimer;
+watch(search, (newValue) => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    debouncedSearch.value = newValue;
+    pageNo.value = 1; // Reset to first page on new search
+  }, 1000); // 300ms debounce
+});
+
+const allVendor = computed(() => vendor.value?.data);
+
 const pagination = (page) => {
   pageNo.value = page;
-  refresh();
 };
 </script>
-9oi8
+
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
@@ -76,6 +82,7 @@ const pagination = (page) => {
           inputType="text"
           label=""
           placeholder="Search for vendor"
+          v-model="search"
         >
           <Icon name="mi:search" size="24" class="text-gray-400" />
         </CustomInput>
@@ -96,12 +103,13 @@ const pagination = (page) => {
         }"
       />
     </div>
+
     <Transition name="fade">
       <Spinner v-if="isVendor" />
     </Transition>
 
     <ReusableTable :tableTitles="vendorHeader">
-      <TableRow v-for="(data, index) in allVendor" :key="index">
+      <TableRow v-for="(data, index) in allVendor?.data" :key="index">
         <TableCheckbox />
         <TableData :data="data.profile?.business_name" />
         <TableData :data="data.email" />
@@ -111,10 +119,11 @@ const pagination = (page) => {
         <TableData :data="data.is_online === 1 ? 'online' : 'offline'" />
       </TableRow>
     </ReusableTable>
-    <div class="py-4">
+
+    <div class="py-4" v-if="!debouncedSearch">
       <MTPagination
-        :total-pages="vendor?.meta?.total"
-        :itemsPerPage="vendor?.meta?.per_page"
+        :total-pages="vendor?.data?.meta?.total"
+        :itemsPerPage="vendor?.data?.meta?.per_page"
         @goto="pagination"
         @prev-page="pagination"
         @next-page="pagination"
@@ -122,4 +131,3 @@ const pagination = (page) => {
     </div>
   </section>
 </template>
-<style scoped></style>
