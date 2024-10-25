@@ -6,7 +6,7 @@ interface ApiResponse<T> {
 }
 export function useApiCall<T>(
   url: string | (() => string),
-  options: UseFetchOptions<ApiResponse<T>> = {}
+  options: UseFetchOptions<ApiResponse<T>> = {},
 ) {
   const config = useRuntimeConfig();
 
@@ -18,7 +18,7 @@ export function useApiCall<T>(
 
 export function useAxiosFetch<T>(
   url: string | (() => string),
-  options: any = {}
+  options: any = {},
 ) {
   const config = useRuntimeConfig();
   const baseUrl = config.public.baseURL;
@@ -31,7 +31,8 @@ export function useAxiosFetch<T>(
     error.value = null;
 
     try {
-      const fullUrl = typeof url === 'function' ? `${baseUrl}${url()}` : `${baseUrl}${url}`;
+      const fullUrl =
+        typeof url === "function" ? `${baseUrl}${url()}` : `${baseUrl}${url}`;
       const response = await axios.request<ApiResponse<T>>({
         url: fullUrl,
         ...options,

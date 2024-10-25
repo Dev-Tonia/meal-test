@@ -54,7 +54,7 @@ const { data, pending, error, refresh } = useFetch(
   {
     headers: authHeader(),
     key: `customer-${pageNo.value}`,
-  }
+  },
 );
 const usersData = computed(() => {
   return data?.value.data;

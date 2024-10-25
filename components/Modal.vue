@@ -1,6 +1,7 @@
 <template>
   <div
-    class="h-screen px-6 sm:px-16 z-20  bg-mt-secondary-50 w-screen fixed flex justify-center items-center top-0 left-0 ">
+    class="h-screen px-6 sm:px-16 z-20 bg-mt-secondary-50 w-screen fixed flex justify-center items-center top-0 left-0"
+  >
     <slot />
   </div>
 </template>
@@ -11,4 +12,4 @@ const emit = defineEmits(["closeModal"]);
 
 <style scoped></style>
 
-  <!-- @click.self="$emit('closeModal')" -->
+<!-- @click.self="$emit('closeModal')" -->

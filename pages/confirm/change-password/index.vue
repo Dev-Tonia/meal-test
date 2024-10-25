@@ -36,6 +36,9 @@
             name="confirmPassword"
           />
         </div>
+        <pre class="bg-red-500 w-full overflow-y-scroll">{{
+          route.query.token
+        }}</pre>
         <MTButton
           :load-state="loading"
           text="Change Password"
@@ -47,9 +50,21 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+
+const router = useRouter();
+
+// const params =  RouteParams()
+
+// const token = router.
+
 import { toTypedSchema } from "@vee-validate/zod";
+import { storeToRefs } from "pinia";
 import { useForm } from "vee-validate";
 import { z } from "zod";
+import { useGlobalStore } from "../../../stores/globalStore";
+
 const { loading } = storeToRefs(useGlobalStore());
 const { toggleModal } = useGlobalStore();
 

@@ -57,7 +57,7 @@ const { data, pending, error, refresh } = useFetch(
   {
     headers: authHeader(),
     key: `orders-${pageNo.value}`,
-  }
+  },
 );
 
 const nextPage = (page) => {

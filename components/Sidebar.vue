@@ -23,8 +23,9 @@ const navItems = [
     path: "/dashboard/admins",
   },
   {
-    title: "Orders", iconName: "ph:package",
-    path: "/dashboard/orders"
+    title: "Orders",
+    iconName: "ph:package",
+    path: "/dashboard/orders",
   },
   {
     title: "Messages",
@@ -38,7 +39,9 @@ const navItems = [
     <div class="sticky top-0 left-0 h-screen">
       <div class="h-full overflow-y-auto">
         <!-- Brand Logo -->
-        <div class="flex items-center justify-center pt-5 sm:pt-5 md:pt-8 lg:pt-10 xl:pt-12 2xl:pt-16å ">
+        <div
+          class="flex items-center justify-center pt-5 sm:pt-5 md:pt-8 lg:pt-10 xl:pt-12 2xl:pt-16å"
+        >
           <NuxtLink to="/" class="w-20">
             <NuxtImg src="/imgs/Brand-Logo.png" class="w-full" alt="" />
           </NuxtLink>
@@ -46,8 +49,10 @@ const navItems = [
         <div class="py-5">
           <ul class="">
             <li class="my-2.5" v-for="navItem in navItems" :key="navItem.title">
-              <NuxtLink :to="navItem.path"
-                class="py-4 rounded-md text-mt-secondary-900 flex items-center px-10 border-l-[24px] border-white">
+              <NuxtLink
+                :to="navItem.path"
+                class="py-4 rounded-md text-mt-secondary-900 flex items-center px-10 border-l-[24px] border-white"
+              >
                 <div class="flex items-center space-x-4">
                   <Icon :name="navItem.iconName" size="24" />
                   <p class="font-bold">{{ navItem.title }}</p>

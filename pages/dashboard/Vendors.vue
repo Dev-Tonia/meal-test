@@ -9,7 +9,7 @@ const { data } = useAsyncData("csvData", async () => {
     `${config.public.baseURL}/admin/exports-records/export-vendors`,
     {
       headers: authHeader(),
-    }
+    },
   );
   const csvData = await response.text();
   return csvData;
@@ -52,7 +52,7 @@ const {
   {
     headers: authHeader(),
     key: `vendor-${pageNo.value}`,
-  }
+  },
 );
 // getting the vendors data
 const allVendor = computed(() => {

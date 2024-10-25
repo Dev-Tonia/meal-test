@@ -162,5 +162,5 @@ export const adminsHeader = [
   "Surname",
   "Email",
   "Role",
-  "Action"
+  "Action",
 ];

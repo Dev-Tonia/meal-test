@@ -5,7 +5,7 @@ const { tableTitles } = defineProps(["tableTitles"]);
 <template>
   <thead class="bg-mt-secondary-50">
     <tr>
-      <th scope="col" class="text-xs px-5  py-3">
+      <th scope="col" class="text-xs px-5 py-3">
         <div class="flex items-center">
           <CustomCheckbox />
           <label for="checkbox-all" class="sr-only">checkbox</label>
