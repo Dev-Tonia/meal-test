@@ -2,6 +2,7 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import { Form, useForm } from "vee-validate";
 import { z } from "zod";
+import { customToast } from "~/composables/utils";
 import { useAuthStore } from "~/stores/authStore";
 import type { UserPayloadInterface } from "~/types/user";
 
