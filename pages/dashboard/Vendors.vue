@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch } from "vue";
 import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
+import { computed, ref, watch } from "vue";
+import SendBroadCast from "~/components/Screens/SendBroadCast.vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -9,11 +10,12 @@ const config = useRuntimeConfig();
 const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
     `${config.public.baseURL}/admin/exports-records/export-vendors`,
-    { headers: authHeader() }
+    { headers: authHeader() },
   );
   return response.text();
 });
 
+// export this downloadCSV function
 const downloadCSV = () => {
   const blob = new Blob([csvData.value], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
@@ -30,10 +32,14 @@ const pageNo = ref(1);
 const search = ref("");
 const debouncedSearch = ref("");
 
+const isOpen = ref(false);
+const openModal = () => {
+  isOpen.value = true;
+};
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/vendors?page=${pageNo.value}`;
@@ -41,7 +47,7 @@ const url = computed(() => {
 });
 
 const fetchKey = computed(
-  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`
+  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`,
 );
 
 const {
@@ -74,6 +80,7 @@ const pagination = (page) => {
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
+    <SendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
@@ -85,7 +92,7 @@ const pagination = (page) => {
           title: 'Export',
         }" @click="downloadCSV" />
       </div>
-      <BaseButton class="text-mt-secondary bg-mt-secondary/25" :btnData="{
+      <BaseButton class="text-mt-secondary bg-mt-secondary/25" @click="openModal" :btnData="{
         iconName: 'mynaui:envelope',
         title: 'Send Broadcast',
       }" />

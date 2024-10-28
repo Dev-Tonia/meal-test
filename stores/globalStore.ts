@@ -31,11 +31,12 @@ export const useGlobalStore = defineStore("globalStore", {
               headers: authHeader(),
             },
           );
-          const roles = res.data.data.data.map((role: any) => role.guard_name);
+          const roles = res.data.data.data.map((role: any) => role.name);
           this.assignableRoles = roles;
           return {
             message: "Roles fetched successfully",
             success: true,
+
           };
         }
         return;

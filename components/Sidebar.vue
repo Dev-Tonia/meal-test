@@ -30,7 +30,7 @@ const navItems = [
   {
     title: "Messages",
     iconName: "mage:message-conversation",
-    path: "/messages",
+    path: "/dashboard/messages",
   },
 ];
 </script>

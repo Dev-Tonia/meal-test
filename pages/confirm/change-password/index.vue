@@ -51,9 +51,20 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 const route = useRoute();
 
-const router = useRouter();
+// onMounted(() => {
+//   if (route.query.token && route.query.token.length > 0 && route.query.token === '') {
+//     console.log("query", route.query.token)
+//     return
+//   } else {
+//     // router.push('')
+//     // console.log("route", route)
+//     return router.push('/')
+//   }
+// })
+
 
 // const params =  RouteParams()
 

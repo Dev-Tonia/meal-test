@@ -1,18 +1,37 @@
 <template>
   <div class="py-4">
     <PageTitle page-title="Admins" />
-    <Modal v-motion :initial="{ opacity: 0, scale: 0.9 }" :visible="{ opacity: 1, scale: 1 }" v-if="openModal">
+
+    <Modal
+      v-motion
+      :initial="{ opacity: 0, scale: 0.9 }"
+      :visible="{ opacity: 1, scale: 1 }"
+      v-if="openModal"
+    >
       <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin>
-      <modal-message v-else v-motion :initial="{ opacity: 0, scale: 0.9 }"
-        :visible="{ opacity: 1, scale: 1 }"></modal-message>
+      <modal-message
+        v-else
+        v-motion
+        :initial="{ opacity: 0, scale: 0.9 }"
+        :visible="{ opacity: 1, scale: 1 }"
+      ></modal-message>
     </Modal>
+
     <!-- <SearchFilter v-model="search" /> -->
     <div class="flex justify-between py-3">
       <div class="flex space-x-2 w-[500px]">
-        <CustomInput class="w-full" inputType="text" label="" placeholder="Search for customer" v-model="search">
+        <CustomInput
+          class="w-full"
+          inputType="text"
+          label=""
+          placeholder="Search for customer"
+          v-model="search"
+        >
           <Icon name="mi:search" size="24" class="text-gray-400 mr-1.5" />
         </CustomInput>
-        <button class="border rounded-[4px] size-fit py-[13px] text-gray-500 px-6">
+        <button
+          class="border rounded-[4px] size-fit py-[13px] text-gray-500 px-6"
+        >
           Filters
         </button>
       </div>
@@ -25,13 +44,18 @@
         <TableData :data="user.lastname" />
         <TableData :data="user.email" />
         <TableData>
-          <button class="bg-purple-500 text-white text-xs capitalize rounded-full px-7 py-1.5">
+          <button
+            class="bg-purple-500 text-white text-xs capitalize rounded-full px-7 py-1.5"
+          >
             {{ user.role }}
           </button>
         </TableData>
         <TableData>
           <div class="flex text-xs gap-x-10">
-            <button @click="editAdmin(user)" class="bg-gray-400 rounded-full px-7 py-1.5">
+            <button
+              @click="editAdmin(user)"
+              class="bg-gray-400 rounded-full px-7 py-1.5"
+            >
               Edit
             </button>
             <ConfirmationModal>
@@ -69,7 +93,7 @@ const url = computed(() => {
   if (debouncedSearch.value) {
     fetchKey.value = "/admin/search/admin";
     return `${config.public.baseURL}/admin/search/admin/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}`;
   } else {
     fetchKey.value = "/admin/admin-users";
@@ -126,7 +150,7 @@ const deleteAdmin = async (user: any) => {
       `https://api-staging.mealtrips.com/api/admin/admin-users/delete/${id}`,
       {
         headers: authHeader(),
-      }
+      },
     );
     customToast(`${res.data.message}`, true);
     setTimeout(() => {

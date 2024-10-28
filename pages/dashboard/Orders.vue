@@ -4,7 +4,13 @@
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
-        <CustomInput class="w-full" inputType="text" label="" placeholder="Search for orders" v-model="search">
+        <CustomInput
+          class="w-full"
+          inputType="text"
+          label=""
+          placeholder="Search for orders"
+          v-model="search"
+        >
           <Icon name="mi:search" size="24" class="text-gray-400" />
         </CustomInput>
       </div>
@@ -18,16 +24,26 @@
         <TableData :data="formatDate(order.order_date)" />
         <TableData :data="order.order_number" />
         <TableData :data="order.rider_name ? order.rider_name : 'N/A'" />
-        <TableData :data="order.dispatched_at ? formatTime(order.dispatched_at) : '--:--'
-          " />
-        <TableData :data="order.completed_at ? formatTime(order.completed_at) : '--:--'" />
+        <TableData
+          :data="
+            order.dispatched_at ? formatTime(order.dispatched_at) : '--:--'
+          "
+        />
+        <TableData
+          :data="order.completed_at ? formatTime(order.completed_at) : '--:--'"
+        />
         <TableData :data="order.distance ? order.distance : '00(KM)'" />
         <TableData :data="order.status ? order.status : 'N/A'" />
         <TableData :data="order.action ? order.action : 'N/A'" />
       </TableRow>
     </ReusableTable>
-    <MTPagination :total-pages="ordersData?.meta?.total" :itemsPerPage="ordersData?.meta?.per_page" @goto="pagination"
-      @prev-page="pagination" @next-page="pagination" />
+    <MTPagination
+      :total-pages="ordersData?.meta?.total"
+      :itemsPerPage="ordersData?.meta?.per_page"
+      @goto="pagination"
+      @prev-page="pagination"
+      @next-page="pagination"
+    />
   </section>
 </template>
 
@@ -44,7 +60,7 @@ const debouncedSearch = ref("");
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/order/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/orders/all?page=${pageNo.value}`;
@@ -52,7 +68,7 @@ const url = computed(() => {
 });
 
 const fetchKey = computed(
-  () => `orders-${debouncedSearch.value || ""}-${pageNo.value}`
+  () => `orders-${debouncedSearch.value || ""}-${pageNo.value}`,
 );
 
 const { data, pending, error, refresh } = useFetch(() => url.value, {

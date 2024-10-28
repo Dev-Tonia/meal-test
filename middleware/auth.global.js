@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (token.value && path === "/") {
     return navigateTo("/dashboard");
   }
-  if (!token.value && path !== "/" && path !== "/confirm/change-password") {
+  if (!token.value && path !== "/" && !path.startsWith("/confirm/change-password")) {
     abortNavigation();
     return navigateTo("/");
   }

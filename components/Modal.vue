@@ -8,8 +8,9 @@
 
 <script setup lang="ts">
 const emit = defineEmits(["closeModal"]);
+
+
 </script>
 
 <style scoped></style>
 
-<!-- @click.self="$emit('closeModal')" -->
