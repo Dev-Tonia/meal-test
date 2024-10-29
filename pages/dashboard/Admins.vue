@@ -1,6 +1,7 @@
 <template>
   <div class="py-4">
     <PageTitle page-title="Admins" />
+
     <Modal
       v-motion
       :initial="{ opacity: 0, scale: 0.9 }"
@@ -15,6 +16,7 @@
         :visible="{ opacity: 1, scale: 1 }"
       ></modal-message>
     </Modal>
+
     <!-- <SearchFilter v-model="search" /> -->
     <div class="flex justify-between py-3">
       <div class="flex space-x-2 w-[500px]">
@@ -91,7 +93,7 @@ const url = computed(() => {
   if (debouncedSearch.value) {
     fetchKey.value = "/admin/search/admin";
     return `${config.public.baseURL}/admin/search/admin/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}`;
   } else {
     fetchKey.value = "/admin/admin-users";
@@ -148,7 +150,7 @@ const deleteAdmin = async (user: any) => {
       `https://api-staging.mealtrips.com/api/admin/admin-users/delete/${id}`,
       {
         headers: authHeader(),
-      }
+      },
     );
     customToast(`${res.data.message}`, true);
     setTimeout(() => {

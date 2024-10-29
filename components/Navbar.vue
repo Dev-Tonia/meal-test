@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { storeToRefs } from "pinia";
-const { currentUser, } = storeToRefs(useAuthStore());
+const { currentUser } = storeToRefs(useAuthStore());
 
 const { logUserOut } = useAuthStore();
 
@@ -23,20 +23,32 @@ const { openOverlay } = defineProps(["openOverlay"]);
     <div class="flex items-center justify-between">
       <div>
         <div class="flex space-x-3 sm:space-x-5 items-center md:hidden">
-          <Icon name="ic:baseline-menu" class="cursor-pointer" size="40" @click="openOverlay" />
+          <Icon
+            name="ic:baseline-menu"
+            class="cursor-pointer"
+            size="40"
+            @click="openOverlay"
+          />
           <NuxtLink to="/" class="block w-10">
             <NuxtImg src="/imgs/Brand-Logo.png" class="w-full" alt="" />
           </NuxtLink>
         </div>
       </div>
       <div class="flex items-center space-x-2">
-        <div class="bg-white border w-9 h-9 rounded-full flex items-center justify-center">
+        <div
+          class="bg-white border w-9 h-9 rounded-full flex items-center justify-center"
+        >
           <Icon name="octicon:bell-fill-24" class="text-text-1 text-2xl" />
         </div>
-        <div class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
-          <NuxtImg :src="currentUser?.photo || '/imgs/UserAvater.png'" class="w-full h-full" />
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden"
+        >
+          <NuxtImg
+            :src="currentUser?.photo || '/imgs/UserAvater.png'"
+            class="w-full h-full"
+          />
         </div>
-        <div class="text-text-1 ">
+        <div class="text-text-1">
           <DropdownMenu>
             <DropdownMenuTrigger as-child>
               <button>
@@ -44,7 +56,7 @@ const { openOverlay } = defineProps(["openOverlay"]);
                 <Icon name="ri:arrow-down-s-line" class="text-2xl" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent class=" right-0 bg-white z-[2]">
+            <DropdownMenuContent class="right-0 bg-white z-[2]">
               <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>

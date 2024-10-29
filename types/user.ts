@@ -64,5 +64,5 @@ export interface AdminProfileInterface {
   bank: string | null;
   profile: {
     user_id: string;
-  }
+  };
 }

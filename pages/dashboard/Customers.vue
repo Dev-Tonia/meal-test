@@ -55,7 +55,7 @@ const debouncedSearch = ref("");
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/customer/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/users/all/customer?page=${pageNo.value}`;
@@ -63,7 +63,7 @@ const url = computed(() => {
 });
 
 const fetchKey = computed(
-  () => `customer-${debouncedSearch.value || ""}-${pageNo.value}`
+  () => `customer-${debouncedSearch.value || ""}-${pageNo.value}`,
 );
 
 const { data, pending, error, refresh } = useFetch(url, {

@@ -1,12 +1,10 @@
 <template>
   <div class="py-1.5">
-    <div class="loader p">
-    </div>
+    <div class="loader p"></div>
   </div>
 </template>
 
-
-<style  scoped>
+<style scoped>
 .loader {
   width: 12px;
   height: 12px;
@@ -18,15 +16,21 @@
 
 @keyframes l6 {
   0% {
-    box-shadow: 15px 0, -25px 0
+    box-shadow:
+      15px 0,
+      -25px 0;
   }
 
   50% {
-    box-shadow: 15px 0, -15px 0
+    box-shadow:
+      15px 0,
+      -15px 0;
   }
 
   100% {
-    box-shadow: 25px 0, -15px 0
+    box-shadow:
+      25px 0,
+      -15px 0;
   }
 }
 </style>
