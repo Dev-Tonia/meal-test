@@ -1,15 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    layoutTransition: true, // Enable layout transitions if needed
+    pageTransition: true, // Enable page transitions if needed
+  },
+  ssr: true,
   modules: [
     "nuxt-icon",
     "nuxt-svgo",
     "@nuxt/image",
     "@pinia/nuxt",
     "shadcn-nuxt",
-    // "@sidebase/nuxt-auth",
     "@vueuse/motion/nuxt",
-    "@nuxtjs/tailwindcss"
+    "@nuxtjs/tailwindcss",
   ],
   runtimeConfig: {
     public: {
@@ -27,9 +31,6 @@ export default defineNuxtConfig({
     },
   },
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: "",
     componentDir: "./components/ui",
   },
@@ -41,6 +42,6 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    preset: "node-server",
-  }
+    preset: "node-server", // or appropriate preset for your hosting
+  },
 });

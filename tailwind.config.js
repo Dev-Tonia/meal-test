@@ -1,4 +1,4 @@
-const animate = require("tailwindcss-animate")
+const animate = require("tailwindcss-animate");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'aileron': ['Aileron', 'sans-serif'],
+        aileron: ["Aileron", "sans-serif"],
       },
       colors: {
         "mt-primary": "#DC6F19",
@@ -83,10 +83,10 @@ module.exports = {
         },
         "collapsible-down": {
           from: { height: 0 },
-          to: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: "var(--radix-collapsible-content-height)" },
         },
         "collapsible-up": {
-          from: { height: 'var(--radix-collapsible-content-height)' },
+          from: { height: "var(--radix-collapsible-content-height)" },
           to: { height: 0 },
         },
       },
@@ -99,4 +99,4 @@ module.exports = {
     },
   },
   plugins: [animate],
-}
+};

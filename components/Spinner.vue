@@ -1,13 +1,14 @@
 <template>
   <Teleport to="body">
-    <div class="fixed h-screen top-0 flex justify-center items-center w-screen bg-white/60 z-10">
+    <div
+      class="fixed h-screen top-0 flex justify-center items-center w-screen bg-white/60 z-10"
+    >
       <div class="loader"></div>
     </div>
   </Teleport>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .loader {
@@ -30,37 +31,39 @@
     var(--c) 47px 43px,
     var(--b) 31px 48px,
     #f6d353;
-  background-size: 15px 15px, 6px 6px;
+  background-size:
+    15px 15px,
+    6px 6px;
   animation: l4 3s infinite;
 }
 
 @keyframes l4 {
   0% {
-    -webkit-mask: conic-gradient(#0000 0, #000 0)
+    -webkit-mask: conic-gradient(#0000 0, #000 0);
   }
 
   16.67% {
-    -webkit-mask: conic-gradient(#0000 60deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 60deg, #000 0);
   }
 
   33.33% {
-    -webkit-mask: conic-gradient(#0000 120deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 120deg, #000 0);
   }
 
   50% {
-    -webkit-mask: conic-gradient(#0000 180deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 180deg, #000 0);
   }
 
   66.67% {
-    -webkit-mask: conic-gradient(#0000 240deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 240deg, #000 0);
   }
 
   83.33% {
-    -webkit-mask: conic-gradient(#0000 300deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 300deg, #000 0);
   }
 
   100% {
-    -webkit-mask: conic-gradient(#0000 360deg, #000 0)
+    -webkit-mask: conic-gradient(#0000 360deg, #000 0);
   }
 }
 </style>

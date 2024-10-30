@@ -9,14 +9,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 </script>
 
 <template>
   <AlertDialog>
     <AlertDialogTrigger as-child>
       <slot name="trigger" />
-
     </AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>

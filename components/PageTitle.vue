@@ -7,7 +7,6 @@ const { pageTitle } = defineProps({
 
 import { storeToRefs } from "pinia";
 const { currentUser } = storeToRefs(useAuthStore());
-
 </script>
 <template>
   <div>

@@ -1,5 +1,3 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,38 +6,44 @@
 @layer base {
   @font-face {
     font-family: "Aileron";
-    src: url("/font/Aileron-Black.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-Black.woff2") format("woff2"),
       url("/font/Aileron-Black.woff") format("woff");
   }
   @font-face {
     font-family: "Aileron";
     font-weight: 700;
-    src: url("/font/Aileron-Bold.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-Bold.woff2") format("woff2"),
       url("/font/Aileron-Bold.woff") format("woff");
   }
   @font-face {
     font-family: "Aileron";
     font-weight: 800;
-    src: url("/font/Aileron-Heavy.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-Heavy.woff2") format("woff2"),
       url("/font/Aileron-Heavy.woff") format("woff");
   }
   @font-face {
     font-family: "Aileron";
     font-weight: 300;
-    src: url("/font/Aileron-Light.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-Light.woff2") format("woff2"),
       url("/font/Aileron-Light.woff") format("woff");
   }
   @font-face {
     font-family: "Aileron";
     font-weight: 400;
-    src: url("/font/Aileron-Regular.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-Regular.woff2") format("woff2"),
       url("/font/Aileron-Regular.woff") format("woff");
   }
 
   @font-face {
     font-family: "Aileron";
     font-weight: 600;
-    src: url("/font/Aileron-SemiBold.woff2") format("woff2"),
+    src:
+      url("/font/Aileron-SemiBold.woff2") format("woff2"),
       url("/font/Aileron-SemiBold.woff") format("woff");
   }
 }

@@ -1,4 +1,9 @@
 <script setup>
+import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
+import { ScreensSendBroadCast } from "#build/components";
+import { computed, ref, watch } from "vue";
+// import SendBroadCast from "~/components/Screens/SendBroadCast.vue";
+
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -12,6 +17,7 @@ const { data: csvData } = useAsyncData("csvData", async () => {
   return response.text();
 });
 
+// export this downloadCSV function
 const downloadCSV = () => {
   const blob = new Blob([csvData.value], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
@@ -28,6 +34,10 @@ const pageNo = ref(1);
 const search = ref("");
 const debouncedSearch = ref("");
 
+const isOpen = ref(false);
+const openModal = () => {
+  isOpen.value = true;
+};
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
@@ -90,6 +100,8 @@ const closeVendorModal = () => {
   {{ allVendor }}
 </pre
     > -->
+    <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
+
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
         <CustomInput
@@ -112,6 +124,7 @@ const closeVendorModal = () => {
       </div>
       <BaseButton
         class="text-mt-secondary bg-mt-secondary/25"
+        @click="openModal"
         :btnData="{
           iconName: 'mynaui:envelope',
           title: 'Send Broadcast',
