@@ -1,6 +1,4 @@
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -69,12 +67,29 @@ const allVendor = computed(() => vendor.value?.data);
 const pagination = (page) => {
   pageNo.value = page;
 };
+
+// vendor details and modal
+const selectedVendorId = ref(null);
+const showVendorModal = ref(false);
+
+const handleViewMore = (vendorId) => {
+  selectedVendorId.value = vendorId;
+  showVendorModal.value = true;
+};
+
+const closeVendorModal = () => {
+  showVendorModal.value = false;
+  selectedVendorId.value = null;
+};
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
-
+    <!-- <pre>
+  {{ allVendor }}
+</pre
+    > -->
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
         <CustomInput
@@ -117,6 +132,16 @@ const pagination = (page) => {
         <TableData :data="data.address" />
         <TableData :data="data.meals_count" />
         <TableData :data="data.is_online === 1 ? 'online' : 'offline'" />
+        <TableData :data="data.profile.rating" />
+
+        <TableData>
+          <button
+            @click="handleViewMore(data.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            view more
+          </button>
+        </TableData>
       </TableRow>
     </ReusableTable>
 
@@ -130,4 +155,10 @@ const pagination = (page) => {
       />
     </div>
   </section>
+  <VendorDetails
+    v-if="showVendorModal"
+    :vendorId="selectedVendorId"
+    :isOpen="showVendorModal"
+    @close="closeVendorModal"
+  />
 </template>
