@@ -1,9 +1,9 @@
 <script setup>
-import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
-import { ScreensSendBroadCast } from "#build/components";
-import { computed, ref, watch } from "vue";
-// import SendBroadCast from "~/components/Screens/SendBroadCast.vue";
+const { toggleModal, getSelectedAdminUser } = useGlobalStore();
 
+const { openModal } = storeToRefs(useGlobalStore());
+
+import { computed, ref, watch } from "vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -34,10 +34,7 @@ const pageNo = ref(1);
 const search = ref("");
 const debouncedSearch = ref("");
 
-const isOpen = ref(false);
-const openModal = () => {
-  isOpen.value = true;
-};
+// get the url for the api call
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
@@ -48,6 +45,7 @@ const url = computed(() => {
   }
 });
 
+// setting the fetch key to be dynamic based on the search value
 const fetchKey = computed(
   () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`
 );
@@ -85,6 +83,7 @@ const showVendorModal = ref(false);
 const handleViewMore = (vendorId) => {
   selectedVendorId.value = vendorId;
   showVendorModal.value = true;
+  toggleModal();
 };
 
 const closeVendorModal = () => {
@@ -168,10 +167,25 @@ const closeVendorModal = () => {
       />
     </div>
   </section>
-  <VendorDetails
+  <!-- <VendorDetails
     v-if="showVendorModal"
     :vendorId="selectedVendorId"
     :isOpen="showVendorModal"
     @close="closeVendorModal"
-  />
+  /> -->
+
+  <Modal
+    v-motion
+    :initial="{ opacity: 0, scale: 0.9 }"
+    :visible="{ opacity: 1, scale: 1 }"
+    v-if="openModal"
+  >
+    <VendorDetails :vendorId="selectedVendorId" />
+    <!-- <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin> -->
+    <!-- <modal-message
+      v-motion
+      :initial="{ opacity: 0, scale: 0.9 }"
+      :visible="{ opacity: 1, scale: 1 }"
+    ></modal-message> -->
+  </Modal>
 </template>
