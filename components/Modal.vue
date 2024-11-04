@@ -1,16 +1,15 @@
 <template>
   <div
-    class="h-screen px-6 sm:px-16 z-20 bg-mt-secondary-50 w-screen fixed flex justify-center items-center top-0 left-0"
+    class="fixed inset-0 z-20 flex items-center justify-center bg-mt-secondary-50"
   >
-    <slot />
+    <div class="min-h-screen px-6 sm:px-16 py-8 flex items-center">
+      <div class="w-full max-h-[90vh] overflow-y-auto">
+        <slot />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const emit = defineEmits(["closeModal"]);
-
-
 </script>
-
-<style scoped></style>
-
