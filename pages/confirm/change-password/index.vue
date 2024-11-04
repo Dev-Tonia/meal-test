@@ -96,7 +96,7 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
         },
       }
     );
-    customToast("Password changed! Please login again", true);;
+    customToast("Password changed! Please login again", true);
     setTimeout(() => {
       router.replace('/')
     }, 3000)
