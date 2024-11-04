@@ -1,7 +1,9 @@
 <script setup>
-import { useAsyncData, useFetch, useRuntimeConfig } from "#app";
+const { toggleModal, getSelectedAdminUser } = useGlobalStore();
+
+const { openModal } = storeToRefs(useGlobalStore());
+
 import { computed, ref, watch } from "vue";
-import SendBroadCast from "~/components/Screens/SendBroadCast.vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -10,7 +12,7 @@ const config = useRuntimeConfig();
 const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
     `${config.public.baseURL}/admin/exports-records/export-vendors`,
-    { headers: authHeader() },
+    { headers: authHeader() }
   );
   return response.text();
 });
@@ -32,22 +34,20 @@ const pageNo = ref(1);
 const search = ref("");
 const debouncedSearch = ref("");
 
-const isOpen = ref(false);
-const openModal = () => {
-  isOpen.value = true;
-};
+// get the url for the api call
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
-      debouncedSearch.value,
+      debouncedSearch.value
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/vendors?page=${pageNo.value}`;
   }
 });
 
+// setting the fetch key to be dynamic based on the search value
 const fetchKey = computed(
-  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`,
+  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`
 );
 
 const {
@@ -75,27 +75,60 @@ const allVendor = computed(() => vendor.value?.data);
 const pagination = (page) => {
   pageNo.value = page;
 };
+
+// vendor details and modal
+const selectedVendorId = ref(null);
+const showVendorModal = ref(false);
+
+const handleViewMore = (vendorId) => {
+  selectedVendorId.value = vendorId;
+  showVendorModal.value = true;
+  toggleModal();
+};
+
+const closeVendorModal = () => {
+  showVendorModal.value = false;
+  selectedVendorId.value = null;
+};
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
-    <SendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
+    <!-- <pre>
+  {{ allVendor }}
+</pre
+    > -->
+    <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
-        <CustomInput class="w-full" inputType="text" label="" placeholder="Search for vendor" v-model="search">
+        <CustomInput
+          class="w-full"
+          inputType="text"
+          label=""
+          placeholder="Search for vendor"
+          v-model="search"
+        >
           <Icon name="mi:search" size="24" class="text-gray-400" />
         </CustomInput>
-        <BaseButton class="text-text-1" :btnData="{
-          iconName: 'mdi:file-export-outline',
-          title: 'Export',
-        }" @click="downloadCSV" />
+        <BaseButton
+          class="text-text-1"
+          :btnData="{
+            iconName: 'mdi:file-export-outline',
+            title: 'Export',
+          }"
+          @click="downloadCSV"
+        />
       </div>
-      <BaseButton class="text-mt-secondary bg-mt-secondary/25" @click="openModal" :btnData="{
-        iconName: 'mynaui:envelope',
-        title: 'Send Broadcast',
-      }" />
+      <BaseButton
+        class="text-mt-secondary bg-mt-secondary/25"
+        @click="openModal"
+        :btnData="{
+          iconName: 'mynaui:envelope',
+          title: 'Send Broadcast',
+        }"
+      />
     </div>
 
     <Transition name="fade">
@@ -111,12 +144,48 @@ const pagination = (page) => {
         <TableData :data="data.address" />
         <TableData :data="data.meals_count" />
         <TableData :data="data.is_online === 1 ? 'online' : 'offline'" />
+        <TableData :data="data.profile.rating" />
+
+        <TableData>
+          <button
+            @click="handleViewMore(data.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            view more
+          </button>
+        </TableData>
       </TableRow>
     </ReusableTable>
 
     <div class="py-4" v-if="!debouncedSearch">
-      <MTPagination :total-pages="vendor?.data?.meta?.total" :itemsPerPage="vendor?.data?.meta?.per_page"
-        @goto="pagination" @prev-page="pagination" @next-page="pagination" />
+      <MTPagination
+        :total-pages="vendor?.data?.meta?.total"
+        :itemsPerPage="vendor?.data?.meta?.per_page"
+        @goto="pagination"
+        @prev-page="pagination"
+        @next-page="pagination"
+      />
     </div>
   </section>
+  <!-- <VendorDetails
+    v-if="showVendorModal"
+    :vendorId="selectedVendorId"
+    :isOpen="showVendorModal"
+    @close="closeVendorModal"
+  /> -->
+
+  <Modal
+    v-motion
+    :initial="{ opacity: 0, scale: 0.9 }"
+    :visible="{ opacity: 1, scale: 1 }"
+    v-if="openModal"
+  >
+    <VendorDetails :vendorId="selectedVendorId" />
+    <!-- <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin> -->
+    <!-- <modal-message
+      v-motion
+      :initial="{ opacity: 0, scale: 0.9 }"
+      :visible="{ opacity: 1, scale: 1 }"
+    ></modal-message> -->
+  </Modal>
 </template>

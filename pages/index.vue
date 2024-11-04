@@ -3,6 +3,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { Form, useForm } from "vee-validate";
 import { z } from "zod";
 import { customToast } from "~/composables/utils";
+
 import { useAuthStore } from "~/stores/authStore";
 import type { UserPayloadInterface } from "~/types/user";
 
@@ -28,7 +29,7 @@ const schema = toTypedSchema(
       .min(6, {
         message: "Password must be at least 6 characters",
       }),
-  }),
+  })
 );
 const { defineField, handleSubmit } = useForm({
   validationSchema: schema,
@@ -44,7 +45,7 @@ const handleLogin = async (data: UserPayloadInterface) => {
 </script>
 
 <template>
-  <Toaster class="bg-mt-primary" />
+  <!-- <Toaster class="bg-mt-primary" /> -->
   <div class="grid md:grid-cols-2">
     <div
       class="bg-gradient-to-br relative p-24 font-bold hidden xl:p-32 md:flex flex-col justify-between from-[#FF792E] min-h-screen to-[#FB9600]"

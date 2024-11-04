@@ -1,12 +1,17 @@
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-indigo-900">Vendor details</h2>
-      <button class="text-gray-500 hover:text-gray-700">
+  <div class="bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
+    <div class="flex justify-end items-center mb-3">
+      <button
+        class="text-gray-600 hover:text-gray-700 bg-gray-200 rounded-full p-2"
+      >
         <Icon icon="mdi:close" class="w-6 h-6" />
       </button>
     </div>
-
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold text-mt-secondary text-center">
+        Vendor details
+      </h2>
+    </div>
     <div class="flex justify-between items-center mb-6">
       <div class="flex items-center">
         <span class="text-sm text-gray-600 mr-2">Status</span>
@@ -17,111 +22,53 @@
           Active
         </span>
       </div>
-      <button
-        class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
-      >
+      <button class="bg-mt-secondary text-white font-bold py-2 px-4 rounded">
         Approve vendor
       </button>
     </div>
 
     <div class="mb-6">
-      <h3 class="text-sm font-medium text-gray-500 mb-2">
-        Contact information
-      </h3>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <p class="text-sm font-medium">Name</p>
-          <p class="text-sm text-gray-600">{{ vendor.name }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Address</p>
-          <p class="text-sm text-gray-600">{{ vendor.address }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Email</p>
-          <p class="text-sm text-gray-600">{{ vendor.email }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Phone</p>
-          <p class="text-sm text-gray-600">{{ vendor.phone }}</p>
-        </div>
+      <h3 class="text-[16px] text-text-1 mb-2">Contact information</h3>
+      <div class="grid grid-cols-2 rounded-lg border p-4">
+        <VendorText title="Name" :detail="vendor.name" />
+        <VendorText title="Address" :detail="vendor.address" />
+        <VendorText title="Email" :detail="vendor.email" />
+        <VendorText title="Phone" :detail="vendor.phone" />
+      </div>
+    </div>
+    <div class="mb-6">
+      <h3 class="text-[16px] text-text-1 mb-2">Business information</h3>
+      <div class="grid grid-cols-2 rounded-lg border p-4">
+        <VendorText title="Business Type" :detail="vendor.businessType" />
+        <VendorText title="Vendor ID " :detail="vendor.vendorId" />
       </div>
     </div>
 
     <div class="mb-6">
-      <h3 class="text-sm font-medium text-gray-500 mb-2">
-        Business information
-      </h3>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <p class="text-sm font-medium">Business Type</p>
-          <p class="text-sm text-gray-600">{{ vendor.businessType }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Vendor ID</p>
-          <p class="text-sm text-gray-600">{{ vendor.vendorId }}</p>
-        </div>
+      <h3 class="text-[16px] text-text-1 mb-2">Account Details</h3>
+      <div class="grid grid-cols-2 rounded-lg border p-4">
+        <VendorText title="Bank Name " :detail="vendor.bankName" />
+        <VendorText title="Account Name " :detail="vendor.accountName" />
+        <VendorText title="Account Number " :detail="vendor.accountNumber" />
+        <VendorText title="Payment Method " :detail="vendor.paymentMethod" />
       </div>
     </div>
 
-    <div class="mb-6">
-      <h3 class="text-sm font-medium text-gray-500 mb-2">Account Details</h3>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <p class="text-sm font-medium">Bank Name</p>
-          <p class="text-sm text-gray-600">{{ vendor.bankName }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Account Name</p>
-          <p class="text-sm text-gray-600">{{ vendor.accountName }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Account Number</p>
-          <p class="text-sm text-gray-600">{{ vendor.accountNumber }}</p>
-        </div>
-        <div>
-          <p class="text-sm font-medium">Payment Method</p>
-          <p class="text-sm text-gray-600">{{ vendor.paymentMethod }}</p>
-        </div>
-      </div>
+    <div class="grid grid-cols-4 gap-2 mb-6">
+      <VendorCard title="total orders Complete" :detail="vendor.totalOrders" />
+      <VendorCard title="Total Sales" :detail="vendor.totalSales" />
+      <VendorCard title="Total Review" :detail="vendor.totalReview" />
+      <VendorCard title="Total Product" :detail="vendor.totalProduct" />
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mb-6">
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <p class="text-xs text-gray-500 mb-1">TOTAL ORDERS COMPLETED</p>
-        <p class="text-2xl font-bold text-gray-800">{{ vendor.totalOrders }}</p>
-      </div>
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <p class="text-xs text-gray-500 mb-1">TOTAL SALES</p>
-        <p class="text-2xl font-bold text-gray-800">₦{{ vendor.totalSales }}</p>
-      </div>
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <p class="text-xs text-gray-500 mb-1">TOTAL REVIEW</p>
-        <p class="text-2xl font-bold text-gray-800">
-          ${{ vendor.totalReview }}
-        </p>
-      </div>
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <p class="text-xs text-gray-500 mb-1">TOTAL PRODUCT</p>
-        <p class="text-2xl font-bold text-gray-800">
-          ${{ vendor.totalProduct }}
-        </p>
-      </div>
-    </div>
-
-    <div class="flex justify-center space-x-4">
+    <div class="flex justify-end space-x-4">
       <button
         class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
       >
         <Icon icon="mdi:cash" class="w-5 h-5 mr-2" />
         Pay vendor
       </button>
-      <button
-        class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-      >
-        <Icon icon="mdi:pencil" class="w-5 h-5 mr-2" />
-        Edit Vendor
-      </button>
+
       <button
         class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
       >

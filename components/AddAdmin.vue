@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[700px] relative h-fite mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7"
+    class="w-[700px] relative h-fit mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7"
   >
     <Icon
       @click="closeModal"
@@ -132,7 +132,7 @@ const schema = toTypedSchema(
       .min(2, {
         message: "Role is required",
       }),
-  }),
+  })
 );
 
 const { defineField, handleSubmit } = useForm({
@@ -179,7 +179,7 @@ const handleAddAdmin = async (data: subAdminPayloadInterface) => {
         },
         {
           headers: authHeader(),
-        },
+        }
       );
       addAdminStatus.value = false;
       selectedAdminUser.value = {
@@ -202,7 +202,7 @@ const handleAddAdmin = async (data: subAdminPayloadInterface) => {
         },
         {
           headers: authHeader(),
-        },
+        }
       );
       addAdminStatus.value = false;
     }

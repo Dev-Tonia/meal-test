@@ -138,6 +138,8 @@ export const vendorHeader = [
   "Location",
   "Orders Complete",
   "Available",
+  "Reviews",
+  "Actions",
 ];
 export const orderHeader = [
   "Date",
