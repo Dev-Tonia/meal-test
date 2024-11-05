@@ -1,49 +1,20 @@
 <template>
   <Modal v-if="true">
-    <div
-      v-motion
-      :initial="{ opacity: 0, scale: 0.9 }"
-      :visible="{ opacity: 1, scale: 1 }"
-      class="w-[500px] relative h-fite mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7"
-    >
-      <Icon
-        role="button"
-        name="ci:close-big"
-        color="#292D32"
-        size="34px"
-        class="absolute top-5 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full"
-      />
+    <div v-motion :initial="{ opacity: 0, scale: 0.9 }" :visible="{ opacity: 1, scale: 1 }"
+      class="w-[500px] relative h-fite mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7">
+      <Icon role="button" name="ci:close-big" color="#292D32" size="34px"
+        class="absolute top-5 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full" />
       <h2 class="text-center text-[#211658] text-3xl font-medium">
         Change Password
       </h2>
-      <form
-        :onSubmit="handleSubmit(handleAddAdmin)"
-        class="space-y-5 md:space-y-7"
-      >
+      <form :onSubmit="handleSubmit(handleAddAdmin)" class="space-y-5 md:space-y-7">
         <div class="space-y-2 pb-4 md:space-y-3">
-          <CustomInput
-            input-type="text"
-            v-model="newPassword"
-            v-bind="newPasswordProps"
-            label="New Password"
-            name="newPassword"
-          />
-          <CustomInput
-            input-type="text"
-            v-model="confirmPassword"
-            v-bind="confirmPasswordProps"
-            label="Confirm Password"
-            name="confirmPassword"
-          />
+          <CustomInput input-type="text" v-model="newPassword" v-bind="newPasswordProps" label="New Password"
+            name="newPassword" />
+          <CustomInput input-type="text" v-model="confirmPassword" v-bind="confirmPasswordProps"
+            label="Confirm Password" name="confirmPassword" />
         </div>
-        <pre class="bg-red-500 w-full overflow-y-scroll">{{
-          route.query.token
-        }}</pre>
-        <MTButton
-          :load-state="loading"
-          text="Change Password"
-          iconName="bxl:codepen"
-        />
+        <MTButton :load-state="loading" text="Change Password" iconName="bxl:codepen" />
       </form>
     </div>
   </Modal>
@@ -54,23 +25,18 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-// onMounted(() => {
-//   if (route.query.token && route.query.token.length > 0 && route.query.token === '') {
-//     console.log("query", route.query.token)
-//     return
-//   } else {
-//     // router.push('')
-//     // console.log("route", route)
-//     return router.push('/')
-//   }
-// })
 
+onMounted(() => {
+  if (route.query.token && route.query.id && route.query.token !== '' && route.query.id !== '') {
+    return
+  } else {
+    return router.push('/')
+  }
+})
 
-// const params =  RouteParams()
-
-// const token = router.
 
 import { toTypedSchema } from "@vee-validate/zod";
+import axios from "axios";
 import { storeToRefs } from "pinia";
 import { useForm } from "vee-validate";
 import { z } from "zod";
@@ -113,7 +79,37 @@ interface changePasswordInterface {
   newPassword: string;
   confirmPassword: string;
 }
-const handleAddAdmin = (data: changePasswordInterface) => {
-  console.log(data);
+const handleAddAdmin = async (data: changePasswordInterface) => {
+  try {
+    loading.value = true;
+    await axios.put(
+      'https://api-staging.mealtrips.com/api/admin/admin-users/edit-admin',
+      {
+        password: data.newPassword,
+        user_id: route.query.id,
+        callBackUrl: "https://api-staging.mealtrips.com/verifyNewAdminEmail",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${route.query.token}`,
+          'Content-Type': 'application/json', // Optional, adjust based on your API needs
+        },
+      }
+    );
+    customToast("Password changed! Please login again", true);
+    setTimeout(() => {
+      router.replace('/')
+    }, 3000)
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      customToast(error.response.data.message, false);
+    } else {
+      customToast("An unexpected error occurred", false);
+    }
+    console.error("🚀 ~ handleAddAdmin ~ error:", error);
+  }
+  finally {
+    loading.value = false;
+  }
 };
 </script>
