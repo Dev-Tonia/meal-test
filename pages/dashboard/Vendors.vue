@@ -3,7 +3,6 @@ const { toggleModal, getSelectedAdminUser } = useGlobalStore();
 
 const { openModal } = storeToRefs(useGlobalStore());
 
-import { computed, ref, watch } from "vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -85,20 +84,12 @@ const handleViewMore = (vendorId) => {
   showVendorModal.value = true;
   toggleModal();
 };
-
-const closeVendorModal = () => {
-  showVendorModal.value = false;
-  selectedVendorId.value = null;
-};
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
-    <!-- <pre>
-  {{ allVendor }}
-</pre
-    > -->
+
     <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
 
     <div class="flex justify-between py-3">
@@ -134,7 +125,7 @@ const closeVendorModal = () => {
     <Transition name="fade">
       <Spinner v-if="isVendor" />
     </Transition>
-
+    <!-- vendor table data -->
     <ReusableTable :tableTitles="vendorHeader">
       <TableRow v-for="(data, index) in allVendor?.data" :key="index">
         <TableCheckbox />
@@ -167,12 +158,6 @@ const closeVendorModal = () => {
       />
     </div>
   </section>
-  <!-- <VendorDetails
-    v-if="showVendorModal"
-    :vendorId="selectedVendorId"
-    :isOpen="showVendorModal"
-    @close="closeVendorModal"
-  /> -->
 
   <Modal
     v-motion
@@ -181,11 +166,5 @@ const closeVendorModal = () => {
     v-if="openModal"
   >
     <VendorDetails :vendorId="selectedVendorId" />
-    <!-- <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin> -->
-    <!-- <modal-message
-      v-motion
-      :initial="{ opacity: 0, scale: 0.9 }"
-      :visible="{ opacity: 1, scale: 1 }"
-    ></modal-message> -->
   </Modal>
 </template>

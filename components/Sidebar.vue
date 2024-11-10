@@ -28,6 +28,11 @@ const navItems = [
     path: "/dashboard/orders",
   },
   {
+    title: "Referral Program",
+    iconName: "icon-park-outline:circular-connection",
+    path: "/dashboard/referral",
+  },
+  {
     title: "Messages",
     iconName: "mage:message-conversation",
     path: "/dashboard/messages",
