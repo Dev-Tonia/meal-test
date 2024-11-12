@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[700px] relative h-fit mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7"
+    class="w-[700px] relative h-fit mx-auto bg-white rounded-lg overflow-hidden shadow-md px-5 py-10 sm:p-16 space-y-7"
   >
     <Icon
       @click="closeSanctionModal"
@@ -11,59 +11,69 @@
       class="absolute top-10 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full"
     />
     <h2 class="text-center text-[#211658] text-3xl font-medium">
-      {{ "Review Vendor" }}
+      Create Referral Program
     </h2>
-    <!-- <pre>{{ sanctionsList.data.data }}</pre> -->
+    <pre>{{ rewards.data.data }}</pre>
+    <div v-if="status.pending">loading ....</div>
+
     <form
+      v-else
       class="space-y-5 md:space-y-10"
       @submit.prevent="handleSubmitSanction"
     >
       <div class="max-w-md mx-auto p-6 space-y-4">
-        <div class="space-y-2">
-          <label class="block font-medium text-[#060606]">Sanction</label>
-          <select
-            v-model="selectedSanction"
-            class="w-full rounded-md border border-[#E8EAED] shadow-sm bg-[#F2F2F2] outline-none py-5 px-3"
+        <CustomInput
+          label="Title"
+          name="title"
+          placeholder="Enter a title for the program"
+        />
+        <CustomInput
+          label="Description"
+          name="description"
+          placeholder="Description"
+        />
+
+        <ReferralSelect placeholder="Select user type" label="User Type">
+          <SelectItem
+            :value="item"
+            v-for="(item, index) in userTypes"
+            :key="item"
           >
-            <option value="" disabled selected>Sanction list</option>
-            <option
-              v-for="sanction in sanctionsList.data.data"
-              :key="sanction.id"
-              :value="sanction.id"
-            >
-              {{ sanction.name }}
-            </option>
-          </select>
-        </div>
+            {{ item }}
+          </SelectItem>
+        </ReferralSelect>
+        <CustomInput
+          label="Criteria"
+          name="criteria"
+          placeholder="Number of referrals"
+          input-type="number"
+        />
+        <ReferralSelect placeholder="Select reward type" label="Reward Type">
+          <SelectItem
+            v-for="reward in rewards.data?.data"
+            :key="reward.id"
+            :value="reward.uuid"
+          >
+            {{ reward.name }}
+          </SelectItem>
+        </ReferralSelect>
 
         <div class="space-y-2">
-          <label class="block font-medium text-[#060606]">Status</label>
-          <ReferralSelect>
-            <SelectItem
-              :value="item"
-              v-for="(item, index) in userTypes"
-              :key="item"
-            >
-              {{ item }}
-            </SelectItem>
-          </ReferralSelect>
+          <div class="flex gap-10">
+            <ReferralDate placeholder=" Enter start date" label="Start Date" />
+
+            <ReferralDate placeholder="Enter end date" label="End Date" />
+          </div>
         </div>
 
-        <div class="space-y-2">
-          <label class="block font-medium text-[#060606]">Sanction Note</label>
-          <textarea
-            v-model="sanctionNote"
-            placeholder="Add a note"
-            rows="4"
-            class="w-full rounded-md border border-[#E8EAED] shadow-sm bg-[#F2F2F2] outline-none py-5 px-3"
-          ></textarea>
+        <div class="mt-4">
+          <MTButton
+            :load-state="loading"
+            text="Create Ref Program"
+            iconName="bxl:codepen"
+          />
         </div>
       </div>
-      <MTButton
-        :load-state="loading"
-        text="Sanction Vendor"
-        iconName="bxl:codepen"
-      />
     </form>
   </div>
 </template>
@@ -74,8 +84,8 @@ import authHeader from "~/services/authHeader";
 const config = useRuntimeConfig();
 const emit = defineEmits(["closeSanctionModal"]);
 
-const { data: sanctionsList } = useFetch(
-  `${config.public.baseURL}/admin/sanctions/active`,
+const { data: rewards, status } = useFetch(
+  `${config.public.baseURL}/admin/rewards`,
   {
     headers: authHeader(),
   }
@@ -100,7 +110,6 @@ const closeSanctionModal = () => {
 
 // Add these at the top of the script section
 const loading = ref(false);
-const router = useRouter();
 
 // Add this function in the script section
 const handleSubmitSanction = async () => {

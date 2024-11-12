@@ -201,7 +201,7 @@ const fetchVendorData = async () => {
 
 const approveVendor = async () => {
   try {
-    const response = await fetch(
+    const response = await $fetch(
       `${config.public.baseURL}/admin/vendors/approval/${props.vendorId}/approve`,
       {
         method: "PATCH",

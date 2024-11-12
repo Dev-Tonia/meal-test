@@ -12,42 +12,47 @@
     />
   </div>
   <div class="py-9">
+    <!-- <pre>{{ allReferrals }}</pre> -->
     <!-- referral card -->
-    <div class="bg-white shadow-xl p-6 rounded-[8px] max-w-3xl w-full">
+    <div
+      class="bg-white shadow-xl p-6 rounded-[8px] max-w-3xl w-full my-5"
+      v-for="(referral, index) in allReferrals"
+      :key="index"
+    >
       <!-- header -->
       <div class="flex items-center justify-between">
         <div
           class="border border-mt-secondary bg-mt-secondary/10 px-3 text-mt-secondary font-semibold text-xs rounded-full inline-block"
         >
-          Users
+          {{ referral.user_type }}
         </div>
 
         <div
           class="w-10 h-6 flex items-center bg-gray-200 rounded-full p-1 cursor-pointer"
-          :class="{ 'bg-green-600': isActive }"
-          @click="isActive = !isActive"
+          :class="{ 'bg-green-600': referral.is_active === 1 }"
+          @click="toggleReferral(referral.id)"
         >
           <div
             class="bg-white h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out"
-            :class="{ 'translate-x-4': isActive }"
+            :class="{ 'translate-x-4': referral.is_active === 1 }"
           />
         </div>
       </div>
 
       <!-- description -->
-      <div class="pt-4 flex gap-7">
+      <div class="pt-4 sm:flex gap-7 justify-between sm:w-10/12">
         <div>
           <h4 class="font-bold font-aileron text-[#393939] text-[22px] mb-1">
-            Earn 20k Cash
+            {{ referral.name }}
           </h4>
           <p class="text-[#8D8F9C] text-sm">
-            Refer a total of 100 users and earn 20k directly into your wallet
+            {{ referral.description }}
           </p>
           <div class="flex items-center space-x-1 mt-2.5">
             <div
               class="border border-[#8E98A8] bg-[#F5F5F5] text-[#393939] px-3 text-sm font-medium rounded-full inline-block"
             >
-              Qualified: 200
+              Qualified: {{ referral.criteria }}
             </div>
             <div
               class="border border-[#8E98A8] bg-[#F5F5F5] text-[#393939] px-3 text-sm font-medium rounded-full inline-block"
@@ -56,26 +61,26 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="pt-2 sm:pt-0">
           <div class="mb-2">
             <p class="text-text-1">Valid Until</p>
-            <h6 class="font-bold">January 1 2025</h6>
+            <h6 class="font-bold">{{ formattedDate(referral.end_date) }}</h6>
           </div>
           <div class="flex items-center space-x-1 mt-2">
-            <BaseButton
-              class="border border-[#8E98A8] bg-[#F5F5F5] text-[#393939] py-1"
-              :btnData="{
-                iconName: 'tabler:trash',
-                title: 'Delete',
-              }"
-            />
-            <BaseButton
-              class="border border-[#8E98A8] bg-[#F5F5F5] text-[#393939]"
-              :btnData="{
-                iconName: 'lucide:pen',
-                title: 'Edit',
-              }"
-            />
+            <button class="sm-btn">
+              <div class="flex gap-2 items-center justify-center">
+                <Icon name="tabler:trash" size="28" />
+                Delete
+                <!-- Slot for icon in the right -->
+              </div>
+            </button>
+            <button class="sm-btn">
+              <div class="flex gap-2 items-center justify-center">
+                <Icon name="lucide:pen" size="28" />
+                Edit
+                <!-- Slot for icon in the right -->
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -93,10 +98,58 @@
 </template>
 
 <script setup>
-import { useIsOpen } from "../composable/getIsOpen";
+import { useIsOpen } from "../../composables/openModal";
 
-const isActive = ref(true);
 const { isOpen, updateIsOpen } = useIsOpen();
+
+import authHeader from "~/services/authHeader";
+const config = useRuntimeConfig();
+
+const { data: referrals, refresh } = useFetch(
+  `${config.public.baseURL}/admin/programs`,
+  {
+    headers: authHeader(),
+  }
+);
+
+// get the data from the api
+const allReferrals = computed(() => referrals.value?.data.data);
+
+import { format } from "date-fns";
+
+// format date
+const formattedDate = computed(() => {
+  return (dateValue) => {
+    const date = new Date(dateValue);
+    return format(date, "MMMM d yyyy");
+  };
+});
+
+const toggleReferral = async (id) => {
+  try {
+    const response = await $fetch(
+      `${config.public.baseURL}/admin/programs/${id}/toggleApproval`,
+      {
+        method: "PATCH",
+        headers: {
+          ...authHeader(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    customToast(response.message, response.success);
+    refresh();
+  } catch (err) {
+    if (err.response) {
+      customToast(err.response._data.message, err.response._data.success);
+    }
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.sm-btn {
+  @apply px-4 shadow overflow-hidden shadow-[#1018280D]  border border-[#8E98A8] bg-[#F5F5F5] text-[#393939] py-1 rounded-[8px];
+}
+</style>
