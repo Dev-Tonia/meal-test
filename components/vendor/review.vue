@@ -77,7 +77,7 @@ const { data: sanctionsList } = useFetch(
   `${config.public.baseURL}/admin/sanctions/active`,
   {
     headers: authHeader(),
-  }
+  },
 );
 
 const selectedSanction = ref("");
@@ -132,7 +132,7 @@ const handleSubmitSanction = async () => {
           status: selectedStatus.value,
           sanction_note: sanctionNote.value,
         }),
-      }
+      },
     );
 
     loading.value = false;

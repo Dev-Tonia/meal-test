@@ -36,7 +36,6 @@ export const useGlobalStore = defineStore("globalStore", {
           return {
             message: "Roles fetched successfully",
             success: true,
-
           };
         }
         return;

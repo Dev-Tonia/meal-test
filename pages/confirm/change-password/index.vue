@@ -1,20 +1,46 @@
 <template>
   <Modal v-if="true">
-    <div v-motion :initial="{ opacity: 0, scale: 0.9 }" :visible="{ opacity: 1, scale: 1 }"
-      class="w-[500px] relative h-fite mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7">
-      <Icon role="button" name="ci:close-big" color="#292D32" size="34px"
-        class="absolute top-5 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full" />
+    <div
+      v-motion
+      :initial="{ opacity: 0, scale: 0.9 }"
+      :visible="{ opacity: 1, scale: 1 }"
+      class="w-[500px] relative h-fite mx-auto bg-white rounded-[4px] shadow-md px-5 py-10 sm:p-16 space-y-7"
+    >
+      <Icon
+        role="button"
+        name="ci:close-big"
+        color="#292D32"
+        size="34px"
+        class="absolute top-5 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full"
+      />
       <h2 class="text-center text-[#211658] text-3xl font-medium">
         Change Password
       </h2>
-      <form :onSubmit="handleSubmit(handleAddAdmin)" class="space-y-5 md:space-y-7">
+      <form
+        :onSubmit="handleSubmit(handleAddAdmin)"
+        class="space-y-5 md:space-y-7"
+      >
         <div class="space-y-2 pb-4 md:space-y-3">
-          <CustomInput input-type="text" v-model="newPassword" v-bind="newPasswordProps" label="New Password"
-            name="newPassword" />
-          <CustomInput input-type="text" v-model="confirmPassword" v-bind="confirmPasswordProps"
-            label="Confirm Password" name="confirmPassword" />
+          <CustomInput
+            input-type="text"
+            v-model="newPassword"
+            v-bind="newPasswordProps"
+            label="New Password"
+            name="newPassword"
+          />
+          <CustomInput
+            input-type="text"
+            v-model="confirmPassword"
+            v-bind="confirmPasswordProps"
+            label="Confirm Password"
+            name="confirmPassword"
+          />
         </div>
-        <MTButton :load-state="loading" text="Change Password" iconName="bxl:codepen" />
+        <MTButton
+          :load-state="loading"
+          text="Change Password"
+          iconName="bxl:codepen"
+        />
       </form>
     </div>
   </Modal>
@@ -25,15 +51,18 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-
 onMounted(() => {
-  if (route.query.token && route.query.id && route.query.token !== '' && route.query.id !== '') {
-    return
+  if (
+    route.query.token &&
+    route.query.id &&
+    route.query.token !== "" &&
+    route.query.id !== ""
+  ) {
+    return;
   } else {
-    return router.push('/')
+    return router.push("/");
   }
-})
-
+});
 
 import { toTypedSchema } from "@vee-validate/zod";
 import axios from "axios";
@@ -83,7 +112,7 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
   try {
     loading.value = true;
     await axios.put(
-      'https://api-staging.mealtrips.com/api/admin/admin-users/edit-admin',
+      "https://api-staging.mealtrips.com/api/admin/admin-users/edit-admin",
       {
         password: data.newPassword,
         user_id: route.query.id,
@@ -92,14 +121,14 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
       {
         headers: {
           Authorization: `Bearer ${route.query.token}`,
-          'Content-Type': 'application/json', // Optional, adjust based on your API needs
+          "Content-Type": "application/json", // Optional, adjust based on your API needs
         },
-      }
+      },
     );
     customToast("Password changed! Please login again", true);
     setTimeout(() => {
-      router.replace('/')
-    }, 3000)
+      router.replace("/");
+    }, 3000);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       customToast(error.response.data.message, false);
@@ -107,8 +136,7 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
       customToast("An unexpected error occurred", false);
     }
     console.error("🚀 ~ handleAddAdmin ~ error:", error);
-  }
-  finally {
+  } finally {
     loading.value = false;
   }
 };

@@ -93,7 +93,7 @@ const url = computed(() => {
   if (debouncedSearch.value) {
     fetchKey.value = "/admin/search/admin";
     return `${config.public.baseURL}/admin/search/admin/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}`;
   } else {
     fetchKey.value = "/admin/admin-users";
@@ -150,7 +150,7 @@ const deleteAdmin = async (user: any) => {
       `https://api-staging.mealtrips.com/api/admin/admin-users/delete/${id}`,
       {
         headers: authHeader(),
-      }
+      },
     );
     customToast(`${res.data.message}`, true);
     setTimeout(() => {
