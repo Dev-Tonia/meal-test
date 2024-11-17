@@ -8,7 +8,7 @@
         iconName: 'ic:round-add',
         title: 'New Referral Program',
       }"
-      @click="updateIsOpen"
+      @click="toggleModal"
     />
   </div>
   <div class="py-9">
@@ -87,12 +87,8 @@
     </div>
   </div>
 
-  <Modal
-    v-motion
-    :initial="{ opacity: 0, scale: 0.9 }"
-    :visible="{ opacity: 1, scale: 1 }"
-    v-if="isOpen"
-  >
+  <Modal v-if="openModal">
+    <!-- <p>Hello</p> -->
     <ReferralNewReferral />
   </Modal>
 </template>
@@ -100,8 +96,8 @@
 <script setup>
 import { useIsOpen } from "../../composables/openModal";
 
-const { isOpen, updateIsOpen } = useIsOpen();
-
+const { toggleModal } = useGlobalStore();
+const { openModal } = storeToRefs(useGlobalStore());
 import authHeader from "~/services/authHeader";
 const config = useRuntimeConfig();
 

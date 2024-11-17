@@ -2,8 +2,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    layoutTransition: true, // Enable layout transitions if needed
-    pageTransition: true, // Enable page transitions if needed
+    // layoutTransition: true, // Enable layout transitions if needed
+    // pageTransition: true, // Enable page transitions if needed
   },
   ssr: true,
   modules: [

@@ -159,12 +159,7 @@ const handleViewMore = (vendorId) => {
     </div>
   </section>
 
-  <Modal
-    v-motion
-    :initial="{ opacity: 0, scale: 0.9 }"
-    :visible="{ opacity: 1, scale: 1 }"
-    v-if="openModal"
-  >
+  <Modal v-if="openModal">
     <VendorDetails :vendorId="selectedVendorId" />
   </Modal>
 </template>
