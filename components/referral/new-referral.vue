@@ -11,7 +11,7 @@
       class="absolute top-10 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full"
     />
     <h2 class="text-center text-[#211658] text-3xl font-medium">
-      Create Referral Program
+      {{ isEditMode ? "Edit" : "Create" }} Referral Program
     </h2>
     <div
       v-if="status.pending"
@@ -106,41 +106,48 @@
         <div class="mt-4">
           <MTButton
             :loading="loading"
-            text="Create Ref Program"
+            :text="isEditMode ? 'Update Ref Program' : 'Create Ref Program'"
             iconName="bxl:codepen"
           />
         </div>
       </div>
     </form>
-    <!-- <p>Hello</p> -->
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
 import { SelectItem } from "@/components/ui/select";
 import authHeader from "~/services/authHeader";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
-const { toggleModal } = useGlobalStore();
-
 import * as z from "zod";
 
 const config = useRuntimeConfig();
+const { toggleModal } = useGlobalStore();
 const emit = defineEmits(["closeModal"]);
 const loading = ref(false);
+
+// Props for edit mode
+const props = defineProps({
+  initialData: {
+    type: Object,
+    default: null,
+  },
+});
+
+const isEditMode = computed(() => !!props.initialData);
 
 // Validation schema
 const schema = toTypedSchema(
   z.object({
     title: z
-      .string({ required_error: "Tile is required" })
+      .string({ required_error: "Title is required" })
       .min(1, "Title is required"),
     description: z
-      .string({ required_error: "Description  is required" })
+      .string({ required_error: "Description is required" })
       .min(1, "Description is required"),
     user_type: z
-      .string({ required_error: "User type  is required" })
+      .string({ required_error: "User type is required" })
       .min(1, "User type is required"),
     criteria: z
       .string({ required_error: "Criteria is required" })
@@ -148,19 +155,34 @@ const schema = toTypedSchema(
     reward: z
       .string({ required_error: "Reward type is required" })
       .min(1, "Reward type is required"),
-    start_date: z.date({ required_error: "Start date is required" }).min(
-      new Date(new Date().setHours(0, 0, 0, 0)), // Convert timestamp to Date
-      "Start date must be today or in the future"
-    ),
+    start_date: z
+      .date({ required_error: "Start date is required" })
+      .min(
+        new Date(new Date().setHours(0, 0, 0, 0)),
+        "Start date must be today or in the future"
+      ),
     end_date: z
       .date({ required_error: "End date is required" })
       .min(new Date(), "End date must be in the future"),
   })
 );
 
-// Form handling
+// Form handling with initial values for edit mode
 const { handleSubmit, errors, defineField } = useForm({
   validationSchema: schema,
+  initialValues: props.initialData
+    ? {
+        title: props.initialData.name,
+        description: props.initialData.description,
+        user_type:
+          props.initialData.user_type.charAt(0).toUpperCase() +
+          props.initialData.user_type.slice(1),
+        criteria: props.initialData.criteria.toString(),
+        reward: props.initialData.rewards[0],
+        start_date: new Date(props.initialData.start_date),
+        end_date: new Date(props.initialData.end_date),
+      }
+    : undefined,
 });
 
 const [title, titleProps] = defineField("title");
@@ -186,7 +208,6 @@ const userTypes = ["Customer", "Vendors"];
 const handleCloseModal = () => {
   toggleModal();
 };
-// to format the date
 
 const formatToYYYYMMDD = (dateString) => {
   const date = new Date(dateString);
@@ -194,30 +215,35 @@ const formatToYYYYMMDD = (dateString) => {
 };
 
 const handleCreateReferral = async (values) => {
-  console.log("trying to submit");
+  const formData = {
+    name: values.title,
+    description: values.description,
+    user_type: values.user_type.toLowerCase(),
+    criteria: Number(values.criteria),
+    start_date: formatToYYYYMMDD(values.start_date),
+    end_date: formatToYYYYMMDD(values.end_date),
+    rewards: [values.reward],
+  };
 
-  const start_date = formatToYYYYMMDD(values.start_date);
-  const end_date = formatToYYYYMMDD(values.end_date);
   try {
     loading.value = true;
-    const response = await $fetch(`${config.public.baseURL}/admin/programs`, {
-      method: "POST",
+    const endpoint = isEditMode.value
+      ? `${config.public.baseURL}/admin/programs/${props.initialData.id}`
+      : `${config.public.baseURL}/admin/programs`;
+
+    const method = isEditMode.value ? "PUT" : "POST";
+
+    const response = await $fetch(endpoint, {
+      method,
       headers: {
         ...authHeader(),
         "Content-Type": "application/json",
       },
-      body: {
-        name: values.title,
-        description: values.description,
-        user_type: values.user_type.tolowerCase(),
-        rewards: values.reward,
-        criteria: Number(values.criteria),
-        start_date: start_date,
-        end_date: end_date,
-      },
+      body: formData,
     });
 
     customToast(response.message, response.success);
+    handleCloseModal();
   } catch (err) {
     if (err.response) {
       console.log(err);
@@ -226,11 +252,7 @@ const handleCreateReferral = async (values) => {
   } finally {
     loading.value = false;
   }
-
-  console.log(values);
 };
-
-// do something like this
 
 const onSubmit = handleSubmit(handleCreateReferral);
 </script>

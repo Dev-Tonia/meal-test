@@ -67,14 +67,14 @@
             <h6 class="font-bold">{{ formattedDate(referral.end_date) }}</h6>
           </div>
           <div class="flex items-center space-x-1 mt-2">
-            <button class="sm-btn">
+            <button class="sm-btn" @click="deleteReferral(referral.id)">
               <div class="flex gap-2 items-center justify-center">
                 <Icon name="tabler:trash" size="28" />
                 Delete
                 <!-- Slot for icon in the right -->
               </div>
             </button>
-            <button class="sm-btn">
+            <button class="sm-btn" @click="getReferralDetail(referral.id)">
               <div class="flex gap-2 items-center justify-center">
                 <Icon name="lucide:pen" size="28" />
                 Edit
@@ -89,7 +89,7 @@
 
   <Modal v-if="openModal">
     <!-- <p>Hello</p> -->
-    <ReferralNewReferral />
+    <ReferralNewReferral :initialData="referralDetail" />
   </Modal>
 </template>
 
@@ -121,6 +121,7 @@ const formattedDate = computed(() => {
   };
 });
 
+// activate a referral
 const toggleReferral = async (id) => {
   try {
     const response = await $fetch(
@@ -136,6 +137,52 @@ const toggleReferral = async (id) => {
 
     customToast(response.message, response.success);
     refresh();
+  } catch (err) {
+    if (err.response) {
+      customToast(err.response._data.message, err.response._data.success);
+    }
+  }
+};
+
+const deleteReferral = async (id) => {
+  try {
+    const response = await $fetch(
+      `${config.public.baseURL}/admin/programs/${id}/delete`,
+      {
+        method: "DELETE",
+        headers: {
+          ...authHeader(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    customToast(response.message, response.success);
+    refresh(); // Refresh the referrals list
+  } catch (err) {
+    if (err.response) {
+      customToast(err.response._data.message, err.response._data.success);
+    }
+  }
+};
+
+// getting the referral that was clicked for edit
+const referralDetail = ref("");
+const getReferralDetail = async (id) => {
+  try {
+    const response = await $fetch(
+      `${config.public.baseURL}/admin/programs/${id}`,
+      {
+        method: "GET",
+        headers: {
+          ...authHeader(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    referralDetail.value = response.data;
+    customToast(response.message, response.success);
+    toggleModal();
   } catch (err) {
     if (err.response) {
       customToast(err.response._data.message, err.response._data.success);
