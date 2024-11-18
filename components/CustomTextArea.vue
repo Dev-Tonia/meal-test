@@ -7,13 +7,7 @@ const {
   modelValue,
   name,
   autoGenerate = false,
-} = defineProps([
-  "label",
-  "placeholder",
-  "modelValue",
-  "name",
-  "autoGenerate",
-]);
+} = defineProps(["label", "placeholder", "modelValue", "name", "autoGenerate"]);
 
 const emit = defineEmits(["update:modelValue", "blur"]);
 
@@ -32,18 +26,33 @@ const generateContent = () => {
     <label for="" class="text-sm mb-2 inline-block" v-show="label">
       {{ label }}
     </label>
-    <div class="rounded-[5px] relative border flex items-start px-2.5 py-3 gap-y-3">
+    <div
+      class="rounded-[5px] relative border flex items-start px-2.5 py-3 gap-y-3"
+    >
       <div>
         <slot></slot>
       </div>
-      <textarea :placeholder="placeholder" class="textarea" :value="modelValue" @input="
-        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
-        " @blur="$emit('blur')" />
-
+      <textarea
+        :placeholder="placeholder"
+        class="textarea"
+        :value="modelValue"
+        @input="
+          $emit(
+            'update:modelValue',
+            ($event.target as HTMLTextAreaElement).value,
+          )
+        "
+        @blur="$emit('blur')"
+      />
     </div>
-    <ErrorMessage :duration="0.5" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1 }" :name="name"
-      class="text-red-400 absolute  left-0 text-[13px] transition-all" />
-
+    <ErrorMessage
+      :duration="0.5"
+      v-motion
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :name="name"
+      class="text-red-400 absolute left-0 text-[13px] transition-all"
+    />
   </div>
 </template>
 

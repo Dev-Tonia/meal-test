@@ -14,7 +14,11 @@
           <CustomInput input-type="text" v-model="confirmPassword" v-bind="confirmPasswordProps"
             label="Confirm Password" name="confirmPassword" />
         </div>
-        <MTButton :load-state="loading" text="Change Password" iconName="bxl:codepen" />
+        <MTButton
+          :load-state="loading"
+          text="Change Password"
+          iconName="bxl:codepen"
+        />
       </form>
     </div>
   </Modal>
@@ -25,14 +29,18 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-
 onMounted(() => {
-  if (route.query.token && route.query.id && route.query.token !== '' && route.query.id !== '') {
-    return
+  if (
+    route.query.token &&
+    route.query.id &&
+    route.query.token !== "" &&
+    route.query.id !== ""
+  ) {
+    return;
   } else {
-    return router.push('/')
+    return router.push("/");
   }
-})
+});
 
 
 import { toTypedSchema } from "@vee-validate/zod";
@@ -83,7 +91,8 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
   try {
     loading.value = true;
     await axios.put(
-      'https://api-staging.mealtrips.com/api/admin/admin-users/edit-admin',
+      "https://api-staging.mealtrips.com/api/admin/admin-users/edit-admin",
+
       {
         password: data.newPassword,
         user_id: route.query.id,
@@ -92,23 +101,23 @@ const handleAddAdmin = async (data: changePasswordInterface) => {
       {
         headers: {
           Authorization: `Bearer ${route.query.token}`,
-          'Content-Type': 'application/json', // Optional, adjust based on your API needs
+          "Content-Type": "application/json", // Optional, adjust based on your API needs
         },
-      }
+      },
     );
     customToast("Password changed! Please login again", true);
     setTimeout(() => {
-      router.replace('/')
-    }, 3000)
+      router.replace("/");
+    }, 3000);
+
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       customToast(error.response.data.message, false);
     } else {
       customToast("An unexpected error occurred", false);
     }
-    console.error("🚀 ~ handleAddAdmin ~ error:", error);
-  }
-  finally {
+  } finally {
+
     loading.value = false;
   }
 };
