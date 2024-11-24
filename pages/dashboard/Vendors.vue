@@ -11,7 +11,7 @@ const config = useRuntimeConfig();
 const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
     `${config.public.baseURL}/admin/exports-records/export-vendors`,
-    { headers: authHeader() }
+    { headers: authHeader() },
   );
   return response.text();
 });
@@ -37,7 +37,7 @@ const debouncedSearch = ref("");
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/vendor/${encodeURIComponent(
-      debouncedSearch.value
+      debouncedSearch.value,
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/vendors?page=${pageNo.value}`;
@@ -46,7 +46,7 @@ const url = computed(() => {
 
 // setting the fetch key to be dynamic based on the search value
 const fetchKey = computed(
-  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`
+  () => `vendor-${debouncedSearch.value || ""}-${pageNo.value}`,
 );
 
 const {
@@ -84,13 +84,19 @@ const handleViewMore = (vendorId) => {
   showVendorModal.value = true;
   toggleModal();
 };
+
+const isOpen = ref(false);
+const openSendBroadcastModal = () => {
+  isOpen.value = true;
+};
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
 
-    <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
+    <SendBroadCastVendor :isOpen="isOpen" @closeModal="isOpen = false" />
+
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
@@ -114,7 +120,7 @@ const handleViewMore = (vendorId) => {
       </div>
       <BaseButton
         class="text-mt-secondary bg-mt-secondary/25"
-        @click="openModal"
+        @click="openSendBroadcastModal"
         :btnData="{
           iconName: 'mynaui:envelope',
           title: 'Send Broadcast',

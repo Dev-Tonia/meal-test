@@ -29,7 +29,7 @@ const schema = toTypedSchema(
       .min(6, {
         message: "Password must be at least 6 characters",
       }),
-  })
+  }),
 );
 const { defineField, handleSubmit } = useForm({
   validationSchema: schema,
