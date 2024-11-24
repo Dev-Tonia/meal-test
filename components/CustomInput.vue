@@ -24,16 +24,18 @@ const handleChange = () => {
 </script>
 <template>
   <div class="w-full pb-1.5 relative">
-    <label for="" class="text-sm mb-2 inline-block" v-show="label"
+    <label :for="name" class="text-sm mb-2 inline-block" v-show="label"
       >{{ label }}
     </label>
     <div
-      class="rounded-[5px] relative border flex items-center px-2.5 py-3 gap-y-3"
+      class="rounded-[5px] relative flex items-center px-2.5 py-3 gap-y-3 bg-[#F2F2F2] border border-[#E8EAED]"
     >
       <div>
         <slot></slot>
       </div>
       <input
+        :id="name"
+        :name="name"
         :type="inputType"
         :placeholder="placeholder"
         class="input"
@@ -64,6 +66,6 @@ const handleChange = () => {
 </template>
 <style scoped>
 input {
-  @apply outline-none border-none w-full placeholder:text-gray-400 placeholder:text-sm placeholder:font-medium;
+  @apply outline-none border-none w-full placeholder:text-gray-400 placeholder:text-sm placeholder:font-medium bg-transparent;
 }
 </style>

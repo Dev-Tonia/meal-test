@@ -2,12 +2,7 @@
   <div class="py-4">
     <PageTitle page-title="Admins" />
 
-    <Modal
-      v-motion
-      :initial="{ opacity: 0, scale: 0.9 }"
-      :visible="{ opacity: 1, scale: 1 }"
-      v-if="openModal"
-    >
+    <Modal v-if="openModal">
       <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin>
       <modal-message
         v-else
