@@ -84,13 +84,22 @@ const handleViewMore = (vendorId) => {
   showVendorModal.value = true;
   toggleModal();
 };
+
+// const closeVendorModal = () => {
+//   showVendorModal.value = false;
+//   selectedVendorId.value = null;
+// };
+const isOpen = ref(false);
+const openSendBroadcastModal = () => {
+  isOpen.value = true;
+};
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
 
-    <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
+    <ScreensSendBroadCastVendor :isOpen="isOpen" @closeModal="isOpen = false" />
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
@@ -114,7 +123,7 @@ const handleViewMore = (vendorId) => {
       </div>
       <BaseButton
         class="text-mt-secondary bg-mt-secondary/25"
-        @click="openModal"
+        @click="openSendBroadcastModal"
         :btnData="{
           iconName: 'mynaui:envelope',
           title: 'Send Broadcast',

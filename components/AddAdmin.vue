@@ -132,7 +132,7 @@ const schema = toTypedSchema(
       .min(2, {
         message: "Role is required",
       }),
-  })
+  }),
 );
 
 const { defineField, handleSubmit } = useForm({
@@ -179,7 +179,7 @@ const handleAddAdmin = async (data: subAdminPayloadInterface) => {
         },
         {
           headers: authHeader(),
-        }
+        },
       );
       addAdminStatus.value = false;
       selectedAdminUser.value = {
@@ -202,7 +202,7 @@ const handleAddAdmin = async (data: subAdminPayloadInterface) => {
         },
         {
           headers: authHeader(),
-        }
+        },
       );
       addAdminStatus.value = false;
     }

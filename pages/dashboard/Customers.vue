@@ -2,6 +2,8 @@
   <section class="py-4">
     <PageTitle page-title="Customers" />
 
+    <SendBroadCastUser :isOpen="isOpen" @closeModal="isOpen = false" />
+
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
         <CustomInput
@@ -14,6 +16,14 @@
           <Icon name="mi:search" size="24" class="text-gray-400" />
         </CustomInput>
       </div>
+      <BaseButton
+        class="text-mt-secondary bg-mt-secondary/25"
+        @click="openSendBroadcastModal"
+        :btnData="{
+          iconName: 'mynaui:envelope',
+          title: 'Send Broadcast',
+        }"
+      />
     </div>
     <Transition name="fade">
       <Spinner v-if="pending" />
@@ -43,6 +53,7 @@
 </template>
 
 <script setup>
+import SendBroadCastUser from "~/components/Screens/SendBroadCastUser.vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
@@ -51,6 +62,11 @@ const config = useRuntimeConfig();
 const pageNo = ref(1);
 const search = ref("");
 const debouncedSearch = ref("");
+
+const isOpen = ref(false);
+const openSendBroadcastModal = () => {
+  isOpen.value = true;
+};
 
 const url = computed(() => {
   if (debouncedSearch.value) {

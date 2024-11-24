@@ -116,7 +116,14 @@ const dateAndTime = computed(() => {
           :data="data.completed_at ? formatTime(data.completed_at) : '--:--'"
         />
         <TableData :data="data.distance ? data.distance : '00(KM)'" />
-        <TableData :data="data.status ? data.status : 'N/A'" />
+        <TableData>
+          <button
+            @click="handleViewMore(data.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            view more
+          </button>
+        </TableData>
       </TableRow>
     </ReusableTable>
   </div>
