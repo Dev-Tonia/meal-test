@@ -11,7 +11,7 @@
       class="absolute top-10 right-10 bg-[#A1B1CC] p-1.5 cursor-pointer rounded-full"
     />
     <h2 class="text-center text-[#211658] text-3xl font-medium">
-      {{ isEditMode ? "Edit" : "Create" }} Referral Program
+      {{ isEdit ? "Edit" : "Create" }} Referral Program
     </h2>
     <div
       v-if="status.pending"
@@ -106,7 +106,7 @@
         <div class="mt-4">
           <MTButton
             :loading="loading"
-            :text="isEditMode ? 'Update Ref Program' : 'Create Ref Program'"
+            :text="isEdit ? 'Update Ref Program' : 'Create Ref Program'"
             iconName="bxl:codepen"
           />
         </div>
@@ -133,6 +133,10 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  isEdit: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isEditMode = computed(() => !!props.initialData);
@@ -155,12 +159,14 @@ const schema = toTypedSchema(
     reward: z
       .string({ required_error: "Reward type is required" })
       .min(1, "Reward type is required"),
-    start_date: z
-      .date({ required_error: "Start date is required" })
-      .min(
-        new Date(new Date().setHours(0, 0, 0, 0)),
-        "Start date must be today or in the future"
-      ),
+    start_date: props.isEdit
+      ? z.date({ required_error: "Start date is required" })
+      : z
+          .date({ required_error: "Start date is required" })
+          .min(
+            new Date(new Date().setHours(0, 0, 0, 0)),
+            "Start date must be today or in the future"
+          ),
     end_date: z
       .date({ required_error: "End date is required" })
       .min(new Date(), "End date must be in the future"),
@@ -178,7 +184,7 @@ const { handleSubmit, errors, defineField } = useForm({
           props.initialData.user_type.charAt(0).toUpperCase() +
           props.initialData.user_type.slice(1),
         criteria: props.initialData.criteria.toString(),
-        reward: props.initialData.rewards[0],
+        reward: props.initialData.rewards[0].uuid,
         start_date: new Date(props.initialData.start_date),
         end_date: new Date(props.initialData.end_date),
       }
@@ -224,14 +230,13 @@ const handleCreateReferral = async (values) => {
     end_date: formatToYYYYMMDD(values.end_date),
     rewards: [values.reward],
   };
-
   try {
     loading.value = true;
-    const endpoint = isEditMode.value
+    const endpoint = props.isEdit
       ? `${config.public.baseURL}/admin/programs/${props.initialData.id}`
       : `${config.public.baseURL}/admin/programs`;
 
-    const method = isEditMode.value ? "PUT" : "POST";
+    const method = props.isEdit ? "PUT" : "POST";
 
     const response = await $fetch(endpoint, {
       method,

@@ -29,13 +29,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 // Initialize field with vee-validate
-const {
-  value: fieldValue,
-  errorMessage,
-  handleBlur,
-} = useField(props.name, props.rules, {
-  initialValue: props.modelValue,
-});
+const { value: fieldValue, errorMessage, handleBlur } = useField(props.name);
 
 // Using computed property for two-way binding
 const selectedValue = computed({

@@ -89,13 +89,11 @@
 
   <Modal v-if="openModal">
     <!-- <p>Hello</p> -->
-    <ReferralNewReferral :initialData="referralDetail" />
+    <ReferralNewReferral :initialData="referralDetail" :isEdit="isEdit" />
   </Modal>
 </template>
 
 <script setup>
-import { useIsOpen } from "../../composables/openModal";
-
 const { toggleModal } = useGlobalStore();
 const { openModal } = storeToRefs(useGlobalStore());
 import authHeader from "~/services/authHeader";
@@ -168,7 +166,9 @@ const deleteReferral = async (id) => {
 
 // getting the referral that was clicked for edit
 const referralDetail = ref("");
+const isEdit = ref(false);
 const getReferralDetail = async (id) => {
+  isEdit.value = true;
   try {
     const response = await $fetch(
       `${config.public.baseURL}/admin/programs/${id}`,
