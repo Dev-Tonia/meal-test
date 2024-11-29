@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     // pageTransition: true, // Enable page transitions if needed
   },
   ssr: true,
+  buildDir: "dist",
   modules: [
     "nuxt-icon",
     "nuxt-svgo",
