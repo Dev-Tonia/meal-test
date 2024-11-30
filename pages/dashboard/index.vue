@@ -42,6 +42,14 @@ const dateAndTime = computed(() => {
     }
   });
 });
+
+//open model
+const selectedOrderId = ref(null);
+
+const handleViewMore = (orderId) => {
+  selectedOrderId.value = orderId;
+  toggleModal();
+};
 </script>
 
 <template>
@@ -128,7 +136,7 @@ const dateAndTime = computed(() => {
     </ReusableTable>
   </div>
 
-  <!-- <Transition name="fade">
-    <Spinner v-if="isOverview || isOrders" />
-  </Transition> -->
+  <Modal v-if="openModal">
+    <OrdersDetails :orderId="selectedOrderId" />
+  </Modal>
 </template>

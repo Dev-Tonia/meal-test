@@ -2,7 +2,6 @@
 import { onMounted } from "vue";
 import "vue3-toastify/dist/index.css";
 import MobileSidebar from "~/components/MobileSidebar.vue";
-import Sidebar from "~/components/Sidebar.vue";
 
 useHead({
   title: "Mealtrips",
@@ -22,7 +21,6 @@ function closeOverlay() {
 function openOverlay() {
   showOverlay.value = true;
 }
-onMounted(async () => {});
 </script>
 <template>
   <div class="flex default-layout">
@@ -38,7 +36,7 @@ onMounted(async () => {});
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
       <div class="px-5 md:px-8 border min-h-[80vh]">
-        <slot />
+        <slot></slot>
       </div>
     </main>
   </div>
