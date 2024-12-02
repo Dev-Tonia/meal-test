@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       compilerOptions: {
-        baseUrl: ".",
+        baseUrl:  import.meta.env.NUXT_PUBLIC_BASE_URLy,
       },
     },
   },
