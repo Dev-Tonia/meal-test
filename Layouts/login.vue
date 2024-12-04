@@ -1,6 +1,5 @@
 <template>
   <div class="h-screen select-none overflow-hidden">
-    <p>hello</p>
     <slot />
   </div>
 </template>
