@@ -1,6 +1,9 @@
 <script setup>
 import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
+definePageMeta({
+  layout: "main-layout",
+});
 
 const { toggleModal, getAssignableRoles } = useGlobalStore();
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore());
@@ -42,17 +45,20 @@ const dateAndTime = computed(() => {
     }
   });
 });
+
+//open model
+const selectedOrderId = ref(null);
+
+const handleViewMore = (orderId) => {
+  selectedOrderId.value = orderId;
+  toggleModal();
+};
 </script>
 
 <template>
   <div class="flex flex-wrap justify-between items-center py-4">
     <PageTitle page-title="Admin Dashboard" />
-    <Modal
-      v-motion
-      :initial="{ opacity: 0, scale: 0.9 }"
-      :visible="{ opacity: 1, scale: 1 }"
-      v-if="openModal"
-    >
+    <Modal v-if="openModal">
       <add-admin v-if="addAdminStatus"></add-admin>
       <modal-message
         v-else
@@ -121,12 +127,19 @@ const dateAndTime = computed(() => {
           :data="data.completed_at ? formatTime(data.completed_at) : '--:--'"
         />
         <TableData :data="data.distance ? data.distance : '00(KM)'" />
-        <TableData :data="data.status ? data.status : 'N/A'" />
+        <TableData>
+          <button
+            @click="handleViewMore(data.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            view more
+          </button>
+        </TableData>
       </TableRow>
     </ReusableTable>
   </div>
 
-  <!-- <Transition name="fade">
-    <Spinner v-if="isOverview || isOrders" />
-  </Transition> -->
+  <Modal v-if="openModal">
+    <OrdersDetails :orderId="selectedOrderId" />
+  </Modal>
 </template>

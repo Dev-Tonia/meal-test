@@ -1,11 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    layoutTransition: true, // Enable layout transitions if needed
-    pageTransition: true, // Enable page transitions if needed
-  },
-  ssr: true,
+  // ssr: true,
   modules: [
     "nuxt-icon",
     "nuxt-svgo",
@@ -17,19 +11,17 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      baseURL:
-        import.meta.env.NUXT_PUBLIC_BASE_URL ??
-        "https://api-staging.mealtrips.com/api",
+      baseURL: import.meta.env.NUXT_PUBLIC_BASE_URL,
     },
   },
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
+  // postcss: {
+  //   plugins: {
+  //     tailwindcss: {},
+  //     autoprefixer: {},
+  //   },
+  // },
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",
@@ -37,11 +29,11 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       compilerOptions: {
-        baseUrl: ".",
+        baseUrl: import.meta.env.NUXT_PUBLIC_BASE_URLy,
       },
     },
   },
-  nitro: {
-    preset: "node-server", // or appropriate preset for your hosting
-  },
+  // nitro: {
+  //   preset: "vercel-edge", // Note the 'edge' part
+  // },
 });

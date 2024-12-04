@@ -29,14 +29,13 @@ export const useGlobalStore = defineStore("globalStore", {
             `https://api-staging.mealtrips.com/api/admin/admin-roles/assignables`,
             {
               headers: authHeader(),
-            },
+            }
           );
           const roles = res.data.data.data.map((role: any) => role.name);
           this.assignableRoles = roles;
           return {
             message: "Roles fetched successfully",
             success: true,
-
           };
         }
         return;
@@ -57,7 +56,6 @@ export const useGlobalStore = defineStore("globalStore", {
       }
     },
     getSelectedAdminUser(adminUser: any) {
-      console.log(adminUser.profile.user_id);
       this.selectedAdminUser = {
         user_id: adminUser.profile.user_id,
         firstname: adminUser.firstname,

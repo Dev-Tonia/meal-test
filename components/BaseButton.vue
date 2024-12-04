@@ -29,7 +29,7 @@ const click = () => emit("click");
         v-if="btnData.iconName"
         :name="btnData.iconName"
         :color="btnData.iconColor"
-        size="30"
+        size="28"
       />
       <span> {{ btnData.title }} </span>
       <!-- Slot for icon in the right -->

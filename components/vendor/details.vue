@@ -182,7 +182,7 @@ const fetchVendorData = async () => {
     error.value = null;
     const response = await fetch(
       `${config.public.baseURL}/admin/vendors/${props.vendorId}`,
-      { headers: authHeader() }
+      { headers: authHeader() },
     );
 
     if (!response.ok) {
@@ -201,7 +201,7 @@ const fetchVendorData = async () => {
 
 const approveVendor = async () => {
   try {
-    const response = await fetch(
+    const response = await $fetch(
       `${config.public.baseURL}/admin/vendors/approval/${props.vendorId}/approve`,
       {
         method: "PATCH",
@@ -209,7 +209,7 @@ const approveVendor = async () => {
           ...authHeader(),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const res = await response.json();
@@ -231,7 +231,7 @@ watch(
       fetchVendorData();
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // close modal

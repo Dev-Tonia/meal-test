@@ -9,26 +9,30 @@
     </div>
     <div class="mb-8">
       <h2 class="text-3xl font-bold text-mt-secondary text-center">
-        Vendor details
+        Order details
       </h2>
-    </div>
-    <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center">
-        <span class="text-sm text-gray-600 mr-2">Status</span>
-        <span
-          class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center"
+      <div class="flex items-center justify-center gap-4 pt-5">
+        <div class="font-bold font-aileron text-[#555555]">Order ID: 5241</div>
+        <button
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100/80 cursor-pointer select-none"
         >
-          <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
-          Active
-        </span>
+          <div class="w-2.5 h-2.5 rounded-full bg-black/65"></div>
+          <span class="text-[13px] text-black/65 font-normal">Pending</span>
+          <Icon icon="mingcute:down-line" class="text-black/45" />
+        </button>
       </div>
-      <button class="bg-mt-secondary text-white font-bold py-2 px-4 rounded">
-        Approve vendor
-      </button>
+    </div>
+
+    <!-- cards  -->
+    <div class="grid grid-cols-4 gap-2 mb-6">
+      <VendorCard title="Order Time " :detail="vendor.totalOrders" />
+      <VendorCard title="Processed Time" :detail="vendor.totalSales" />
+      <VendorCard title="Pick up time " :detail="vendor.totalReview" />
+      <VendorCard title="delivery Time " :detail="vendor.totalProduct" />
     </div>
 
     <div class="mb-6">
-      <h3 class="text-[16px] text-text-1 mb-2">Contact information</h3>
+      <h3 class="text-[16px] text-text-1 mb-2">Customer Contact information</h3>
       <div class="grid grid-cols-2 rounded-lg border p-4">
         <VendorText title="Name" :detail="vendor.name" />
         <VendorText title="Address" :detail="vendor.address" />
@@ -37,15 +41,16 @@
       </div>
     </div>
     <div class="mb-6">
-      <h3 class="text-[16px] text-text-1 mb-2">Business information</h3>
+      <h3 class="text-[16px] text-text-1 mb-2">Delivery person information</h3>
       <div class="grid grid-cols-2 rounded-lg border p-4">
-        <VendorText title="Business Type" :detail="vendor.businessType" />
-        <VendorText title="Vendor ID " :detail="vendor.vendorId" />
+        <VendorText title="Name" :detail="vendor.name" />
+        <VendorText title="Phone" :detail="vendor.phone" />
+        <VendorText title="Email" :detail="vendor.email" />
       </div>
     </div>
 
     <div class="mb-6">
-      <h3 class="text-[16px] text-text-1 mb-2">Account Details</h3>
+      <h3 class="text-[16px] text-text-1 mb-2">Customer Account Details</h3>
       <div class="grid grid-cols-2 rounded-lg border p-4">
         <VendorText title="Bank Name " :detail="vendor.bankName" />
         <VendorText title="Account Name " :detail="vendor.accountName" />
@@ -53,29 +58,7 @@
         <VendorText title="Payment Method " :detail="vendor.paymentMethod" />
       </div>
     </div>
-
-    <div class="grid grid-cols-4 gap-2 mb-6">
-      <VendorCard title="total orders Complete" :detail="vendor.totalOrders" />
-      <VendorCard title="Total Sales" :detail="vendor.totalSales" />
-      <VendorCard title="Total Review" :detail="vendor.totalReview" />
-      <VendorCard title="Total Product" :detail="vendor.totalProduct" />
-    </div>
-
-    <div class="flex justify-end space-x-4">
-      <button
-        class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-      >
-        <Icon icon="mdi:cash" class="w-5 h-5 mr-2" />
-        Pay vendor
-      </button>
-
-      <button
-        class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-      >
-        <Icon icon="mdi:pause" class="w-5 h-5 mr-2" />
-        Suspend Vendor
-      </button>
-    </div>
+    \
   </div>
 </template>
 

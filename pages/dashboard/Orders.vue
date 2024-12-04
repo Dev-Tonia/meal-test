@@ -34,7 +34,14 @@
         />
         <TableData :data="order.distance ? order.distance : '00(KM)'" />
         <TableData :data="order.status ? order.status : 'N/A'" />
-        <TableData :data="order.action ? order.action : 'N/A'" />
+        <TableData>
+          <button
+            @click="handleViewMore(order.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            view more
+          </button>
+        </TableData>
       </TableRow>
     </ReusableTable>
     <MTPagination
@@ -45,10 +52,17 @@
       @next-page="pagination"
     />
   </section>
+
+  <Modal v-if="openModal">
+    <OrdersDetails :orderId="selectedOrderId" />
+  </Modal>
 </template>
 
 <script setup>
 import authHeader from "~/services/authHeader";
+const { toggleModal } = useGlobalStore();
+
+const { openModal } = storeToRefs(useGlobalStore());
 
 const config = useRuntimeConfig();
 
@@ -60,7 +74,7 @@ const debouncedSearch = ref("");
 const url = computed(() => {
   if (debouncedSearch.value) {
     return `${config.public.baseURL}/admin/search/order/${encodeURIComponent(
-      debouncedSearch.value,
+      debouncedSearch.value
     )}?page=${pageNo.value}`;
   } else {
     return `${config.public.baseURL}/admin/orders/all?page=${pageNo.value}`;
@@ -68,7 +82,7 @@ const url = computed(() => {
 });
 
 const fetchKey = computed(
-  () => `orders-${debouncedSearch.value || ""}-${pageNo.value}`,
+  () => `orders-${debouncedSearch.value || ""}-${pageNo.value}`
 );
 
 const { data, pending, error, refresh } = useFetch(() => url.value, {
@@ -94,6 +108,14 @@ const pagination = (page) => {
 const ordersData = computed(() => {
   return data?.value?.data;
 });
+
+//open modal
+const selectedOrderId = ref(null);
+
+const handleViewMore = (orderId) => {
+  selectedOrderId.value = orderId;
+  toggleModal();
+};
 </script>
 
 <style scoped></style>

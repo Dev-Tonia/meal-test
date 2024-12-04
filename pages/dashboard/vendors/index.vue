@@ -3,10 +3,13 @@ const { toggleModal, getSelectedAdminUser } = useGlobalStore();
 
 const { openModal } = storeToRefs(useGlobalStore());
 
-import { computed, ref, watch } from "vue";
 import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
+
+definePageMeta({
+  layout: "mainLayout",
+});
 
 // CSV download functionality (unchanged)
 const { data: csvData } = useAsyncData("csvData", async () => {
@@ -86,20 +89,21 @@ const handleViewMore = (vendorId) => {
   toggleModal();
 };
 
-const closeVendorModal = () => {
-  showVendorModal.value = false;
-  selectedVendorId.value = null;
+// const closeVendorModal = () => {
+//   showVendorModal.value = false;
+//   selectedVendorId.value = null;
+// };
+const isOpen = ref(false);
+const openSendBroadcastModal = () => {
+  isOpen.value = true;
 };
 </script>
 
 <template>
   <section class="py-4">
     <PageTitle page-title="Vendors" />
-    <!-- <pre>
-  {{ allVendor }}
-</pre
-    > -->
-    <ScreensSendBroadCast :isOpen="isOpen" @closeModal="isOpen = false" />
+
+    <ScreensSendBroadCastVendor :isOpen="isOpen" @closeModal="isOpen = false" />
 
     <div class="flex justify-between py-3">
       <div class="flex space-x-4 basis-[60%]">
@@ -123,7 +127,7 @@ const closeVendorModal = () => {
       </div>
       <BaseButton
         class="text-mt-secondary bg-mt-secondary/25"
-        @click="openModal"
+        @click="openSendBroadcastModal"
         :btnData="{
           iconName: 'mynaui:envelope',
           title: 'Send Broadcast',
@@ -134,7 +138,7 @@ const closeVendorModal = () => {
     <Transition name="fade">
       <Spinner v-if="isVendor" />
     </Transition>
-
+    <!-- vendor table data -->
     <ReusableTable :tableTitles="vendorHeader">
       <TableRow v-for="(data, index) in allVendor?.data" :key="index">
         <TableCheckbox />
@@ -167,25 +171,8 @@ const closeVendorModal = () => {
       />
     </div>
   </section>
-  <!-- <VendorDetails
-    v-if="showVendorModal"
-    :vendorId="selectedVendorId"
-    :isOpen="showVendorModal"
-    @close="closeVendorModal"
-  /> -->
 
-  <Modal
-    v-motion
-    :initial="{ opacity: 0, scale: 0.9 }"
-    :visible="{ opacity: 1, scale: 1 }"
-    v-if="openModal"
-  >
+  <Modal v-if="openModal">
     <VendorDetails :vendorId="selectedVendorId" />
-    <!-- <add-admin v-if="addAdminStatus" :isEdit="true"></add-admin> -->
-    <!-- <modal-message
-      v-motion
-      :initial="{ opacity: 0, scale: 0.9 }"
-      :visible="{ opacity: 1, scale: 1 }"
-    ></modal-message> -->
   </Modal>
 </template>

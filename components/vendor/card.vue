@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow-lg p-4 rounded-lg">
-    <p class="text-sm uppercase text-gray-500 font-aileron mb-1">
+    <p class="text-xs uppercase text-gray-500 font-aileron mb-1">
       {{ title }}
     </p>
     <p class="text-2xl font-bold text-mt-secondary">
