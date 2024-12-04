@@ -19,12 +19,15 @@ function openOverlay() {
 }
 </script>
 <template>
-  <div class="flex default-layout">
+  <div class="flex">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
+      cupiditate fuga ullam accusantium perferendis nesciunt eligendi, quibusdam
+      aspernatur alias molestiae accusamus adipisci ex corporis aliquid facilis
+      assumenda voluptatum iste. Tempora.
+    </p>
     <Sidebar class="hidden md:block w-[300px]" />
     <MobileSidebar
-      v-motion
-      :initial="{ x: -100 }"
-      :visible="{ x: 0 }"
       class="md:hidden"
       :closeOverlay="closeOverlay"
       :showOverlay="showOverlay"
