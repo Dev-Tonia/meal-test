@@ -8,7 +8,7 @@ import authHeader from "~/services/authHeader";
 const config = useRuntimeConfig();
 
 definePageMeta({
-  layout: "main",
+  layout: "mainLayout",
 });
 
 // CSV download functionality (unchanged)

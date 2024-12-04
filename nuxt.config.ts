@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  ssr: false,
+  // ssr: true,
   modules: [
     "nuxt-icon",
     "nuxt-svgo",
@@ -16,12 +16,12 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
+  // postcss: {
+  //   plugins: {
+  //     tailwindcss: {},
+  //     autoprefixer: {},
+  //   },
+  // },
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",
@@ -33,7 +33,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    preset: "vercel-edge", // Note the 'edge' part
-  },
+  // nitro: {
+  //   preset: "vercel-edge", // Note the 'edge' part
+  // },
 });
