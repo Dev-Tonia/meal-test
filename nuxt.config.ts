@@ -29,8 +29,11 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       compilerOptions: {
-        baseUrl:  import.meta.env.NUXT_PUBLIC_BASE_URLy,
+        baseUrl: import.meta.env.NUXT_PUBLIC_BASE_URLy,
       },
     },
+  },
+  nitro: {
+    preset: "vercel-edge", // Note the 'edge' part
   },
 });

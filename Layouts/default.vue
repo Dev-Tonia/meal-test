@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import "vue3-toastify/dist/index.css";
-import MobileSidebar from "~/components/MobileSidebar.vue";
-
 useHead({
   title: "Mealtrips",
   meta: [
