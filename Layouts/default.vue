@@ -32,7 +32,7 @@ function openOverlay() {
     <main class="w-full overflow-hidden">
       <Navbar :openOverlay="openOverlay" />
       <div class="px-5 md:px-8 border min-h-[80vh]">
-        <slot></slot>
+        <NuxtPage />
       </div>
     </main>
   </div>
