@@ -2,7 +2,7 @@
 import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
 definePageMeta({
-  layout: "default",
+  layout: "main",
 });
 
 const { toggleModal, getAssignableRoles } = useGlobalStore();

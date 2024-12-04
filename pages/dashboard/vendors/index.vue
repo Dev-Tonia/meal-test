@@ -7,6 +7,10 @@ import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
 
+definePageMeta({
+  layout: "main",
+});
+
 // CSV download functionality (unchanged)
 const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
