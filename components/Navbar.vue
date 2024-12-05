@@ -49,21 +49,25 @@ const { openOverlay } = defineProps(["openOverlay"]);
           />
         </div>
         <div class="text-text-1">
-          <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-              <button>
-                <span class="font-medium">Admin</span>
-                <Icon name="ri:arrow-down-s-line" class="text-2xl" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent class="right-0 bg-white z-[2]">
-              <DropdownMenuLabel>{{ currentUser?.fullname }}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <button @click="handleLogout" class="">Logout</button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ClientOnly>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <button>
+                  <span class="font-medium">Admin</span>
+                  <Icon name="ri:arrow-down-s-line" class="text-2xl" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent class="right-0 bg-white z-[2]">
+                <DropdownMenuLabel>{{
+                  currentUser?.fullname
+                }}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <button @click="handleLogout" class="">Logout</button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </ClientOnly>
         </div>
       </div>
     </div>

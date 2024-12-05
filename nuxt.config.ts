@@ -36,4 +36,5 @@ export default defineNuxtConfig({
   // nitro: {
   //   preset: "vercel-edge", // Note the 'edge' part
   // },
+  plugins: ["~/plugins/toast.ts"],
 });
