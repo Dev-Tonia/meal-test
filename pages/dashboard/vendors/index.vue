@@ -7,10 +7,6 @@ import authHeader from "~/services/authHeader";
 
 const config = useRuntimeConfig();
 
-definePageMeta({
-  layout: "mainLayout",
-});
-
 // CSV download functionality (unchanged)
 const { data: csvData } = useAsyncData("csvData", async () => {
   const response = await fetch(
@@ -89,13 +85,19 @@ const handleViewMore = (vendorId) => {
   toggleModal();
 };
 
-// const closeVendorModal = () => {
-//   showVendorModal.value = false;
-//   selectedVendorId.value = null;
-// };
 const isOpen = ref(false);
 const openSendBroadcastModal = () => {
   isOpen.value = true;
+};
+
+// navigate to vendor payout page
+const handleViewHistory = async (id) => {
+  await navigateTo({
+    path: "/dashboard/vendors/vendor-payouts",
+    query: {
+      value: id,
+    },
+  });
 };
 </script>
 
@@ -110,6 +112,7 @@ const openSendBroadcastModal = () => {
         <CustomInput
           class="w-full"
           inputType="text"
+          name="search"
           label=""
           placeholder="Search for vendor"
           v-model="search"
@@ -136,7 +139,9 @@ const openSendBroadcastModal = () => {
     </div>
 
     <Transition name="fade">
-      <Spinner v-if="isVendor" />
+      <div v-if="isVendor">
+        <Spinner />
+      </div>
     </Transition>
     <!-- vendor table data -->
     <ReusableTable :tableTitles="vendorHeader">
@@ -156,6 +161,14 @@ const openSendBroadcastModal = () => {
             class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
           >
             view more
+          </button>
+        </TableData>
+        <TableData>
+          <button
+            @click="handleViewHistory(data.id)"
+            class="border rounded-3xl py-0.5 px-2.5 border-[#E9EBF8] w-fit text-sm flex items-center justify-center"
+          >
+            View history
           </button>
         </TableData>
       </TableRow>

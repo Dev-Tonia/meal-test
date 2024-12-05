@@ -59,7 +59,7 @@
               v-motion
               :initial="{ opacity: 0 }"
               :enter="{ opacity: 1 }"
-              name="emails"
+              :name="emails"
               class="text-red-400 left-0 text-[13px] transition-all"
             />
           </div>
@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { useForm } from "vee-validate";
+import { ErrorMessage, useForm } from "vee-validate";
 import Multiselect from "vue-multiselect";
 import { toast } from "vue3-toastify";
 import { BroadcastSchema } from "~/lib/schema";
@@ -131,7 +131,7 @@ const getAllVendors = async () => {
     `https://api-staging.mealtrips.com/api/admin/vendors`,
     {
       headers: authHeader(),
-    },
+    }
   );
   const data = response.data.data;
   const e = data.data.map((vendor: { email: string; fullname: string }) => {
@@ -158,7 +158,7 @@ const [sendToAll, sendToAllProps] = defineField("sendToAll");
 const [sendEmail, sendEmailProps] = defineField("sendEmail");
 
 const handleSendBroadcast = async (
-  form_data: SendBroadcastPayloadInterface,
+  form_data: SendBroadcastPayloadInterface
 ) => {
   const vendorEmails = form_data.emails?.map((email) => email.email);
   const { data, error } = await useApiCall("/admin/broadcast", {
@@ -175,7 +175,7 @@ const handleSendBroadcast = async (
   if (data.value) {
     //ts-ig
     toast.success(`Broadcast sent successfully`);
-    resetForm()
+    resetForm();
   } else {
     toast.error(`${error.value?.message}`);
   }

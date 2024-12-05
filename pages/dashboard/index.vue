@@ -1,9 +1,7 @@
 <script setup>
 import { overviewHeaders } from "~/composables/data";
 import authHeader from "~/services/authHeader";
-definePageMeta({
-  layout: "main-layout",
-});
+import { format } from "date-fns";
 
 const { toggleModal, getAssignableRoles } = useGlobalStore();
 const { openModal, addAdminStatus } = storeToRefs(useGlobalStore());
@@ -13,6 +11,7 @@ onMounted(async () => {
   getAssignableRoles();
   await getCurrentUser();
 });
+
 const {
   data: overview,
   pending: isOverview,
@@ -20,6 +19,7 @@ const {
 } = useApiCall("/admin/dashboard/overview", {
   headers: authHeader(),
 });
+
 const {
   data: orders,
   pending: isOrders,
@@ -27,26 +27,27 @@ const {
 } = useApiCall("/admin/orders/all", {
   headers: authHeader(),
 });
+
 const satOverview = computed(() => {
   return overview.value?.data;
 });
+
 const ordersData = computed(() => {
   return orders.value?.data.data;
 });
 
-// formatting the date
-const dateAndTime = computed(() => {
+const formatDateTime = (dateString) => {
   const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z$/;
-  return ordersData.value.map((price) => {
-    if (pattern.test(price.order_date)) {
-      let date = price.order_date.slice(0, 10);
-      let time = price.order_date.slice(12, 19);
-      return `${date}:${time}`;
-    }
-  });
+  if (pattern.test(dateString)) {
+    return format(new Date(dateString), "yyyy-MM-dd:HH:mm:ss");
+  }
+  return dateString;
+};
+
+const dateAndTime = computed(() => {
+  return ordersData.value?.map((price) => formatDateTime(price.order_date));
 });
 
-//open model
 const selectedOrderId = ref(null);
 
 const handleViewMore = (orderId) => {
@@ -58,6 +59,7 @@ const handleViewMore = (orderId) => {
 <template>
   <div class="flex flex-wrap justify-between items-center py-4">
     <PageTitle page-title="Admin Dashboard" />
+
     <Modal v-if="openModal">
       <add-admin v-if="addAdminStatus"></add-admin>
       <modal-message
@@ -79,36 +81,39 @@ const handleViewMore = (orderId) => {
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-    <Cards-Card :positive="false">
-      <template #title>Today Sales</template>
-      <template #price>{{ satOverview?.today_sales }}</template>
-      <template #statNumber>36</template>
-    </Cards-Card>
-    <Cards-Card variant="secondary">
-      <template #title>Total Sales</template>
-      <template #price>{{ satOverview?.total_sales }}</template>
-      <template #statNumber>36</template>
-    </Cards-Card>
-    <Cards-Card :positive="false">
-      <template #title>Total Orders</template>
-      <template #price>{{ satOverview?.orders_count }}</template>
-      <template #statNumber>8</template>
-    </Cards-Card>
-    <Cards-Card :positive="false">
-      <template #title>customers</template>
-      <template #price>{{ satOverview?.customers_count }}</template>
-      <template #statNumber>36</template>
-    </Cards-Card>
-    <Cards-Card variant="secondary">
-      <template #title>Vendors</template>
-      <template #price>{{ satOverview?.vendors_count }}</template>
-      <template #statNumber>36</template>
-    </Cards-Card>
-    <Cards-Card :positive="false">
-      <template #title>riders</template>
-      <template #price>{{ satOverview?.riders_count }}</template>
-      <template #statNumber>8</template>
-    </Cards-Card>
+    <template v-if="!isOverview">
+      <Cards-Card :positive="false">
+        <template #title>Today Sales</template>
+        <template #price>{{ satOverview?.today_sales }}</template>
+        <template #statNumber>36</template>
+      </Cards-Card>
+      <Cards-Card variant="secondary">
+        <template #title>Total Sales</template>
+        <template #price>{{ satOverview?.total_sales }}</template>
+        <template #statNumber>36</template>
+      </Cards-Card>
+      <Cards-Card :positive="false">
+        <template #title>Total Orders</template>
+        <template #price>{{ satOverview?.orders_count }}</template>
+        <template #statNumber>8</template>
+      </Cards-Card>
+      <Cards-Card :positive="false">
+        <template #title>customers</template>
+        <template #price>{{ satOverview?.customers_count }}</template>
+        <template #statNumber>36</template>
+      </Cards-Card>
+      <Cards-Card variant="secondary">
+        <template #title>Vendors</template>
+        <template #price>{{ satOverview?.vendors_count }}</template>
+        <template #statNumber>36</template>
+      </Cards-Card>
+      <Cards-Card :positive="false">
+        <template #title>riders</template>
+        <template #price>{{ satOverview?.riders_count }}</template>
+        <template #statNumber>8</template>
+      </Cards-Card>
+    </template>
+    <Spinner v-else />
   </div>
 
   <div class="flex flex-col my-6 rounded shadow-xl shadow-gray-200">

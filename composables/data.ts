@@ -140,6 +140,7 @@ export const vendorHeader = [
   "Available",
   "Reviews",
   "Actions",
+  "Payout History",
 ];
 export const orderHeader = [
   "Date",
@@ -165,4 +166,14 @@ export const adminsHeader = [
   "Email",
   "Role",
   "Action",
+];
+
+export const vendorPayoutsHeader = [
+  "vendor",
+  "Transfer Ref",
+  "Amount",
+  "Date",
+  "Time",
+  "Status",
+  "Actions",
 ];

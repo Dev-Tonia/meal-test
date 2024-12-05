@@ -1,13 +1,13 @@
 <script setup lang="ts">
-useHead({
-  title: "Mealtrips",
-  meta: [
-    {
-      name: "description",
-      content: "Mealtrips Dashboard.",
-    },
-  ],
-});
+// useHead({
+//   title: "Mealtrips",
+//   meta: [
+//     {
+//       name: "description",
+//       content: "Mealtrips Dashboard.",
+//     },
+//   ],
+// });
 
 // toggle side bar on mobile screen
 const showOverlay = ref(false);
@@ -20,12 +20,6 @@ function openOverlay() {
 </script>
 <template>
   <div class="flex">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-      cupiditate fuga ullam accusantium perferendis nesciunt eligendi, quibusdam
-      aspernatur alias molestiae accusamus adipisci ex corporis aliquid facilis
-      assumenda voluptatum iste. Tempora.
-    </p>
     <Sidebar class="hidden md:block w-[300px]" />
     <MobileSidebar
       class="md:hidden"
